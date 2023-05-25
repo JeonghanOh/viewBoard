@@ -1,0 +1,107 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: #f5f6f7;
+}
+.lo{
+    padding-top: 30px;
+    padding-bottom: 20px;
+}
+.logo{
+    display: block;
+    margin: 0 auto;
+    width: 240px;
+    height: 44px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-size: 240px auto;
+    color: transparent;
+    font-size: 0;
+
+}
+.hidden{
+    width: 1px;height: 1px;overflow: hidden; margin: -1px; position: absolute;
+}
+.wrap_b{
+    width: 460px;
+    margin: 0 auto;
+}
+.dan{
+    color: red;
+    font-size: 12px;
+    display: none;
+}
+input{
+    width: 100%;
+    border: 1px solid #dadada;
+    height: 51px;
+    margin: 10px 0px;
+}
+button{
+    cursor: pointer;
+}
+input:focus,select:focus{
+    outline: none;
+    border: 1px solid #03c75a;
+}
+#id::-webkit-input-placeholder{
+    text-align: right;
+    padding-right: 10px;
+}
+select{
+    margin: 10px 0;
+    width: 100%;
+    height: 51px;
+    border: 1px solid #dadada;
+}
+.year,.month,.day{
+    width: 147px;
+    margin: auto;
+}
+.phone{
+    width: 335px;
+}
+.sign{
+    margin-top: 20px;
+    width: 100%;
+    color: #fff;
+    background: #03c75a;
+    font-weight: bold;
+    height: 51px;
+    border: none;
+    font-size: 20px;
+}
+.confirm{
+    width: 115px;
+    height: 51px;
+    border: none;
+    background: #03c75a;
+    color: #fff;
+    font-weight: bold;
+}
+footer{
+    margin-top: 20px;
+}
+footer ul{
+    list-style: none;
+}
+footer li{
+    font-size: 12px;
+    float: left;
+    margin-right: 10px;
+}
+.m_logo{
+    padding-left: 50px;
+    color: #03c75a;
+    font-weight: bold;
+}
+footer li a span{
+    color: #000;
+    font-weight: bold;
+}
+footer li a{
+    color: #000;
+    text-decoration: none;
+}

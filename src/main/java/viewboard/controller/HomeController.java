@@ -9,4 +9,12 @@ public class HomeController {
     public String home(){
         return "index";
     }
+    @GetMapping("/write")
+    public String write(){
+        return "write";
+    }
+    @GetMapping("/signup")
+    public String signUp(){
+        return "signup";
+    }
 }

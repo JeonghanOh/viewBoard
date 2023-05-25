@@ -1,0 +1,153 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+ul{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+    color: #999;
+}
+
+.wrapper{
+    width:1000px;
+    margin: 0 auto;
+}
+.banner{
+    width: 100%;
+    height:500px;
+    background: #8987;
+    display: flex;
+}
+.left{
+    width: 700px;
+    height: 100%;
+}
+.left .top{
+    width: 100%;
+    height: 30%;
+    background: #6767;
+    display:flex;
+    justify-content: space-around;
+}
+.left .top > div{
+    height: 100%;
+    line-height: 100px;
+}
+.boardtitle h1{
+    line-height: 150px;
+}
+.about p{
+    line-height: 150px;
+}
+.left .bottom{
+    width: 100%;
+    height: 70%;
+    padding: 20px;
+}
+.bottom h3{
+    padding-left: 50px;
+}
+.bottom li{
+    margin-top: 6px
+}
+.right{
+    margin-left: 20px;
+    width: 270px;
+    height: 100%;
+}
+.login{
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+}
+.login label{
+    font-size: 13px;
+}
+.login input{
+    width: 100%;
+    height: 30px;
+    border: none;
+    border-bottom: 2px solid #8979;
+}
+.login #signin{
+    margin: 10px 0;
+    width: 100%;
+    height: 30px;
+    border: none;
+    background-color: #6767;
+}
+.login ul{
+    padding: 0;
+    text-align: center;
+}
+.login a{
+    color: #888;
+}
+.section{
+    width: 100%;
+    height: 950px;
+    background: #3456;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.board{
+    width: 450px;
+    height: 160px;
+    border-radius: 10px;
+    margin: 0 10px;
+    background: #fff;
+    font-size: 15px;
+    padding: 10px;
+    display: flex;
+    cursor: pointer;
+}
+.letter{
+    width: 70%;
+}
+.image{
+    width: 30%;
+    height: 100%;
+}
+.image img{
+    border-radius: 15px;
+}
+.letter .title{
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.content{
+    margin-bottom: 30px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.writer{
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+.letter ul{
+    padding: 0;
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 13px;
+}
+.pagination{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.page{
+    padding: 0;
+    display: flex;
+
+}
+.page li{
+    margin: 0 5px;
+}
+.page li a {
+    color: #000;
+}
