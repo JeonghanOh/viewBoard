@@ -15,21 +15,28 @@
               <div class="wrapper">
                   <div class="row">
                           <h3>글작성</h3>
-                          <form action="insertStudentInfoForm" method="post">
+                          <form action="/write" method="post">
+                          <input type="hidden" value="wnsqja@naver.com" name="userEmail"/>
                               <div id="title">
-
-                                  <input type="text" name="title" style="width:100%">
+                                   <select name="boardType">
+                                        <option value="1">개발 게시판</option>
+                                        <option value="2">자격증 게시판</option>
+                                        <option value="3">JOB 게시판</option>
+                                        <option value="4">유머 게시판</option>
+                                        <option value="5">부산 게시판</option>
+                                   </select>
+                                  <input type="text" name="boardTitle" style="width:100%">
                               </div>
                               <div id="smarteditor">
-                                  <textarea
-                                      name="editorTxt"
+                              <textarea
+                                      name="boardContent"
                                       id="editorTxt"
                                       rows="20"
                                       cols="10"
                                       placeholder="내용을 입력해주세요"
                                       style="width: 100%"></textarea>
                               </div>
-                              <input type="button" value="작성하기" onclick="submitPost()"/>
+                              <button type="submit" onclick="submitPost()">작성하기</button>
                           </form>
                           <!-- 포스트 추가하는 곳-->
                       </div>
@@ -50,6 +57,21 @@
            document.addEventListener("DOMContentLoaded", function() {
                smartEditor();
            });
+
+           /* 버튼 클릭 이벤트 */
+           submitPost = function() {
+               oEditors.getById["editorTxt"].exec("UPDATE_CONTENTS_FIELD", [])
+               let content = document.getElementById("editorTxt").value
+
+               //if(content == '') {
+               if(content == '<p>&nbsp;</p>') { //비어있어도 기본 P태그가 붙더라.
+                   alert("내용을 입력해주세요.")
+                   oEditors.getById["editorTxt"].exec("FOCUS")
+                   return
+               } else {
+                   console.log(content)
+               }
+           }
         </script>
 </body>
 </html>
