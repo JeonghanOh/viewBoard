@@ -13,6 +13,6 @@ public class SignUpDto {
     private String userPasswordChk;
     private String userName;
     private String userNickname;
-    private int userPhoneNumber;
+    private String userPhoneNumber;
 }
 

@@ -19,21 +19,21 @@ import javax.persistence.Table;
 @Table(name = "user")
 public class UserEntity {
     @Id
-    @Column(name="userEmail")
+    @Column(name="user_email")
     private String userEmail;
-    @Column(name="userPassword")
+    @Column(name="user_password")
     private String userPassword;
-    @Column(name="userName")
+    @Column(name="user_name")
     private String userName;
-    @Column(name="userNickname")
+    @Column(name="user_nickname")
     private String userNickName;
-    @Column(name="userPhoneNumber")
-    private int userPhoneNumber;
-    @Column(name="userGrant")
+    @Column(name="user_phonenumber")
+    private String userPhoneNumber;
+    @Column(name="user_grant")
     private int userGrant;
-    @Column(name="userAdult")
+    @Column(name="user_adult")
     private int userAdult;
-    @Column(name = "boardCount")
+    @Column(name = "board_count")
     private int boardCount;
 
     public UserEntity(SignUpDto dto) {

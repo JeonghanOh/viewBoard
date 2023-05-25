@@ -13,8 +13,8 @@ public class HomeController {
     public String write(){
         return "write";
     }
-    @GetMapping("/signup")
-    public String signUp(){
-        return "signup";
+    @GetMapping("/board")
+    public String board(){
+        return "board";
     }
 }
