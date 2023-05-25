@@ -3,6 +3,9 @@ package viewboard.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import viewboard.dto.ResponseDto;
+import viewboard.dto.SignInDto;
+import viewboard.dto.SignInResponseDto;
 import viewboard.dto.SignUpDto;
 import viewboard.service.AuthService;
 
@@ -18,5 +21,22 @@ public class AuthController {
     public String signUp(@ModelAttribute SignUpDto dto){
         authService.memberInsert(dto);
         return "board";
+    }
+
+    @PostMapping("/loginResult")
+    public String login(@ModelAttribute SignInDto dto){
+        ResponseDto<SignInResponseDto> res = authService.signIn(dto);
+
+        if(res.isResult()==true){
+            return "loginSuccess";
+        }
+        else{
+            return "login";
+        }
+    }
+
+    @GetMapping("/login")
+    public String signIn(){
+        return "login";
     }
 }

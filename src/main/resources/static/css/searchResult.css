@@ -1,0 +1,157 @@
+#nav1 {
+	background-color: #00ff00;
+	width: max;
+	height: 50px;
+}
+
+#nav2 {
+	background-color: #ff0000;
+	width: max;
+	height: 50px;
+}
+
+#logo {
+	float: left;
+}
+
+#search {
+	float: right;
+}
+
+#main {
+	margin: auto;
+	background-color: #00ffff;
+	width: 1000px;
+	height: 2000px;
+	font-size:50px;
+}
+
+#result{
+	margin: auto;
+	width:100%;
+	height: 1600px;
+	font-size: 30px;
+}
+
+#footer{
+	margin:auto;
+	width:100%;
+	height:400px;
+	font-size: 20px;
+}
+
+.resBox{
+	background-color:#0000ff;
+	width:100%;
+	height:150px;
+}
+
+.box{
+	background-color:#ff00ff;
+	width:800px;
+	height:150px;
+	margin:auto;
+}
+
+#box1{
+    background-color: #ffff00;
+	width: 100px;
+	height: 150px;
+	float:left;
+}
+
+#box2{
+	width: 550px;
+	height: 150px;
+	float:left;
+}
+
+#box2_1{
+    background-color: #00ffff;
+	width: 550px;
+	height: 40px;
+}
+
+#box2_2{
+    background-color: #00ff00;
+	width: 550px;
+	height: 110px;
+}
+
+#box3{
+    background-color: #ff0000;
+	width: 150px;
+	height: 150px;
+	float:left;
+}
+  .article {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .content {
+    display: flex;
+    padding: 0.3em 0;
+    list-style: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .content__id,
+  .content__author,
+  .content__date {
+    flex-basis: 15%;
+  }
+
+  .content__title {
+    flex: 1;
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .buttons {
+    background-color:#ff5555;
+    padding-top: 200px;
+    width: 100%;
+    margin:auto;
+    height: 300px;
+    text-align: center;
+  }
+
+  .button {
+    padding: 0 1rem;
+    font-size: 1.2rem;
+    color: #333;
+    background: transparent;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+  }
+
+  .button.active,
+  .button:hover {
+    color: #1f975d;
+    font-weight: 600;
+    text-decoration: underline;
+  }
+
+  .prev {
+    position: absolute;
+    left: -2.5rem;
+  }
+
+  .next {
+    position: absolute;
+    right: -2.5rem;
+  }
+
+  ion-icon {
+    padding-top: 0.05rem;
+  }
+
+  li{
+     list-style:none;
+  }

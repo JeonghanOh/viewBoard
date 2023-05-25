@@ -2,6 +2,9 @@ package viewboard.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import viewboard.dto.ResponseDto;
+import viewboard.dto.SignInDto;
+import viewboard.dto.SignInResponseDto;
 import viewboard.dto.SignUpDto;
 import viewboard.entity.UserEntity;
 import viewboard.repository.UserRepository;
@@ -29,5 +32,31 @@ public class AuthService {
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    public ResponseDto<SignInResponseDto> signIn(SignInDto dto){
+        String id = dto.getId();
+        String password= dto.getPassword();
+
+
+        UserEntity userentity = null;
+        try {
+            userentity = userRepository.findByUserEmail(id);
+//			잘못된 이메일
+            if(userentity == null) return ResponseDto.setFailed("sign in failed");
+//			잘못된 패스워드
+            if(!password.equals(userentity.getUserPassword())) {
+                return ResponseDto.setFailed("sign in failed");
+            }
+
+        }catch(Exception error) {
+            return ResponseDto.setFailed("Database Error");
+        }
+        userentity.setUserPassword("");
+
+        int exprTime = 3600000;
+
+        SignInResponseDto signInResponseDto = new SignInResponseDto(exprTime,userentity);
+        return ResponseDto.setSuccess("sign in success !",signInResponseDto);
     }
 }

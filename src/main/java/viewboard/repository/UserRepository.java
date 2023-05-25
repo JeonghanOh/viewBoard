@@ -8,4 +8,5 @@ import viewboard.entity.UserEntity;
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
     public boolean existsByuserEmail(String email);
 
+    public UserEntity findByUserEmail(String id);
 }

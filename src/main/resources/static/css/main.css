@@ -1,0 +1,162 @@
+#nav1 {
+	background-color: #00ff00;
+	width: max;
+	height: 50px;
+}
+
+#nav2 {
+	background-color: #ff0000;
+	width: max;
+	height: 50px;
+}
+
+#logo {
+	float: left;
+}
+
+#search {
+	float: right;
+}
+
+
+#set1 {
+	height: 200px;
+	width: 1000px;
+}
+
+#set2 {
+	padding-top: 50px;
+	width: 1000px;
+	height: 400px;
+}
+
+#set3 {
+	padding-top: 50px;
+	width: 1000px;
+	height: 425px;
+}
+
+#set4 {
+	padding-top: 50px;
+	width: 1000px;
+	height: 425px;
+}
+
+#banner {
+	background-color: #00ff00;
+	width: 800px;
+	height: 200px;
+	float: left;
+}
+
+#login {
+	background-color: #00ffff;
+	width: 200px;
+	height: 200px;
+	float: left;
+}
+
+#best {
+	background-color: #ff00ff;
+	width: 900px;
+	height: 400px;
+	margin: auto;
+}
+
+#gesiSet1 {
+	width: 900px;
+	height: 425px;
+	margin: auto;
+}
+
+#gesiSet2 {
+	width: 900px;
+	height: 425px;
+	margin: auto;
+}
+
+#gesi1 {
+	background-color: #ffff00;
+	width: 425px;
+	height: 425px;
+	float: left;
+}
+
+#gesi1Contents{
+    border: 5px solid #ff5722;
+    width: 415px;
+    height: 75px;
+}
+
+#gesi2 {
+	background-color: #ff0000;
+	width: 425px;
+	height: 425px;
+	float: left;
+	margin-left: 50px;
+}
+
+#gesi3 {
+	background-color: #00ff00;
+	width: 425px;
+	height: 425px;
+	float: left;
+}
+
+#gesi4 {
+	background-color: #00ffff;
+	width: 425px;
+	height: 425px;
+	float: left;
+	margin-left: 50px;
+}
+
+#container{
+    margin:auto;
+    width: 1400px;
+    height: 2000px;
+}
+
+#outside1{
+    background-color: #ffffff;
+    width: 200px;
+    height: 200px;
+    float:left;
+}
+
+#outside2{
+    background-color: #0000ff;
+    width: 200px;
+    height: 500px;
+    float:left;
+}
+
+#hotGesipan{
+    border: 5px solid #ff5722;
+    width: 190px;
+    height: 40px;
+}
+
+#main {
+	margin: auto;
+	background-color: #000000;
+	width: 1000px;
+	height: 1800px;
+    float:left;
+}
+
+#best_detail1{
+    background-color:#00ffff;
+    border: 5px solid #ff5722;
+    width: 440px;
+    height: 70px;
+    float:left;
+}
+
+#best_detail2{
+    background-color:#ff00ff;
+    border: 5px solid #ff5722;
+    width: 440px;
+    height: 70px;
+    float:left;
+}
