@@ -25,7 +25,6 @@ public class AuthService {
             }
         UserEntity user = new UserEntity(dto);
         try{
-            System.out.println(dto.getUserPhoneNumber());
             userRepository.save(user);
         }catch(Exception e){
             e.printStackTrace();

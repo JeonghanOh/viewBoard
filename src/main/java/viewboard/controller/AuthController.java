@@ -15,7 +15,8 @@ public class AuthController {
         return "signup";
     }
     @PostMapping("/signup")
-    public void signUp(@ModelAttribute SignUpDto dto){
+    public String signUp(@ModelAttribute SignUpDto dto){
         authService.memberInsert(dto);
+        return "board";
     }
 }
