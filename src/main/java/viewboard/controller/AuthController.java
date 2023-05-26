@@ -22,7 +22,6 @@ public class AuthController {
         authService.memberInsert(dto);
         return "board";
     }
-
     @PostMapping("/loginResult")
     public String login(@ModelAttribute SignInDto dto){
         ResponseDto<SignInResponseDto> res = authService.signIn(dto);
@@ -34,7 +33,6 @@ public class AuthController {
             return "login";
         }
     }
-
     @GetMapping("/login")
     public String signIn(){
         return "login";
