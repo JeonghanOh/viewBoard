@@ -26,9 +26,4 @@ public class BoardController {
         model.addAttribute("boardCount",boardService.counting(type));
         return "board";
     }
-    @GetMapping("/detail/{boardId}")
-    public String getboardDetail(@PathVariable("boardId")int id, Model model){
-        model.addAttribute("detail",boardService.getDetail(id));
-        return "DetailBoard";
-    }
 }

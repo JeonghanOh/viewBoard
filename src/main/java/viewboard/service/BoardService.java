@@ -40,7 +40,7 @@ public class BoardService {
     public BoardEntity getDetail(int id){
         BoardEntity detail;
         try{
-            detail =detailRepository.findByBoardId(id);
+            detail = detailRepository.findByBoardId(id);
         }catch (Exception e){
             e.printStackTrace();
             throw new RuntimeException("Database Error");

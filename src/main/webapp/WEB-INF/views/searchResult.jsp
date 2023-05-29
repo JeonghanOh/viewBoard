@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<%@page import="viewboard.repository.*"%>
+<%@page import="viewboard.entity.*"%>
+<%@page import="java.util.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,137 +13,103 @@
 
 </head>
 <body>
-	<nav id="nav1">
-		<div id="logo">logo</div>
-		<div id="search">search</div>
-	</nav>
-	<nav id="nav2">
-		<div id="menu">메뉴</div>
-	</nav>
+	<nav>
+            <div class="top-nav">
+                <div class="top-nav-left">
+                    <a href="Home.jsp" class="color_w"><img src="resource/img/Logo.png" style="width: 100px"></a>
+                </div>
+                <div class="serach">
+                    <select onchange="search_()" id=change_select>
+                        <option disabled="disabled" selected="selected">검색 조건</option>
+                        <option value="Title">제목 검색</option>
+                        <option value="Story">작성자 검색</option>
+                    </select>
+                    <form method="get" action="searchResult">
+                        <input type="text" placeholder="검색어를 입력" class="serach_text" id="serach_form" name="query">
+                        <button class="search_btn" type="submit">검색</button>
+                    </form>
+                </div>
+                <div class="top-nav-right">
+                    * * * 님
+                </div>
+            </div>
+            <hr>
+            <div class="bot">
+                <div class="bot-nav">
+                    <div class="w150">회원</div>
+                    <div class="w150">회원 2</div>
+                    <div class="w150">조회</div>
+                    <div class="w150">좋아요</div>
+                    <div class="w150">리뷰</div>
+                </div>
+            </div>
+            <div class="hide-nav">
+                <div class="hide_nav_width">
+                    <div class="around">
+                        <div class="pt20">회원 가입</div>
+                        <div class="pt20">회원 가입 정규식</div>
+                        <div class="pt20">로그인</div>
+                        <div class="pt20">로그아웃</div>
+
+                    </div>
+                    <div class="around">
+                        <div class="pt20">내 정보 보기</div>
+                        <div class="pt20">내 정보 변경</div>
+                        <div class="pt20">아아디 찾기</div>
+                        <div class="pt20">비밀 번호 찾기</div>
+                        <div class="pt20">회원 탈퇴</div>
+                    </div>
+                    <div class="around">
+                        <div class="pt20">이름순 정렬 조회</div>
+                        <div class="pt20">좋아요순 정렬 조회</div>
+                        <div class="pt20">조회순 정렬 조회</div>
+                        <div class="pt20">검색어 검색</div>
+                    </div>
+                    <div class="around">
+                        <div class="pt20">좋아요</div>
+                        <div class="pt20">좋아요 해제</div>
+                        <div class="pt20">좋아요 작품 보기</div>
+                        <div class="pt20">좋아요 수 표시</div>
+                    </div>
+                    <div class="around">
+                        <div class="pt20">리뷰 작성</div>
+                        <div class="pt20">작품 최근 리뷰 보기</div>
+                        <div class="pt20">작성한 리뷰 보기</div>
+                    </div>
+                </div>
+            </div>
+        </nav>
 
 	<div id="main">
 		검색 결과
-		
-		<div id="result">
 
+		<%
+            List <BoardEntity> res = (List <BoardEntity>)request.getAttribute("result");
+            ArrayList <BoardTypeEntity> bteList = (ArrayList <BoardTypeEntity>)request.getAttribute("bteList");
+        %>
+
+		<div id="result">
+		    <%
+		        for(int i=0;i<res.size();i++){
+		    %>
+              <div class="resBox">
+                <div class="box">
+                    <div id="box1"><%=bteList.get(i).getBoardName()%></div>
+                    <div id="box2">
+                        <div id="box2_1"><%=res.get(i).getBoardTitle()%></div>
+                        <div id="box2_2"><%=res.get(i).getBoardContent()%></div>
+                    </div>
+                    <div id="box3"><img src=<%=res.get(i).getBoardImage()%>></div>
+                </div>
+              </div>
+            <%
+                }
+            %>
 		</div>
-		
+
 		<footer id="footer">
             <div class="buttons"></div>
 		</footer>
 	</div>
-
-	<!-- Scripts -->
-        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
-
-<script>
-const contents = document.querySelector("#result");
-const buttons = document.querySelector(".buttons");
-
-const numOfContent = 178;
-const showContent = 10;
-const showButton = 5;
-const maxContent = 10;
-const maxButton = 10;
-const maxPage = Math.ceil(numOfContent / maxContent);
-let page = 1;
-
-const makeContent = (id) => {
-    const content = document.createElement("li");
-    content.classList.add("content");
-    content.innerHTML = `
-      <div class="resBox">
-        <div class="box">
-            <div id="box1">게시판`+id+`</div>
-            <div id="box2">
-                <div id="box2_1">제목</div>
-                <div id="box2_2">내용</div>
-            </div>
-            <div id="box3">이미지</div>
-        </div>
-      </div>
-    `;
-
-    return content;
-  };
-
-  const makeButton = (id) => {
-    const button = document.createElement("button");
-    button.classList.add("button");
-    button.dataset.num = id;
-    button.innerText = id;
-    button.addEventListener("click", (e) => {
-      Array.prototype.forEach.call(buttons.children, (button) => {
-        if (button.dataset.num) button.classList.remove("active");
-      });
-      e.target.classList.add("active");
-      renderContent(parseInt(e.target.dataset.num));
-    });
-    return button;
-  };
-
-  const renderContent = (page) => {
-    // 목록 리스트 초기화
-    while (contents.hasChildNodes()) {
-      contents.removeChild(contents.lastChild);
-    }
-    // 글의 최대 개수를 넘지 않는 선에서, 화면에 최대 10개의 글 생성
-    for (let id = (page - 1) * maxContent + 1; id <= page * maxContent && id <= numOfContent; id++) {
-      contents.appendChild(makeContent(id));
-    }
-  };
-
-  const prev = document.createElement("button");
-  const next = document.createElement("button");
-
-  const renderButton = (page) => {
-    // 버튼 리스트 초기화
-    while (buttons.hasChildNodes()) {
-      buttons.removeChild(buttons.lastChild);
-    }
-    // 화면에 최대 5개의 페이지 버튼 생성
-    for (let id = page; id < page + maxButton && id <= maxPage; id++) {
-      buttons.appendChild(makeButton(id));
-    }
-    // 첫 버튼 활성화(class="active")
-    buttons.children[0].classList.add("active");
-
-    buttons.prepend(prev);
-    buttons.append(next);
-
-    // 이전, 다음 페이지 버튼이 필요한지 체크
-    if (page - maxButton < 1) {buttons.removeChild(prev);}
-    if (page + maxButton > maxPage) {buttons.removeChild(next);}
-  };
-
-  const render = (page) => {
-    renderContent(page);
-    renderButton(page);
-  };
-  render(page);
-
-
-  const goPrevPage = () => {
-    page -= maxButton;
-    render(page);
-  };
-
-  const goNextPage = () => {
-    page += maxButton;
-    render(page);
-  };
-
-
-  prev.classList.add("button", "prev");
-  prev.innerHTML = '<ion-icon name="chevron-back-outline"></ion-icon>';
-  prev.addEventListener("click", goPrevPage);
-
-  next.classList.add("button", "next");
-  next.innerHTML = '<ion-icon name="chevron-forward-outline"></ion-icon>';
-  next.addEventListener("click", goNextPage);
-</script>
-
 </body>
 </html>

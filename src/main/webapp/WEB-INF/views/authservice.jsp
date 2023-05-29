@@ -20,18 +20,18 @@
 <script>
         function loadIdFinder() {
           document.getElementById("container").innerHTML = `
-            <iframe src="id_finder.jsp" width="100%" height="500" scrolling ="no"></iframe>
+            <iframe src="/auth/findid" width="100%" height="500" scrolling ="no"></iframe>
           `;
         }
 
         function loadPasswordFinder() {
           document.getElementById("container").innerHTML = `
-            <iframe src="pw_finder.jsp" width="100%" height="500" scrolling ="no"></iframe>
+            <iframe src="/auth/findpw" width="100%" height="500" scrolling ="no"></iframe>
           `;
         }
         function loadSecession(){
           document.getElementById("container").innerHTML = `
-            <iframe src="secession.jsp" width="100%" height="500" scrolling ="no"></iframe>
+            <iframe src="/auth/secession" width="100%" height="500" scrolling ="no"></iframe>
           `;
         }
       </script>

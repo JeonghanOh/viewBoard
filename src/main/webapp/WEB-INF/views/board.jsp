@@ -35,8 +35,8 @@
                          <form action="">
                             <button type="button" id="signin">로그인</button>
                             <ul>
-                                <li><a href="#">회원가입</a></li>
-                                <li><a href="#">이메일/비밀번호 찾기</a></li>
+                                <li><a href="/auth/signup">회원가입</a></li>
+                                <li><a href="/auth/service">이메일/비밀번호 찾기</a></li>
                             </ul>
                          </form>
                       </div>

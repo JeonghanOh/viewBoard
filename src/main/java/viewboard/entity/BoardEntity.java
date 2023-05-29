@@ -2,6 +2,7 @@ package viewboard.entity;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import viewboard.dto.CommentDto;
 import viewboard.dto.WriteDTO;
 
 import javax.persistence.*;
@@ -14,28 +15,28 @@ import java.time.LocalDateTime;
 @Table(name = "boarddetail")
 public class BoardEntity {
     @Id
-    @Column
+    @Column(name="board_id")
     private int boardId;
-    @Column
+    @Column(name="board_type")
     private int boardType;
-    @Column
+    @Column(name="board_title")
     private String boardTitle;
-    @Column
+    @Column(name="board_content")
     private String boardContent;
-    @Column
+    @Column(name="board_image")
     private String boardImage;
-    @Column
+    @Column(name="board_file")
     private String boardFile;
-    @Column
+    @Column(name="board_like")
     private int boardLike;
-    @Column
+    @Column(name="board_click")
     private int boardClick;
-    @Column
+    @Column(name="user_email")
     private String userEmail;
-    @Column
+    @Column(name="comment_count")
     private int commentCount;
     @CreationTimestamp
-    @Column
+    @Column(name="board_date")
     private LocalDateTime boardDate;
 
     public BoardEntity (WriteDTO writeDTO) {
