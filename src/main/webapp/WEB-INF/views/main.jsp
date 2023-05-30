@@ -13,13 +13,15 @@
 
 </head>
 <body>
+<% UserEntity user = (UserEntity)session.getAttribute("login");
+%>
 
 	<nav>
             <div class="top-nav">
                 <div class="top-nav-left">
                     <a href="Home.jsp" class="color_w"><img src="resource/img/Logo.png" style="width: 100px"></a>
                 </div>
-                <div class="serach">
+                <div class="search">
                     <select onchange="search_()" id=change_select>
                         <option disabled="disabled" selected="selected">검색 조건</option>
                         <option value="Title">제목 검색</option>
@@ -31,7 +33,7 @@
                     </form>
                 </div>
                 <div class="top-nav-right">
-                    * * * 님
+                   님
                 </div>
             </div>
             <hr>
@@ -89,10 +91,12 @@
 		<div id="set1">
 			<div id="banner"></div>
 			<div id="login">
-				<form>
-					<input type="text" id="loginId"> <input type="password"
-						id="loginPw"> <input type="submit" value="로그인">
-				</form>
+			   <% if(user!=null){ %>
+			           <span><%=user.getUserName()%>님</span>
+			           <a href="/auth/logout">로그아웃</a><a>회원탈퇴</a>
+			   <% } else{%>
+					<button onclick="location.href='/auth/login'">로그인</button>
+				<% } %>
 			</div>
 		</div>
 
@@ -157,5 +161,8 @@
 	    %>
 	</div>
 </div>
+<script>
+
+</script>
 </body>
 </html>

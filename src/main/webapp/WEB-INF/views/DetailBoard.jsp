@@ -128,7 +128,7 @@
                              </table>
                          </div>
              <div class="input_comment">
-             <form method="post" action="/DetailBoard">
+             <form method="post" action="DetailBoard">
                  <div class="comment_btn">
                      <h3>댓글 작성</h3>
                  </div>

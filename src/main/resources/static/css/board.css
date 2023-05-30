@@ -117,12 +117,17 @@ a{
      border-radius: 15px;
  }
  .letter .title{
+        width:280px;
+        white-space: nowrap;
+             overflow: hidden;
+             text-overflow: ellipsis;
      font-size: 20px;
      font-weight: bold;
      margin-bottom: 5px;
  }
 
  .content{
+    width:280px;
     height:40px;
      margin-bottom: 30px;
      white-space: nowrap;

@@ -3,10 +3,16 @@ package viewboard.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import viewboard.dto.*;
 import viewboard.service.AuthService;
 import viewboard.service.FindService;
+
+import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/auth")
@@ -18,16 +24,27 @@ public class AuthController {
         return "signup";
     }
     @PostMapping("/signup")
-    public String signUp(@ModelAttribute SignUpDto dto){
+    public String signUp(@Validated @ModelAttribute SignUpDto dto, Errors errors, Model model, RedirectAttributes redirectAttributes){
+        if(errors.hasErrors()){
+            model.addAttribute("dto",dto);
+            Map<String,String> validatorResult = authService.validateHandle(errors);
+            for(String key : validatorResult.keySet()){
+                model.addAttribute(key,validatorResult.get(key));
+            }
+            model.addAttribute("errors", errors);
+            return "signup";
+        }
         authService.memberInsert(dto);
-        return "board";
+        redirectAttributes.addFlashAttribute("message", "회원 가입이 완료되었습니다.");
+        return "main";
     }
     @PostMapping("/loginResult")
-    public String login(@ModelAttribute SignInDto dto){
+    public String login(@ModelAttribute SignInDto dto, HttpSession session){
         ResponseDto<SignInResponseDto> res = authService.signIn(dto);
 
         if(res.isResult()==true){
-            return "loginSuccess";
+            session.setAttribute("login",res.getData().getUser());
+            return "redirect:/main";
         }
         else{
             return "login";
@@ -36,7 +53,7 @@ public class AuthController {
     @PostMapping("/cancel")
     public String cancelUser(DeleteDto dto){
         authService.deleteUser(dto);
-        return "secession";
+        return "/secession";
     }
     @GetMapping("/login")
     public String signIn(){
@@ -67,6 +84,11 @@ public class AuthController {
         model.addAttribute("find",password);
         return "pw_finder";
     }
+    @GetMapping("/logout")
+    public String logout(HttpSession session){
+        session.invalidate();
+        return "redirect:/main";
+    }
     @GetMapping("/findid")
     public String viewId(){
         return "id_finder";
@@ -80,4 +102,9 @@ public class AuthController {
     public String viewSecession(){
         return "secession";
     }
+    @GetMapping("/MyPage")
+    public String MyPage() {
+        return "MyPage";
+    }
+
 }

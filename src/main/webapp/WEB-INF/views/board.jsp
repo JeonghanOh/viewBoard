@@ -16,8 +16,8 @@
             <div class="banner">
                 <div class="left">
                     <div class="top">
-                        <div class="boardtitle"><h1>${boardType.boardName}게시판</h1></div>
-                        <div class="about"><p>${boardType.boardIntro}</
+                        <div class="boardtitle"><h1>${board.boardName}게시판</h1></div>
+                        <div class="about"><p>${board.boardIntro}</
                         p></div>
                     </div>
                     <div class="bottom">
@@ -65,9 +65,16 @@
                                </c:forEach>
                 <div class="pagination">
                     <ul class="page">
-                        <% for(int j=1;j<=10;j++){ %>
-                        <li><a href="#"><%=j%></a></li>
-                           <% }%>
+                     <c:forEach begin="${startpage}" end="${endpage}" var="pageNum">
+                         <c:choose>
+                             <c:when test="${pageNum != nowpage}">
+                                 <li><a href="/board/${board.boardType}/?page=${pageNum-1}">${pageNum}</a></li>
+                             </c:when>
+                             <c:otherwise>
+                                 <li><a href="/board/${boardType}?page=${pageNum-1}"><strong style="color:red">${pageNum}</strong></a></li>
+                             </c:otherwise>
+                         </c:choose>
+                     </c:forEach>
                     </ul>
                 </div>
             </div>
