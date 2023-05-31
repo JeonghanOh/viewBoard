@@ -14,4 +14,7 @@ public interface BoardRepository extends JpaRepository<BoardTypeEntity, Long> {
 
     @Query(value="select max(board_type) from board", nativeQuery = true)
     public int getMaxBoard_type();
+
+    @Query(value="select A.* from board as A join (select board_type, count(board_type) as count_board_type from boarddetail group by board_type)as B on A.board_type = B.board_type order by count_board_type desc",nativeQuery = true)
+    public List<BoardTypeEntity> getHotBoardName();
 }

@@ -12,6 +12,38 @@
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>Document</title>
      <link rel="stylesheet" href="/css/DetailBoard.css">
+     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+     <script>
+     var currentPage = 2;
+   function moreList() {
+       $.ajax({
+           url: "/Detail",
+           type: "Post",
+           cache: false,
+           dataType: 'json',
+           data: { boardId: ${board.boardId} , page: currentPage },
+           success: function(data) {
+               var content = "";
+               for (var i = 0; i < data.length; i++) {
+                   var comment = data[i];
+                   content += '<tr>';
+                   content += '<td>' + comment.userEmail + '</td>';
+                   content += '<td>' + comment.commentContent + '</td>';
+                   content += '</tr>';
+               }
+   	              content += '<div class="input_recomment">';
+                  content += '<input type="text"/>';
+                  content += '<button type="submit">답글 달기</button>';
+                  content += '</div>';
+               $('.comment_list').append(content);
+               currentPage++;
+           },
+           error: function(request, status, error) {
+               alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+           }
+       });
+   };
+     </script>
  </head>
  <body>
  <%
@@ -128,7 +160,7 @@
                              </table>
                          </div>
              <div class="input_comment">
-             <form method="post" action="DetailBoard">
+             <form method="post" action="/main/DetailBoard">
                  <div class="comment_btn">
                      <h3>댓글 작성</h3>
                  </div>
@@ -143,15 +175,16 @@
              <div class="comment_list">
                  <div class="list_container">
                      <h3>댓글</h3>
-                     <div>
-                          <c:forEach items="${comment}" var="commentlist">
-                              <tr>
-                                 <td>${commentlist.userEmail}</td>
-                                 <td>${commentlist.commentContent}</td><br>
-                              </tr>
-                        </c:forEach>
-                        </div>
-
+                             <table>
+                                 <tbody>
+                                     <c:forEach items="${comment}" var="comment">
+                                     <tr>
+                                         <td>${comment.userEmail}</td>
+                                         <td>${comment.commentContent}</td>
+                                     </tr>
+                                     </c:forEach>
+                                 </tbody>
+                             </table>
                          <div class="input_recomment">
                              <input type="text"/>
                              <button type="submit">답글 달기</button>
@@ -159,7 +192,7 @@
                  </div>
              </div>
             <div class="more_btn">
-                <button>더보기</button>
+                <button onclick="moreList()">더보기</button>
             </div>
 
          </div>
@@ -190,5 +223,4 @@
      ${board.boardId}
      </div>
  </body>
-
  </html>

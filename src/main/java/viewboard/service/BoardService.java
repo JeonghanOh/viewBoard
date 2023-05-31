@@ -9,11 +9,13 @@ import viewboard.entity.BoardTypeEntity;
 import viewboard.repository.BoardRepository;
 import viewboard.repository.DetailRepository;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Service
+@Transactional
 public class BoardService {
     @Autowired DetailRepository detailRepository;
     @Autowired BoardRepository boardRepository;
@@ -62,4 +64,12 @@ public class BoardService {
         return typeInfo;
     }
 
+    public List<BoardTypeEntity>HotBoardType(){
+        List<BoardTypeEntity> list = boardRepository.getHotBoardName();
+        return list;
+    }
+
+    public void increaseView(int id){
+        detailRepository.UpView(id);
+    }
 }

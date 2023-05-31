@@ -24,6 +24,7 @@
                                         <option value="3">JOB 게시판</option>
                                         <option value="4">유머 게시판</option>
                                         <option value="5">부산 게시판</option>
+                                        <option value="6">노래 게시판</option>
                                    </select>
                                   <input type="text" name="boardTitle" style="width:100%">
                               </div>

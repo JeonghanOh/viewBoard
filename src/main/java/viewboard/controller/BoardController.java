@@ -45,9 +45,11 @@ public class BoardController {
     @GetMapping("/board/{boardType}")
     public String getboard(@PathVariable("boardType") int type, Model model, @PageableDefault(page=0,size = 10,sort = "boardId",direction = Sort.Direction.DESC) Pageable pageable){
         Page<BoardEntity> list = boardService.getList(type,pageable);
+        List<BoardTypeEntity> nameList = boardService.HotBoardType();
         int nowPag = list.getPageable().getPageNumber()+1;
         int startPag = Math.max(nowPag - 4,1);
         int endPag = Math.min(nowPag + 5,list.getTotalPages());
+        model.addAttribute("hotType",nameList);
         model.addAttribute("nowpage",nowPag);
         model.addAttribute("startpage",startPag);
         model.addAttribute("endpage",endPag);
@@ -64,7 +66,7 @@ public class BoardController {
 
     @GetMapping("/DetailBoard/{boardId}")
     public String DetailBoard(@PathVariable("boardId") int id, Model model){
-        List<CommentEntity> commentList = commentRepository.findByCommentList(id);
+        List<CommentEntity> commentList = commentRepository.findByCommentLists(id);
         model.addAttribute("board" , writeService.getFindid(id));
         model.addAttribute("comment",commentList);
         return "DetailBoard";
@@ -75,8 +77,19 @@ public class BoardController {
         commentService.Commentinsert(commentDto);
         return "redirect:/main";
     }
+
+    @PostMapping("/Detail")
+    @ResponseBody
+    public List<CommentEntity> MoreComment(@RequestParam("boardId") int id, @RequestParam("page") int page, Model model){
+        int pageSize = 10; // 페이지당 댓글 수
+        int offset = (page - 1) * pageSize; // 페이지
+        List<CommentEntity> commentList = commentRepository.findByCommentList(id, offset, pageSize);
+        model.addAttribute("commentList", commentList);
+        return commentList;
+    }
+
     @GetMapping("/write")
-    public String showWrite(){
+    public String write(){
         return "write";
     }
 
@@ -86,7 +99,7 @@ public class BoardController {
         return "redirect:/main";
     }
 
-    @RequestMapping("")
+    @GetMapping("")
     public String mainController(Model model){
         int maxType = boardRepository.getMaxBoard_type();
         Set<Integer> set = new HashSet<Integer>();
@@ -110,18 +123,35 @@ public class BoardController {
     }
 
     @RequestMapping("/searchResult")
-    public String searchController(Model model, @RequestParam String query){
+    public String searchController(Model model, @RequestParam String query, @RequestParam int page ,@PageableDefault(page=0,size = 10,direction = Sort.Direction.DESC)Pageable pageable){
         SearchService ss = new SearchService();
-        List<BoardEntity> res = ss.searchResult(query, writeRepository);
+        Page<BoardEntity> res = ss.searchResult(query, writeRepository, pageable);
         ArrayList<BoardTypeEntity> bteList = new ArrayList<BoardTypeEntity>();
 
-        for(int i=0;i<res.size();i++){
-            bteList.add(boardRepository.findByboardType(res.get(i).getBoardType()));
+        for(int i=0;i<res.toList().size();i++){
+            bteList.add(boardRepository.findByboardType(res.toList().get(i).getBoardType()));
         }
 
-        model.addAttribute("result", res);
+        int nowPag = res.getPageable().getPageNumber()+1;
+        int startPag = Math.max(nowPag - 4, 1);
+        int endPag = Math.min(nowPag + 5, res.getTotalPages());
+
+        System.out.println(nowPag + "/"+startPag +"/"+endPag +"/" + res.getTotalPages());
+
+        model.addAttribute("nowpage",nowPag);
+        model.addAttribute("startpage",startPag);
+        model.addAttribute("endpage",endPag);
+
+        model.addAttribute("query", query);
+        model.addAttribute("result", res.getContent());
         model.addAttribute("bteList", bteList);
+        model.addAttribute("page", page);
 
         return "searchResult";
+    }
+    @PostMapping("/increase")
+    public void increase(@RequestParam("boardId") int boardId) {
+        // 조회수 상승 서비스 실행
+        boardService.increaseView(boardId);
     }
 }

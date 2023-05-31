@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@page import="viewboard.repository.*"%>
 <%@page import="viewboard.entity.*"%>
+<%@page import="viewboard.dto.*"%>
 <%@page import="java.util.*"%>
+<%@page import="org.springframework.data.domain.Page"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +16,7 @@
 
 </head>
 <body>
-	<nav>
+   <nav>
             <div class="top-nav">
                 <div class="top-nav-left">
                     <a href="Home.jsp" class="color_w"><img src="resource/img/Logo.png" style="width: 100px"></a>
@@ -26,6 +29,7 @@
                     </select>
                     <form method="get" action="searchResult">
                         <input type="text" placeholder="검색어를 입력" class="serach_text" id="serach_form" name="query">
+                        <input type="hidden" name="page" value="0">
                         <button class="search_btn" type="submit">검색</button>
                     </form>
                 </div>
@@ -80,18 +84,18 @@
             </div>
         </nav>
 
-	<div id="main">
-		검색 결과
+   <div id="main">
+      검색 결과
 
-		<%
+      <%
             List <BoardEntity> res = (List <BoardEntity>)request.getAttribute("result");
             ArrayList <BoardTypeEntity> bteList = (ArrayList <BoardTypeEntity>)request.getAttribute("bteList");
         %>
 
-		<div id="result">
-		    <%
-		        for(int i=0;i<res.size();i++){
-		    %>
+      <div id="result">
+          <%
+              for(int i=0;i<res.size();i++){
+          %>
               <div class="resBox">
                 <div class="box">
                     <div id="box1"><%=bteList.get(i).getBoardName()%></div>
@@ -105,11 +109,23 @@
             <%
                 }
             %>
-		</div>
+            <div id="pagination">
+                <c:forEach begin="${startpage}" end="${endpage}" var="pageNum">
+                                    <c:choose>
+                                    <c:when test="${pageNum != nowpage}">
+                                        <li><a href="/main/searchResult?query=${query}&page=${pageNum-1}">${pageNum}</a></li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li><a href="/main/searchResult?query=${query}&page=${pageNum-1}"><strong style="color:red">${pageNum}</strong></a></li>
+                                    </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+            </div>
+      </div>
 
-		<footer id="footer">
+      <footer id="footer">
             <div class="buttons"></div>
-		</footer>
-	</div>
+      </footer>
+   </div>
 </body>
 </html>
