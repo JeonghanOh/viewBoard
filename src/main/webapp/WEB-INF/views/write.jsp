@@ -15,7 +15,7 @@
               <div class="wrapper">
                   <div class="row">
                           <h3>글작성</h3>
-                          <form action="/write" method="post">
+                          <form action="/main/write" method="post">
                           <input type="hidden" value="wnsqja@naver.com" name="userEmail"/>
                               <div id="title">
                                    <select name="boardType">

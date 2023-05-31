@@ -68,10 +68,10 @@
                      <c:forEach begin="${startpage}" end="${endpage}" var="pageNum">
                          <c:choose>
                              <c:when test="${pageNum != nowpage}">
-                                 <li><a href="/board/${board.boardType}/?page=${pageNum-1}">${pageNum}</a></li>
+                                 <li><a href="/main/board/${board.boardType}/?page=${pageNum-1}">${pageNum}</a></li>
                              </c:when>
                              <c:otherwise>
-                                 <li><a href="/board/${boardType}?page=${pageNum-1}"><strong style="color:red">${pageNum}</strong></a></li>
+                                 <li><a href="/main/board/${boardType}?page=${pageNum-1}"><strong style="color:red">${pageNum}</strong></a></li>
                              </c:otherwise>
                          </c:choose>
                      </c:forEach>

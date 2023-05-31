@@ -76,7 +76,7 @@ public class BoardController {
         return "redirect:/main";
     }
     @GetMapping("/write")
-    public String write(){
+    public String showWrite(){
         return "write";
     }
 
