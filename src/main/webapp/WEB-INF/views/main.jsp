@@ -152,14 +152,15 @@
 
 	<div id="outside2">
 	    <%
-	        for(int i=0;i<10;i++)
-	        {
-	    %>
-	    <div id="hotGesipan">
-	    </div>
-	    <%
-	        }
-	    %>
+        	        if(request.getAttribute("hotBoard") == null)
+        	            System.out.println("null");
+        	    %>
+
+        	     <c:forEach var="board" items="${hotBoard}">
+                    <div id="hotGesipan">
+                        ${board.boardName}
+                    </div>
+        	    </c:forEach>
 	</div>
 </div>
 <script>

@@ -100,11 +100,14 @@
         <div class="wrapper">
             <div class="banner">
                 <div class="left">
+                <form  action ="/main/favorite" method="post">
+                    <input type="hidden" name= "userEmail" value="dkdfl1235@naver.com">
+                    <input type="hidden" name= "boardType" value="${board.boardType}">
                     <div class="top">
                         <div class="boardtitle"><h1>${board.boardName}게시판</h1></div>
-                        <div class="about"><p>${board.boardIntro}</
-                        p></div>
+                        <div class="about"><p>${board.boardIntro}</p><button type="submit">⭐</button></div>
                     </div>
+                    </form>
                     <div class="bottom">
                         <h3>실시간 🔥게시글</h3>
                         <ul>

@@ -17,7 +17,7 @@
      var currentPage = 2;
    function moreList() {
        $.ajax({
-           url: "/Detail",
+           url: "/main/Detail",
            type: "Post",
            cache: false,
            dataType: 'json',
@@ -43,6 +43,19 @@
            }
        });
    };
+   <%--
+   ajax 두개 사용 안됨
+           function liked() {
+           $.ajax({
+               url: "/main/like",
+               type: "Post",
+               cache: false,
+               data: { boardId: ${board.boardId}, userEmail: ${board.userEmail}},
+               success: function(data) {
+               },
+           });
+           };
+   --%>
      </script>
  </head>
  <body>
@@ -142,9 +155,8 @@
                      ${board.boardContent}
                  </div>
                  <div class="Liky_btn">
-                     <button>개추
-                         (12)
-                     </button>
+                        <button type="button" onclick="liked()">추천</button>
+                        ${board.boardLike}
                  </div>
              </div>
              <div class="Arrow_btn">

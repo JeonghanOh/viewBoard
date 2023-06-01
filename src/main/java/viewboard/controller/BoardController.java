@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import viewboard.dto.CommentDto;
+import viewboard.dto.FavoriteDto;
+import viewboard.dto.LikedDto;
 import viewboard.dto.WriteDTO;
 import viewboard.entity.BoardEntity;
 import viewboard.entity.BoardTypeEntity;
@@ -16,10 +18,8 @@ import viewboard.entity.CommentEntity;
 import viewboard.repository.BoardRepository;
 import viewboard.repository.CommentRepository;
 import viewboard.repository.DetailRepository;
-import viewboard.service.BoardService;
-import viewboard.service.CommentService;
-import viewboard.service.SearchService;
-import viewboard.service.WriteService;
+import viewboard.repository.LikedRepository;
+import viewboard.service.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -41,6 +41,8 @@ public class BoardController {
     BoardRepository boardRepository;
     @Autowired
     CommentRepository commentRepository;
+    @Autowired
+    LikedRepository likedRepository;
 
     @GetMapping("/board/{boardType}")
     public String getboard(@PathVariable("boardType") int type, Model model, @PageableDefault(page=0,size = 10,sort = "boardId",direction = Sort.Direction.DESC) Pageable pageable){
@@ -88,6 +90,15 @@ public class BoardController {
         return commentList;
     }
 
+    @PostMapping("/like")
+    public void likeContent(@RequestParam("boardId") int id, @RequestParam("userEmail") String email){
+        LikedDto likedDto = new LikedDto();
+        likedDto.setBoardId(id);
+        likedDto.setUserEmail(email);
+        boardService.likeContent(likedDto);
+        likedRepository.likeupdate(id);
+    }
+
     @GetMapping("/write")
     public String write(){
         return "write";
@@ -101,24 +112,21 @@ public class BoardController {
 
     @GetMapping("")
     public String mainController(Model model){
-        int maxType = boardRepository.getMaxBoard_type();
-        Set<Integer> set = new HashSet<Integer>();
-        while(set.size() < 4){
-            int type = (int)(Math.random()*maxType)+1;
-            set.add(type);
-            System.out.println("type : " + type);
-        }
+        RandomService rs = new RandomService();
+        Set<Integer> set = rs.getGesipanSet(boardRepository);
 
         int i = 0;
         for(int x:set){
-            System.out.println("i : " + i + " x: " + x);
             List<BoardEntity> list = writeRepository.findByboardType(x);
             model.addAttribute("boardList"+i, list);
             i++;
         }
 
         List<BoardEntity> list = writeRepository.getHotGesigeul();
+        List<BoardTypeEntity> list2 = boardService.HotBoardType();
+
         model.addAttribute("hotGesigeul", list);
+        model.addAttribute("hotBoard", list2);
         return "main";
     }
 
@@ -153,5 +161,10 @@ public class BoardController {
     public void increase(@RequestParam("boardId") int boardId) {
         // 조회수 상승 서비스 실행
         boardService.increaseView(boardId);
+    }
+    @PostMapping("/favorite")
+    public String favorite(FavoriteDto dto){
+        boardService.addFavorite(dto);
+        return "redirect:/main/board/"+ dto.getBoardType();
     }
 }

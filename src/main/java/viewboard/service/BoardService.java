@@ -4,10 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import viewboard.dto.FavoriteDto;
+import viewboard.dto.LikedDto;
 import viewboard.entity.BoardEntity;
 import viewboard.entity.BoardTypeEntity;
+import viewboard.entity.FavoriteEntity;
+import viewboard.entity.LikedEntity;
 import viewboard.repository.BoardRepository;
 import viewboard.repository.DetailRepository;
+import viewboard.repository.FavoriteRepository;
+import viewboard.repository.LikedRepository;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -19,6 +25,10 @@ import java.util.List;
 public class BoardService {
     @Autowired DetailRepository detailRepository;
     @Autowired BoardRepository boardRepository;
+    @Autowired
+    LikedRepository likedRepository;
+    @Autowired
+    FavoriteRepository favoriteRepository;
     public Page<BoardEntity> getList(int type, Pageable pageable){
         return detailRepository.findByBoardType(type,pageable);
     }
@@ -72,4 +82,21 @@ public class BoardService {
     public void increaseView(int id){
         detailRepository.UpView(id);
     }
+
+    public void likeContent(LikedDto likedDto) {
+        LikedEntity liked = new LikedEntity(likedDto);
+        likedRepository.save(liked);
+    }
+    public void addFavorite(FavoriteDto dto){
+        String email = dto.getUserEmail();
+        int type = dto.getBoardType();
+
+        if(favoriteRepository.existsByFavoriteDtoUserEmailAndFavoriteDtoBoardType(email,type)){
+            favoriteRepository.deleteByFavoriteDtoUserEmailAndFavoriteDtoBoardType(email,type);
+        }else{
+            FavoriteEntity fav= new FavoriteEntity(dto);
+            favoriteRepository.save(fav);
+        }
+    }
 }
+

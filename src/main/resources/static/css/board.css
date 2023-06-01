@@ -249,6 +249,18 @@ nav {
 .boardtitle h1{
     line-height: 150px;
 }
+.about{
+   position:relative;
+}
+.about button{
+    position:absolute;
+    right:-40px;
+    top:0;
+    background:none;
+    border:none;
+    cursor:pointer;
+    font-size:30px;
+}
 .about p{
     line-height: 150px;
 }
