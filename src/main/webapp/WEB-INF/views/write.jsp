@@ -83,7 +83,7 @@
               <div class="wrapper">
                   <div class="row">
                           <h3>글작성</h3>
-                          <form action="/main/write" method="post">
+                          <form action="/main/write" method="post" enctype="multipart/form-data">
                           <input type="hidden" value="wnsqja@naver.com" name="userEmail"/>
                               <div id="title">
                                    <select name="boardType">
@@ -105,6 +105,7 @@
                                       placeholder="내용을 입력해주세요"
                                       style="width: 100%"></textarea>
                               </div>
+                              <input type="file" class="upload" name="image" accept="image/$"/>
                               <button type="submit" onclick="submitPost()">작성하기</button>
                           </form>
                           <!-- 포스트 추가하는 곳-->

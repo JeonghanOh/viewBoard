@@ -1,6 +1,7 @@
 package viewboard.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -8,6 +9,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import viewboard.dto.CommentDto;
 import viewboard.dto.FavoriteDto;
 import viewboard.dto.LikedDto;
@@ -21,10 +23,7 @@ import viewboard.repository.DetailRepository;
 import viewboard.repository.LikedRepository;
 import viewboard.service.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @RequestMapping("/main")
@@ -34,6 +33,10 @@ public class BoardController {
     WriteService writeService;
     @Autowired
     CommentService commentService;
+    @Autowired
+    RandomService randomService;
+    @Autowired
+    SearchService searchService;
 
     @Autowired
     DetailRepository writeRepository;
@@ -105,20 +108,25 @@ public class BoardController {
     }
 
     @PostMapping("/write")
-    public String write(@ModelAttribute WriteDTO writeDTO){
-        writeService.save(writeDTO);
+    public String write(@RequestParam("image") MultipartFile file, @ModelAttribute WriteDTO writeDTO){
+        if(file.isEmpty()){
+            writeService.writePost1(writeDTO);
+        }else {
+            writeService.writePost2(file, writeDTO);
+        }
         return "redirect:/main";
     }
 
     @GetMapping("")
     public String mainController(Model model){
-        RandomService rs = new RandomService();
-        Set<Integer> set = rs.getGesipanSet(boardRepository);
+        Set<Integer> set = randomService.getGesipanSet(boardRepository);
 
         int i = 0;
         for(int x:set){
             List<BoardEntity> list = writeRepository.findByboardType(x);
+            BoardTypeEntity bte = boardRepository.findByboardType(x);
             model.addAttribute("boardList"+i, list);
+            model.addAttribute("boardName"+i, bte.getBoardName());
             i++;
         }
 
@@ -132,8 +140,7 @@ public class BoardController {
 
     @RequestMapping("/searchResult")
     public String searchController(Model model, @RequestParam String query, @RequestParam int page ,@PageableDefault(page=0,size = 10,direction = Sort.Direction.DESC)Pageable pageable){
-        SearchService ss = new SearchService();
-        Page<BoardEntity> res = ss.searchResult(query, writeRepository, pageable);
+        Page<BoardEntity> res = searchService.searchResult(query, writeRepository, pageable);
         ArrayList<BoardTypeEntity> bteList = new ArrayList<BoardTypeEntity>();
 
         for(int i=0;i<res.toList().size();i++){

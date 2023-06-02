@@ -104,7 +104,8 @@
 		<div id="set2">
 			<div id="best">
 			    <c:forEach var="board" items="${hotGesigeul}">
-			        <div class="best_detail1">
+			        <div class="best_detail1" onclick="location.href='/main/board/${board.boardType}'">
+			            <h4>${board.boardTitle}</h4>
 			            ${board.boardContent}
 			        </div>
 			    </c:forEach>
@@ -113,16 +114,20 @@
 
 		<div id="set3">
 			<div id="gesiSet1">
-				<div id="gesi1">
+				<div id="gesi1" onclick="location.href='/main/board/${boardList0[0].boardType}'">
+				<h3>${boardName0}</h3>
                     <c:forEach var="board" items="${boardList0}">
                         <div id="gesi1Contents">
+                            <h4>${board.boardTitle}</h4>
                             ${board.boardContent}
                         </div>
                     </c:forEach>
 				</div>
-				<div id="gesi2">
+				<div id="gesi2" onclick="location.href='/main/board/${boardList1[0].boardType}'">
+				<h3>${boardName1}</h3>
                     <c:forEach var="board" items="${boardList1}">
                         <div id="gesi1Contents">
+                            <h4>${board.boardTitle}</h4>
                             ${board.boardContent}
                         </div>
                     </c:forEach>
@@ -132,16 +137,20 @@
 
 		<div id="set4">
 			<div id="gesiSet2">
-				<div id="gesi3">
+				<div id="gesi3" onclick="location.href='/main/board/${boardList2[0].boardType}'">
+				<h3>${boardName2}</h3>
                     <c:forEach var="board" items="${boardList2}">
                         <div id="gesi1Contents">
+                             <h4>${board.boardTitle}</h4>
                             ${board.boardContent}
                         </div>
                     </c:forEach>
 				</div>
-				<div id="gesi4">
+				<div id="gesi4" onclick="location.href='/main/board/${boardList3[0].boardType}'">
+				<h3>${boardName3}</h3>
                     <c:forEach var="board" items="${boardList3}">
                         <div id="gesi1Contents">
+                             <h4>${board.boardTitle}</h4>
                             ${board.boardContent}
                         </div>
                     </c:forEach>
@@ -157,7 +166,7 @@
         	    %>
 
         	     <c:forEach var="board" items="${hotBoard}">
-                    <div id="hotGesipan">
+                    <div id="hotGesipan" onclick="location.href='/main/board/${board.boardType}'">
                         ${board.boardName}
                     </div>
         	    </c:forEach>

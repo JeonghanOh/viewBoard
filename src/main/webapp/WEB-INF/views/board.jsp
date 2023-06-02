@@ -31,7 +31,7 @@
     <nav>
                 <div class="top-nav">
                     <div class="top-nav-left">
-                        <a href="/main" class="color_w"><img src="resource/img/Logo.png" style="width: 100px"></a>
+                        <a href="/main" class="color_w"><img src="/img/logo.png" style="width: 100px"></a>
                     </div>
                     <div class="search">
                         <select onchange="search_()" id=change_select>
@@ -129,7 +129,7 @@
 
                       </div>
                       <div class="ad">
-                      <h3>실시간 🔥게시판</h3>
+                      <h3> 🔥게시판</h3>
                             <ul>
                                  <c:forEach var="hot" items="${hotType}">
                                       <li><a href="/main/board/${hot.boardType}">${hot.boardName} 게시판</a></li>
@@ -139,23 +139,31 @@
                 </div>
             </div>
             <div class="section">
-                           <c:forEach var="board" items="${boardDetail}">
-                               <div class="board" onclick="increaseView(${board.boardId})">
-                                    <div class="letter">
-                                   <div class="title">${board.boardTitle}</div>
-                                   <div class="writer">${board.userEmail}<span>${board.boardDate}</span></div>
-                                    <div class="content">${board.boardContent}</div>
-                                      <ul>
-                                            <li>조회수${board.boardClick}</li>
-                                            <li>좋아요${board.boardLike}</li>
-                                            <li>댓글수${board.commentCount}</li>
-                                      </ul>
-                                </div>
-                                <div class="image">
-                                    <img src="./toeic.png" style="width: 100%; height: 100%;">
-                                </div>
-                                </div>
-                               </c:forEach>
+                               <c:forEach var="board" items="${boardDetail}">
+                                   <div class="board" onclick="increaseView(${board.boardId})">
+                                        <div class="letter">
+                                       <div class="title">${board.boardTitle}</div>
+                                       <div class="writer">${board.userEmail}<span>${board.boardDate}</span></div>
+                                        <div class="content">${board.boardContent}</div>
+                                          <ul>
+                                                <li>조회수${board.boardClick}</li>
+                                                <li>좋아요${board.boardLike}</li>
+                                                <li>댓글수${board.commentCount}</li>
+                                          </ul>
+
+                                    </div>
+                                    <div class="image">
+                                       <c:choose>
+                                           <c:when test="${board.boardImage.length() > 70}">
+                                        <img src="/img/${board.boardImage.substring(70)}" style="width: 100%; height: 100%;">
+                                        </c:when>
+                                        <c:otherwise>
+                                           <img src="/img/none.png" style="width: 100%; height: 100%;">
+                                        </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                    </div>
+                                   </c:forEach>
                 <div class="pagination">
                     <ul class="page">
                      <c:forEach begin="${startpage}" end="${endpage}" var="pageNum">

@@ -96,7 +96,7 @@
           <%
               for(int i=0;i<res.size();i++){
           %>
-              <div class="resBox">
+              <div class="resBox" onclick="location.href='/main/DetailBoard/<%=res.get(i).getBoardId()%>'">
                 <div class="box">
                     <div id="box1"><%=bteList.get(i).getBoardName()%></div>
                     <div id="box2">
@@ -109,7 +109,9 @@
             <%
                 }
             %>
-            <div id="pagination">
+            <div class="pagination">
+
+                    <ul class="page">
                 <c:forEach begin="${startpage}" end="${endpage}" var="pageNum">
                                     <c:choose>
                                     <c:when test="${pageNum != nowpage}">
@@ -120,6 +122,7 @@
                                     </c:otherwise>
                                     </c:choose>
                                 </c:forEach>
+                               </ul>
             </div>
       </div>
 

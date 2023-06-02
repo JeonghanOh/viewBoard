@@ -1,10 +1,12 @@
 package viewboard.service;
 
+import org.springframework.stereotype.Service;
 import viewboard.repository.BoardRepository;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Service
 public class RandomService {
 
     public Set<Integer> getGesipanSet(BoardRepository boardRepository){
