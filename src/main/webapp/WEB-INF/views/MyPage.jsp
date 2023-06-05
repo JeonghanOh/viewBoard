@@ -1,6 +1,6 @@
 <%@ page import="java.util.Calendar" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,7 +29,7 @@
                    </form>
                </div>
                <div class="top-nav-right">
-                   * * * 님
+
                </div>
            </div>
            <hr>
@@ -80,18 +80,28 @@
        </nav>
     <div class="bodyContainer">
         <div class="Nickname">
-            <h3>* * * 님</h3>
+            <h3>${info.userNickName}님</h3> <button>수정</button>
+            <form action="/user/fix" method="post"><input type="text" name="fix" /><button type="submit">수정하기</button></form>
         </div>
         <div class="sub_con">
             <div class="user_info">
                 <h3>유저 정보</h3>
+                ${info.userEmail}
+                ${info.userName}
+                ${info.userPhoneNumber}
             </div>
             <div class="liky_board">
                 <h3>즐겨 찾는 게시판</h3>
+                   <c:forEach var="fav" items="${favorite}">
+                       <a href="/main/board/${fav.boardType}">${fav.boardType}</a>
+                   </c:forEach>
             </div>
         </div>
         <div class="post_board">
             <h3>게시글 목록</h3>
+            <c:forEach var="mine" items="${mine}">
+                                   <a href="/main/board/${fav.boardId}">${mine.boardTitle}</a>
+            </c:forEach>
         </div>
         <div class="postBoard_number">
             <div>1 2 3 4 5</div>

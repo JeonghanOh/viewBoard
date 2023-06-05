@@ -20,6 +20,7 @@ public interface DetailRepository extends JpaRepository<BoardEntity, Long> {
     public Page<BoardEntity> findByBoardType(int boardType, Pageable pageable);
 //    public List<BoardEntity> findByBoardType(int boardType, Pageable pageable);
     public BoardEntity findByBoardId(int id);
+    public List<BoardEntity> findByUserEmail(String email);
     public long countByBoardType(int boardType);
     @Query(value="select A.* from boarddetail as A join (select count(board_id) as count, board_id from liky as B where like_time >= date_sub(now(), INTERVAL 4 HOUR) group by board_id order by count(board_id) desc LIMIT 10) B on A.board_id = B.board_id where board_type=?1",nativeQuery = true)
     public List<BoardEntity> liveHot(int boardType);

@@ -10,22 +10,7 @@
     <title>뷰보드 - 게시판</title>
     <link rel="stylesheet" href="/css/board.css"/>
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-    <script>
-        function increaseView(boardId){
-        $.ajax({
-            url:"/main/increase",
-            type:"post",
-            data:{boardId:boardId},
-             success: function(response) {
 
-             },
-              complete: function() {
-                   // 상세 페이지로 리디렉션
-                   window.location.href = "/main/DetailBoard/"+boardId;
-                 }
-            });
-        }
-    </script>
 </head>
 <body>
     <nav>
@@ -140,7 +125,7 @@
             </div>
             <div class="section">
                                <c:forEach var="board" items="${boardDetail}">
-                                   <div class="board" onclick="increaseView(${board.boardId})">
+                                   <div class="board" onclick=location.href="/main/DetailBoard/${board.boardId}">
                                         <div class="letter">
                                        <div class="title">${board.boardTitle}</div>
                                        <div class="writer">${board.userEmail}<span>${board.boardDate}</span></div>

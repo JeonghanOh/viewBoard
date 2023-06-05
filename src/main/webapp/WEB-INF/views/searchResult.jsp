@@ -19,7 +19,7 @@
    <nav>
             <div class="top-nav">
                 <div class="top-nav-left">
-                    <a href="Home.jsp" class="color_w"><img src="resource/img/Logo.png" style="width: 100px"></a>
+                    <a href="/main" class="color_w"><img src="/img/logo.png" style="width: 100px"></a>
                 </div>
                 <div class="serach">
                     <select onchange="search_()" id=change_select>
@@ -85,7 +85,7 @@
         </nav>
 
    <div id="main">
-      검색 결과
+      '<%=request.getAttribute("query")%>' 검색 결과
 
       <%
             List <BoardEntity> res = (List <BoardEntity>)request.getAttribute("result");
@@ -95,6 +95,7 @@
       <div id="result">
           <%
               for(int i=0;i<res.size();i++){
+
           %>
               <div class="resBox" onclick="location.href='/main/DetailBoard/<%=res.get(i).getBoardId()%>'">
                 <div class="box">
@@ -103,7 +104,20 @@
                         <div id="box2_1"><%=res.get(i).getBoardTitle()%></div>
                         <div id="box2_2"><%=res.get(i).getBoardContent()%></div>
                     </div>
-                    <div id="box3"><img src=<%=res.get(i).getBoardImage()%>></div>
+                    <%
+                        String a = res.get(i).getBoardImage() == null?null:res.get(i).getBoardImage().substring(70);
+                        if(a == null){
+                    %>
+                    <div id="box3"><img src="/img/none.png" width=150 height=150></div>
+                    <%
+                        }
+                        else{
+                            System.out.println(a);
+                    %>
+                    <div id="box3"><img src="/img/<%=a%>" width=150 height=150></div>
+                    <%
+                        }
+                    %>
                 </div>
               </div>
             <%

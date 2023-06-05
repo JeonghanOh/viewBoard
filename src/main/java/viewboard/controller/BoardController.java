@@ -72,6 +72,7 @@ public class BoardController {
     @GetMapping("/DetailBoard/{boardId}")
     public String DetailBoard(@PathVariable("boardId") int id, Model model){
         List<CommentEntity> commentList = commentRepository.findByCommentLists(id);
+        boardService.increaseView(id);
         model.addAttribute("board" , writeService.getFindid(id));
         model.addAttribute("comment",commentList);
         return "DetailBoard";
@@ -125,8 +126,9 @@ public class BoardController {
         for(int x:set){
             List<BoardEntity> list = writeRepository.findByboardType(x);
             BoardTypeEntity bte = boardRepository.findByboardType(x);
+            System.out.println(list);
             model.addAttribute("boardList"+i, list);
-            model.addAttribute("boardName"+i, bte.getBoardName());
+            model.addAttribute("board"+i, bte);
             i++;
         }
 
@@ -164,11 +166,7 @@ public class BoardController {
 
         return "searchResult";
     }
-    @PostMapping("/increase")
-    public void increase(@RequestParam("boardId") int boardId) {
-        // 조회수 상승 서비스 실행
-        boardService.increaseView(boardId);
-    }
+
     @PostMapping("/favorite")
     public String favorite(FavoriteDto dto){
         boardService.addFavorite(dto);
