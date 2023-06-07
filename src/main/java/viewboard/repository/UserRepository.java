@@ -12,13 +12,15 @@ import javax.transaction.Transactional;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
     public boolean existsByUserEmail(String email);
-    @Query(value = "update user set user_nickname = ?1 where user_email = ?2", nativeQuery = true)
-    @Modifying
-    @Transactional
-    void NickNameUpdate(String userNickName,String userEmail);
+
     public UserEntity findByUserEmail(String id);
     public UserEntity findUserEmailByUserNameAndUserPhoneNumber(String name,String phoneNumber);
     public UserEntity findUserPasswordByUserEmailAndUserNameAndUserPhoneNumber(String email,String name,String phoneNumber);
     @Transactional
     public void deleteByUserEmail(String email);
+
+    @Query(value="update user set user_nickname = ?1 where user_email = ?2",nativeQuery = true)
+    @Modifying
+    @Transactional
+    public void FixNickname(String NickName, String email);
 }

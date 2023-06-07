@@ -7,7 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EditDto {
-    private String userEmail;
-    private String userNickName;
+public class UserDto {
+    private String UserEmail;
+    private String UserNickname;
+    private String UserPhonenumber;
+    private int BoardCount;
+
 }

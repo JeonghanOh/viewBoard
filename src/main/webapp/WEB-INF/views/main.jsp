@@ -95,6 +95,10 @@
 			   <% if(user!=null){ %>
 			           <span><%=user.getUserName()%>님</span>
 			           <a href="/auth/logout">로그아웃</a><a>회원탈퇴</a>
+			               <form action="/auth/MyPage" method="get">
+                       			<input type="hidden" value="<%=user.getUserEmail()%>" name="UserEmail">
+                       			<button>마이 페이지</button>
+                       	   </form>
 			   <% } else{%>
 					<button onclick="location.href='/auth/login'">로그인</button>
 				<% } %>

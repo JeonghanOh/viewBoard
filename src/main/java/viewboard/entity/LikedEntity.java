@@ -19,9 +19,11 @@ import java.time.LocalDateTime;
 public class LikedEntity {
     @Id
     @Column
-    private String userEmail;
-    @Column
     private int boardId;
+
+    @Column
+    private String userEmail;
+
     @Column
     private LocalDateTime likeTime;
 

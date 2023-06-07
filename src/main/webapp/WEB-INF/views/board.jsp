@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="viewboard.entity.BoardEntity" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="viewboard.entity.UserEntity"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -106,6 +107,7 @@
                     </div>
                 </div>
                 <div class="right">
+                <% if(user==null){ %>
                      <div class="login">
 
                             <button type="button" id="signin" onclick="location.href='/auth/login'">로그인</button>
@@ -115,6 +117,17 @@
                             </ul>
 
                       </div>
+                      <% } else{%>
+                        <div class="login">
+                       <p><strong><%=user.getUserName()%></strong>님</p>
+                       <p>작성한 게시물 : 100개</p>
+                       <p><a href="#">마이페이지</a></p>
+                       <ul>
+                            <li><a href="/auth/logout">로그아웃</a></li>
+                            <li><a href="/auth/service">회원탈퇴</a></li>
+                       </ul>
+                       </div>
+                      <% } %>
                       <div class="ad">
                       <h3> 🔥게시판</h3>
                             <ul>

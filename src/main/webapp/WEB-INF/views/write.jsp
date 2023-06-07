@@ -1,6 +1,8 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@page import="viewboard.entity.*"%>
+<%@page import="viewboard.repository.*"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -11,6 +13,10 @@
     <script type="text/javascript" src="/smarteditor/js/HuskyEZCreator.js" charset="utf-8"></script>
 </head>
 <body>
+  <%
+         CommentRepository commentRepository;
+         UserEntity user = (UserEntity) session.getAttribute("login");
+  %>
 <nav>
             <div class="top-nav">
                 <div class="top-nav-left">
@@ -83,8 +89,8 @@
               <div class="wrapper">
                   <div class="row">
                           <h3>글작성</h3>
-                          <form action="/main/write" method="post" enctype="multipart/form-data">
-                          <input type="hidden" value="wnsqja@naver.com" name="userEmail"/>
+                          <form action="/main/write" method="post">
+                          <input type="hidden" value="<%=user.getUserEmail()%>" name="UserEmail">
                               <div id="title">
                                    <select name="boardType">
                                         <option value="1">개발 게시판</option>
@@ -105,7 +111,6 @@
                                       placeholder="내용을 입력해주세요"
                                       style="width: 100%"></textarea>
                               </div>
-                              <input type="file" class="upload" name="image" accept="image/$"/>
                               <button type="submit" onclick="submitPost()">작성하기</button>
                           </form>
                           <!-- 포스트 추가하는 곳-->

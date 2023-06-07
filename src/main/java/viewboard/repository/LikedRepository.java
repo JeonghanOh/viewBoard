@@ -7,13 +7,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import viewboard.entity.LikedEntity;
 
-
 @Repository
-public interface LikedRepository extends JpaRepository <LikedEntity, Long>{
+public interface LikedRepository extends JpaRepository <LikedEntity, Integer>{
 
-    @Query(value = "update boarddetail set board_like = board_like + 1 where board_id = :id", nativeQuery = true)
     @Modifying
-    void likeupdate(@Param("id") int id);
+    @Query(value = "update boarddetail set board_like = board_like + 1 where board_id = :id", nativeQuery = true)
+    public void Uplike(@Param("id") int id);
 
+
+    public void deleteByboardId(int id);
 
 }

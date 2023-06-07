@@ -22,6 +22,12 @@ public class WriteService {
     private String uploadPath;
     @Autowired 
     DetailRepository detailRepository;
+
+    public void save(WriteDTO writeDTO){
+        BoardEntity boardEntity = new BoardEntity(writeDTO);
+        detailRepository.save(boardEntity);
+    }
+
     public BoardEntity writePost2(MultipartFile file, WriteDTO dto){
         String filename= UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
         String imgPath=uploadPath+"/"+filename;
@@ -46,6 +52,26 @@ public class WriteService {
             error.printStackTrace();
         }
         return boardEntity;
+    }
+
+    public BoardEntity prevPage (int id, int type) {
+        BoardEntity boardList=null;
+        try {
+            boardList = detailRepository.PrevPage(id, type);
+        } catch(Exception error) {
+            error.printStackTrace();
+        }
+        return boardList;
+    }
+
+    public BoardEntity nextPage (int id, int type) {
+        BoardEntity boardList=null;
+        try {
+            boardList = detailRepository.NextPage(id, type);
+        } catch (Exception error) {
+            error.printStackTrace();
+        }
+        return boardList;
     }
 }
 

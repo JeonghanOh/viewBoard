@@ -73,7 +73,13 @@ public class BoardController {
     public String DetailBoard(@PathVariable("boardId") int id, Model model){
         List<CommentEntity> commentList = commentRepository.findByCommentLists(id);
         boardService.increaseView(id);
-        model.addAttribute("board" , writeService.getFindid(id));
+        BoardEntity board = writeService.getFindid(id);
+        System.out.println(board.getBoardType());
+        model.addAttribute("board" , board);
+        model.addAttribute("Prev", writeService.prevPage(id, board.getBoardType()));
+        model.addAttribute("Next", writeService.nextPage(id, board.getBoardType()));
+        model.addAttribute("hotBoard",writeRepository.getHotGesigeul());
+        model.addAttribute("type",boardService.getBoardType(board.getBoardType()));
         model.addAttribute("comment",commentList);
         return "DetailBoard";
     }
@@ -95,12 +101,19 @@ public class BoardController {
     }
 
     @PostMapping("/like")
-    public void likeContent(@RequestParam("boardId") int id, @RequestParam("userEmail") String email){
+    @ResponseBody
+    public boolean like(@RequestParam("boardId") int id, @RequestParam("userEmail") String email , Model model){
         LikedDto likedDto = new LikedDto();
         likedDto.setBoardId(id);
         likedDto.setUserEmail(email);
-        boardService.likeContent(likedDto);
-        likedRepository.likeupdate(id);
+        boolean isLiked = boardService.isLiked(likedDto);
+        if (likedRepository.existsById(likedDto.getBoardId())) {
+            boardService.likeContent(likedDto);
+        } else {
+            boardService.likeContent(likedDto);
+            boardService.likeview(id);
+        }
+        return isLiked;
     }
 
     @GetMapping("/write")

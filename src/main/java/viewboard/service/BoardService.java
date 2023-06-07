@@ -46,16 +46,6 @@ public class BoardService {
 
         return boardList;
     }
-    public BoardEntity getDetail(int id){
-        BoardEntity detail;
-        try{
-            detail = detailRepository.findByBoardId(id);
-        }catch (Exception e){
-            e.printStackTrace();
-            throw new RuntimeException("Database Error");
-        }
-        return detail;
-    }
 
     public Long counting(int type){
         long count = 0;
@@ -87,10 +77,42 @@ public class BoardService {
         detailRepository.UpView(id);
     }
 
+    @Transactional
     public void likeContent(LikedDto likedDto) {
+        if (likedRepository.existsById(likedDto.getBoardId())) {
+            int boardId = likedDto.getBoardId();
+            String email = likedDto.getUserEmail();
+            detailRepository.downlike(boardId);
+            likedRepository.deleteByboardId(boardId);
+            return;
+        }
         LikedEntity liked = new LikedEntity(likedDto);
-        likedRepository.save(liked);
+        try {
+            likedRepository.save(liked);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Database Error");
+        }
     }
+
+    @Transactional
+    public void likeview(int id){
+        likedRepository.Uplike(id);
+    }
+
+    public boolean isLiked(LikedDto likedDto){
+        if (likedRepository.existsById(likedDto.getBoardId())){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public Page<BoardEntity> getMyBoardList(String email, Pageable pageable){
+        System.out.println("service " + detailRepository.findByUserEmail(email,pageable));
+        return detailRepository.findByUserEmail(email,pageable);
+    }
+
     public void addFavorite(FavoriteDto dto){
         String email = dto.getUserEmail();
         int type = dto.getBoardType();
