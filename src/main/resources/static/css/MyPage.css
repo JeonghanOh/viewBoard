@@ -17,7 +17,9 @@ nav {
     justify-content: space-between;
     align-items: center;
 }
-
+#edit{
+display:none;
+}
 .search {
 	display:flex;
 }

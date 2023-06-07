@@ -13,6 +13,8 @@
 
 </head>
 <body>
+<% UserEntity user = (UserEntity)session.getAttribute("login");%>
+
     <nav>
                 <div class="top-nav">
                     <div class="top-nav-left">

@@ -80,8 +80,10 @@
        </nav>
     <div class="bodyContainer">
         <div class="Nickname">
-            <h3>${info.userNickName}님</h3> <button>수정</button>
-            <form action="/user/fix" method="post"><input type="text" name="fix" /><button type="submit">수정하기</button></form>
+            <h3>${info.userNickName}님</h3> <button onclick="toggle()">수정</button>
+            <form action="/user/change" method="post" id="edit"><input type="text" name="userNickName" /><button type="submit">수정하기</button>
+             <input type="hidden" name="userEmail" value="dkdfl1235@naver.com"/>
+            </form>
         </div>
         <div class="sub_con">
             <div class="user_info">
@@ -93,7 +95,7 @@
             <div class="liky_board">
                 <h3>즐겨 찾는 게시판</h3>
                    <c:forEach var="fav" items="${favorite}">
-                       <a href="/main/board/${fav.boardType}">${fav.boardType}</a>
+                       <a href="/main/board/${fav.boardType}">${fav.boardName}</a>
                    </c:forEach>
             </div>
         </div>
@@ -107,5 +109,15 @@
             <div>1 2 3 4 5</div>
         </div>
     </div>
+    <script>
+        function toggle() {
+          const edit = document.getElementById("edit");
+          if (edit.style.display === "none") {
+            edit.style.display = "block";
+          } else {
+            edit.style.display = "none";
+          }
+        }
+    </script>
 </body>
 </html>

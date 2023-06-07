@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import viewboard.dto.EditDto;
 import viewboard.dto.FavoriteDto;
 import viewboard.repository.FavoriteRepository;
 import viewboard.service.UserService;
@@ -24,5 +25,10 @@ public class UserController {
        model.addAttribute("favorite",userService.favBoard("dkdfl1235@naver.com"));
 
         return "MyPage";
+    }
+    @PostMapping("/change")
+    public String change(EditDto dto){
+        userService.changeName(dto);
+        return "redirect:/user/mypage";
     }
 }

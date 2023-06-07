@@ -1,6 +1,6 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@page import="viewboard.entity.*"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/css/service.css"/>
 </head>
 <body>
+<% UserEntity user = (UserEntity)session.getAttribute("login"); %>
 <nav>
             <div class="top-nav">
                 <div class="top-nav-left">
@@ -80,7 +81,12 @@
 
  <div class="main">
         <div class="wrapper">
-            <div class="top"><button onclick="loadIdFinder()">이메일찾기</button><button onclick="loadPasswordFinder()">비밀번호찾기</button><button onclick="loadSecession()">회원탈퇴</button></div>
+        <% if(user!= null ){ %>
+            <div class="top"><button onclick="loadSecession()">회원탈퇴</button> </div>
+
+          <% } else {%>
+            <div class="top"><button onclick="loadIdFinder()">이메일찾기</button><button onclick="loadPasswordFinder()">비밀번호찾기</button> </div>
+            <% } %>
             <div id="container"></div>
         </div>
     </div>
