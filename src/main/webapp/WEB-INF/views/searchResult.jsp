@@ -27,7 +27,7 @@
                         <option value="Title">제목 검색</option>
                         <option value="Story">작성자 검색</option>
                     </select>
-                    <form method="get" action="searchResult">
+                    <form method="get" action="searchresult">
                         <input type="text" placeholder="검색어를 입력" class="serach_text" id="serach_form" name="query">
                         <input type="hidden" name="page" value="0">
                         <button class="search_btn" type="submit">검색</button>
@@ -97,7 +97,7 @@
               for(int i=0;i<res.size();i++){
 
           %>
-              <div class="resBox" onclick="location.href='/main/DetailBoard/<%=res.get(i).getBoardId()%>'">
+              <div class="resBox" onclick="location.href='/main/detailboard/<%=res.get(i).getBoardId()%>'">
                 <div class="box">
                     <div id="box1"><%=bteList.get(i).getBoardName()%></div>
                     <div id="box2">
@@ -129,10 +129,10 @@
                 <c:forEach begin="${startpage}" end="${endpage}" var="pageNum">
                                     <c:choose>
                                     <c:when test="${pageNum != nowpage}">
-                                        <li><a href="/main/searchResult?query=${query}&page=${pageNum-1}">${pageNum}</a></li>
+                                        <li><a href="/main/searchresult?query=${query}&page=${pageNum-1}">${pageNum}</a></li>
                                     </c:when>
                                     <c:otherwise>
-                                        <li><a href="/main/searchResult?query=${query}&page=${pageNum-1}"><strong style="color:red">${pageNum}</strong></a></li>
+                                        <li><a href="/main/searchresult?query=${query}&page=${pageNum-1}"><strong style="color:red">${pageNum}</strong></a></li>
                                     </c:otherwise>
                                     </c:choose>
                                 </c:forEach>

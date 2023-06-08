@@ -201,7 +201,7 @@
                              <div class="btn_another_width">
                                  <div class="btn_another">
                                 <c:if test="${Prev != null}">
-                                 <a href = "/main/DetailBoard/${Prev.boardId}">
+                                 <a href = "/main/detailboard/${Prev.boardId}">
                                  <div id="Prev_btn">
                                   <div class="first_td">이전글</div>
                                   <div class="second_td">${Prev.boardTitle}</div>
@@ -213,7 +213,7 @@
                              <div class="btn_another_width">
                                  <div class="btn_another">
                                  <c:if test="${Next != null}">
-                                 <a href = "/main/DetailBoard/${Next.boardId}">
+                                 <a href = "/main/detailboard/${Next.boardId}">
                                  <div id="Next_btn">
                                      <div class="first_td">다음글</div>
                                      <div class="second_td">${Next.boardTitle}</div>
@@ -224,7 +224,7 @@
                              </div>
                          </div>
              <div class="input_comment">
-             <form method="post" action="/main/DetailBoard">
+             <form method="post" action="/main/detailboard">
                  <div class="comment_btn">
                      <h3>댓글 작성</h3>
                  </div>

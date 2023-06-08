@@ -23,10 +23,7 @@ public class WriteService {
     @Autowired 
     DetailRepository detailRepository;
 
-    public void save(WriteDTO writeDTO){
-        BoardEntity boardEntity = new BoardEntity(writeDTO);
-        detailRepository.save(boardEntity);
-    }
+
 
     public BoardEntity writePost2(MultipartFile file, WriteDTO dto){
         String filename= UUID.randomUUID().toString() + "-" + file.getOriginalFilename();

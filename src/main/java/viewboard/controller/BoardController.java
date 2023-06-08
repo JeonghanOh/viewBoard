@@ -69,7 +69,7 @@ public class BoardController {
         return "board";
     }
 
-    @GetMapping("/DetailBoard/{boardId}")
+    @GetMapping("/detailboard/{boardId}")
     public String DetailBoard(@PathVariable("boardId") int id, Model model){
         List<CommentEntity> commentList = commentRepository.findByCommentLists(id);
         boardService.increaseView(id);
@@ -84,13 +84,13 @@ public class BoardController {
         return "DetailBoard";
     }
 
-    @PostMapping("/DetailBoard")
+    @PostMapping("/detailboard")
     public String CommentWrite(@ModelAttribute CommentDto commentDto){
         commentService.Commentinsert(commentDto);
         return "redirect:/main";
     }
 
-    @PostMapping("/Detail")
+    @PostMapping("/detail")
     @ResponseBody
     public List<CommentEntity> MoreComment(@RequestParam("boardId") int id, @RequestParam("page") int page, Model model){
         int pageSize = 10; // 페이지당 댓글 수
@@ -155,7 +155,7 @@ public class BoardController {
         return "main";
     }
 
-    @RequestMapping("/searchResult")
+    @RequestMapping("/searchresult")
     public String searchController(Model model, @RequestParam String query, @RequestParam int page ,@PageableDefault(page=0,size = 10,direction = Sort.Direction.DESC)Pageable pageable){
         Page<BoardEntity> res = searchService.searchResult(query, writeRepository, pageable);
         ArrayList<BoardTypeEntity> bteList = new ArrayList<BoardTypeEntity>();

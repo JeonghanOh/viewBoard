@@ -2,9 +2,8 @@
     margin: 0;
     box-sizing: border-box;
 }
-
 nav {
-    background-color: #8987;
+    background-color: #EDEDED;
     width: 100%;
     height: 150px;
 }
@@ -69,7 +68,7 @@ nav {
     font-weight:600;
     font-size:18px;
     text-align: center;
-    color: white;
+    color: #9C3646;
 }
 
 .bot:hover ~ .hide-nav{
@@ -150,41 +149,24 @@ button{
 }
 input:focus,select:focus{
     outline: none;
-    border: 1px solid #03c75a;
+    border: 1px solid #9c3646;
 }
 #id::-webkit-input-placeholder{
     text-align: right;
     padding-right: 10px;
-}
-select{
-    margin: 10px 0;
-    width: 100%;
-    height: 51px;
-    border: 1px solid #dadada;
-}
-.year,.month,.day{
-    width: 147px;
-    margin: auto;
 }
 
 .sign{
     margin-top: 20px;
     width: 100%;
     color: #fff;
-    background: #03c75a;
+    background: #9c3646;
     font-weight: bold;
     height: 51px;
     border: none;
     font-size: 20px;
 }
-.confirm{
-    width: 115px;
-    height: 51px;
-    border: none;
-    background: #03c75a;
-    color: #fff;
-    font-weight: bold;
-}
+
 footer{
     margin-top: 20px;
 }

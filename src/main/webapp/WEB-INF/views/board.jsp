@@ -22,19 +22,15 @@
                         <a href="/main" class="color_w"><img src="/img/logo.png" style="width: 100px"></a>
                     </div>
                     <div class="search">
-                        <select onchange="search_()" id=change_select>
-                            <option disabled="disabled" selected="selected">검색 조건</option>
-                            <option value="Title">제목 검색</option>
-                            <option value="Story">작성자 검색</option>
-                        </select>
-                        <form method="get" action="/main/searchResult">
-                            <input type="text" placeholder="검색어를 입력" class="serach_text" id="serach_form" name="query">
+
+                        <form method="get" action="/main/searchresult">
+                            <input type="text" placeholder="검색어를 입력" class="search_text" id="search_form" name="query">
                             <input type="hidden" name="page" value="0">
                             <button class="search_btn" type="submit">검색</button>
                         </form>
                     </div>
                     <div class="top-nav-right">
-                       님
+
                     </div>
                 </div>
                 <hr>
@@ -97,10 +93,10 @@
                     </div>
                     </form>
                     <div class="bottom">
-                        <h3>실시간 🔥게시글</h3>
+                        <h3 class="color">실시간 🔥게시글</h3>
                         <ul>
                         <c:forEach var="hot" items="${hotBoard}">
-                            <li><a href="#">${hot.boardTitle}</a></li>
+                            <li><a href="/main/detailboard/${hot.boardId}">${hot.boardTitle}</a></li>
                             </c:forEach>
 
                         </ul>
@@ -119,9 +115,13 @@
                       </div>
                       <% } else{%>
                         <div class="login">
-                       <p><strong><%=user.getUserName()%></strong>님</p>
+                       <p><strong><%=user.getUserNickName()%></strong>님</p>
                        <p>작성한 게시물 : 100개</p>
-                       <p><a href="#">마이페이지</a></p>
+                       <form action="/auth/mypage" method="get">
+                        <input type="hidden" value="<%=user.getUserEmail()%>" name="UserEmail">
+                        <button>마이 페이지</button><a href="/main/write" class="write">글쓰기</a>
+                        </form>
+
                        <ul>
                             <li><a href="/auth/logout">로그아웃</a></li>
                             <li><a href="/auth/service">회원탈퇴</a></li>
@@ -129,7 +129,7 @@
                        </div>
                       <% } %>
                       <div class="ad">
-                      <h3> 🔥게시판</h3>
+                      <h3 > 🔥게시판</h3>
                             <ul>
                                  <c:forEach var="hot" items="${hotType}">
                                       <li><a href="/main/board/${hot.boardType}">${hot.boardName} 게시판</a></li>
@@ -140,7 +140,7 @@
             </div>
             <div class="section">
                                <c:forEach var="board" items="${boardDetail}">
-                                   <div class="board" onclick=location.href="/main/DetailBoard/${board.boardId}">
+                                   <div class="board" onclick=location.href="/main/detailboard/${board.boardId}">
                                         <div class="letter">
                                        <div class="title">${board.boardTitle}</div>
                                        <div class="writer">${board.userEmail}<span>${board.boardDate}</span></div>

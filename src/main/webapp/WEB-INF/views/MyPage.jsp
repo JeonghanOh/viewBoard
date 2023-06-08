@@ -42,7 +42,7 @@
                        <option value="Title">제목 검색</option>
                        <option value="Story">작성자 검색</option>
                    </select>
-                   <form method="get" action="/main/searchResult">
+                   <form method="get" action="/main/searchresult">
                             <input type="text" placeholder="검색어를 입력" class="serach_text" id="serach_form" name="query">
                             <input type="hidden" name="page" value="0">
                        <button class="search_btn" type="submit">검색</button>
@@ -107,7 +107,7 @@
          <% } %>
                 <span>
                 <button onclick="ChangeNick()" id="Change"> 닉네임 변경 </button>
-                <form method="post" action="/auth/MyPage">
+                <form method="post" action="/auth/mypage">
                     <input type="hidden" value="<%=user.getUserEmail()%>" name="UserEmail">
                     <input type="text" class="NickName_Fix" style="display:none;" name="UserNickName">
                     <button type="submit" style="display:none;" class="NickName_Fix">수정</button>
@@ -139,10 +139,10 @@
           <c:forEach begin="${startpage}" end="${endpage}" var="pageNum">
             <c:choose>
               <c:when test="${pageNum != nowpage}">
-                <li><a href="/auth/MyPage?UserEmail=${param.UserEmail}&page=${pageNum-1}">${pageNum}</a></li>
+                <li><a href="/auth/mypage?UserEmail=${param.UserEmail}&page=${pageNum-1}">${pageNum}</a></li>
               </c:when>
               <c:otherwise>
-                <li><a href="/auth/MyPage?UserEmail=${param.UserEmail}&page=${pageNum-1}"><strong style="color:red">${pageNum}</strong></a></li>
+                <li><a href="/auth/mypage?UserEmail=${param.UserEmail}&page=${pageNum-1}"><strong style="color:red">${pageNum}</strong></a></li>
               </c:otherwise>
             </c:choose>
           </c:forEach>

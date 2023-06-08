@@ -53,7 +53,7 @@ public class AuthController {
         }
 
     }
-    @PostMapping("/loginResult")
+    @PostMapping("/loginresult")
     public String login(@ModelAttribute SignInDto dto, HttpSession session){
         ResponseDto<SignInResponseDto> res = authService.signIn(dto);
 
@@ -118,7 +118,7 @@ public class AuthController {
         return "secession";
     }
 
-    @GetMapping("/MyPage")
+    @GetMapping("/mypage")
     public String MyPage(@RequestParam("UserEmail") String email, Model model, @PageableDefault(page=0,size = 3,direction = Sort.Direction.DESC) Pageable pageable) {
         Page<BoardEntity> list = boardService.getMyBoardList(email, pageable);
         int nowPag = list.getPageable().getPageNumber()+1;
@@ -133,7 +133,7 @@ public class AuthController {
         return "MyPage";
     }
 
-    @PostMapping("/MyPage")
+    @PostMapping("/mypage")
     public String changeNick(@RequestParam("UserNickName") String NickName ,@RequestParam("UserEmail") String email, Model model){
         authService.ChangeNick(NickName , email);
         model.addAttribute("FixName", NickName);

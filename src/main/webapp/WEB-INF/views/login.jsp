@@ -9,7 +9,7 @@
 
 </head>
 <body>
-    <form action="loginResult" method="post">
+    <form action="loginresult" method="post">
         <div id="container">
             <div class="set">
                 <div id="set0"><a href="/main"><img id="setimg" src="/img/logo.png"></a></div>

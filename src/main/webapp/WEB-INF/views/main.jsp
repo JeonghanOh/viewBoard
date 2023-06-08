@@ -21,7 +21,7 @@
                     <a href="/main" class="color_w"><img src="/img/logo.png" style="width: 150px"></a>
                 </div>
                 <div class="search">
-                    <form method="get" action="/main/searchResult">
+                    <form method="get" action="/main/searchresult">
                         <input type="text" placeholder="검색어를 입력" class="search_text" id="search_form" name="query">
                         <input type="hidden" name="page" value="0">
                         <button class="search_btn" type="submit">검색</button>
@@ -87,7 +87,7 @@
     			   <% if(user!=null){ %>
     			           <span><%=user.getUserNickName()%>님</span>
     			           <div><a href="/auth/logout">로그아웃</a><a>회원탈퇴</a></div>
-    			               <form action="/auth/MyPage" method="get">
+    			               <form action="/auth/mypage" method="get">
                            			<input type="hidden" value="<%=user.getUserEmail()%>" name="UserEmail">
                            			<button>마이 페이지</button>
                            	   </form>
@@ -100,7 +100,7 @@
     		<div id="set2">
     			<div id="best">
     			    <c:forEach var="board" items="${hotGesigeul}">
-    			        <div class="best_detail1" onclick="location.href='/main/DetailBoard/${board.boardId}'">
+    			        <div class="best_detail1" onclick="location.href='/main/detailboard/${board.boardId}'">
     			            <h4>${board.boardTitle}</h4>
     			            ${board.boardContent}
     			        </div>
