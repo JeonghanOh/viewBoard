@@ -1,13 +1,17 @@
 package viewboard.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import viewboard.entity.BoardEntity;
 import viewboard.repository.DetailRepository;
 
 import java.util.List;
 
+@Service
 public class SearchService {
-    public List<BoardEntity> searchResult(String query, DetailRepository writeRepository){
-        List<BoardEntity> ret;
+    public Page<BoardEntity> searchResult(String query, DetailRepository writeRepository, Pageable pageable){
+        Page<BoardEntity> ret;
 
         query = query.replaceAll("\\s+", " ");
         query = query.trim();
@@ -20,7 +24,7 @@ public class SearchService {
             }
         }
 
-        ret = writeRepository.getSearchResult(val);
+        ret = writeRepository.getSearchResult(val,pageable);
 
         return ret;
     }

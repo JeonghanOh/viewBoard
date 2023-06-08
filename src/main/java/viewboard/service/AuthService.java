@@ -14,19 +14,19 @@ import java.util.Map;
 @Service
 public class AuthService {
     @Autowired UserRepository userRepository;
-    public void memberInsert(SignUpDto dto){
+    public ResponseDto<?> memberInsert(SignUpDto dto){
         String email = dto.getUserEmail();
         String password = dto.getUserPassword();
         String passwordChk = dto.getUserPasswordChk();
         try{
             if(userRepository.existsByUserEmail(email)){
-                throw new IllegalStateException("이미 존재하는 이메일입니다.");
+                return ResponseDto.setFailed("중복된 이메일 입니다.");
             }
         }catch (Exception e){
             e.printStackTrace();
         }
         if(!password.equals(passwordChk)) {
-            throw new IllegalStateException("비밀번호가 일치하지 않습니다");
+            return ResponseDto.setFailed("비밀번호가 일치하지 않습니다.");
         }
         UserEntity user = new UserEntity(dto);
         try{
@@ -34,6 +34,7 @@ public class AuthService {
         }catch(Exception e){
             e.printStackTrace();
         }
+        return ResponseDto.setSuccess("회원가입 성공",null);
     }
 
     public ResponseDto<SignInResponseDto> signIn(SignInDto dto){
@@ -74,18 +75,26 @@ public class AuthService {
     public void deleteUser(DeleteDto dto){
         String email = dto.getUserEmail();
         String password = dto.getUserPassword();
+        System.out.println(email + password);
         UserEntity user;
         user =userRepository.findByUserEmail(email);
         try{
             if(email!=null && user.getUserPassword().equals(password)){
                 userRepository.deleteByUserEmail(email);
-            }else{
+            }else if(!user.getUserPassword().equals(password)){
                 throw new RuntimeException("비밀번호가 일치하지 않습니다");
             }
         }catch(Exception e){
             e.printStackTrace();
-            throw new RuntimeException("Database Error");
         }
-
     }
+
+    public void ChangeNick(String nickname, String email) {
+        try {
+            userRepository.FixNickname(nickname, email);
+        } catch (Exception error){
+            error.printStackTrace();
+        }
+    }
+
 }

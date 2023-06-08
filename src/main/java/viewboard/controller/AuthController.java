@@ -1,6 +1,10 @@
 package viewboard.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -8,8 +12,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import viewboard.dto.*;
+import viewboard.entity.BoardEntity;
 import viewboard.service.AuthService;
+import viewboard.service.BoardService;
 import viewboard.service.FindService;
+import viewboard.service.UserService;
 
 import javax.servlet.http.HttpSession;
 import java.util.Map;
@@ -19,6 +26,9 @@ import java.util.Map;
 public class AuthController {
     @Autowired AuthService authService;
     @Autowired FindService findService;
+    @Autowired UserService userService;
+    @Autowired BoardService boardService;
+
     @GetMapping("/signup")
     public String signUpHome(){
         return "signup";
@@ -34,9 +44,14 @@ public class AuthController {
             model.addAttribute("errors", errors);
             return "signup";
         }
-        authService.memberInsert(dto);
-        redirectAttributes.addFlashAttribute("message", "회원 가입이 완료되었습니다.");
-        return "redirect:/main";
+        ResponseDto<?> result = authService.memberInsert(dto);
+        if(result.isResult()==true){
+            redirectAttributes.addFlashAttribute("message", "회원 가입이 완료되었습니다.");
+            return "redirect:/auth/login";
+        }else{
+            return "signup";
+        }
+
     }
     @PostMapping("/loginResult")
     public String login(@ModelAttribute SignInDto dto, HttpSession session){
@@ -102,8 +117,26 @@ public class AuthController {
     public String viewSecession(){
         return "secession";
     }
+
     @GetMapping("/MyPage")
-    public String MyPage() {
+    public String MyPage(@RequestParam("UserEmail") String email, Model model, @PageableDefault(page=0,size = 3,direction = Sort.Direction.DESC) Pageable pageable) {
+        Page<BoardEntity> list = boardService.getMyBoardList(email, pageable);
+        int nowPag = list.getPageable().getPageNumber()+1;
+        int startPag = Math.max(nowPag - 4,1);
+        int endPag = Math.min(nowPag + 5,list.getTotalPages());
+        model.addAttribute("nowpage",nowPag);
+        model.addAttribute("startpage",startPag);
+        model.addAttribute("endpage",endPag);
+        model.addAttribute("Title", list.getContent());
+        model.addAttribute("favorite",userService.favBoard(email));
+
+        return "MyPage";
+    }
+
+    @PostMapping("/MyPage")
+    public String changeNick(@RequestParam("UserNickName") String NickName ,@RequestParam("UserEmail") String email, Model model){
+        authService.ChangeNick(NickName , email);
+        model.addAttribute("FixName", NickName);
         return "MyPage";
     }
 

@@ -11,12 +11,40 @@ table {
 }
 
 .first_td {
-    width: 20%;
-    border: 1px #a39485 solid;
+    width:20%;
+    text-align:center;
+    border-right:1px solid black;
 }
+
+.second_td {
+    width:80%;
+    text-align:left;
+    margin-left : 20px;
+}
+
 td {
     border: 1px #a39485 solid;
     padding: 10px;
+}
+
+.btn_another_width {
+    width: 100%;
+}
+
+.btn_another {
+    display:inline-block;
+    width:100%;
+    font-size:20px;
+}
+
+#Prev_btn , #Next_btn {
+    display:flex;
+    justify-content:space-between;
+    margin-top : 10px;
+}
+
+#Prev_btn , #Next_btn:hover{
+    cursor:pointer;
 }
 
 nav {
@@ -191,7 +219,6 @@ button:hover {
 .main_text {
     width: 95%;
     margin: auto;
-    height: 80%;
     background-color: antiquewhite;
     padding: 5px 10px;
 }
@@ -215,13 +242,28 @@ button:hover {
 }
 
 .comment_list {
-    height: 440px;
     background-color: gray;
     margin-top:30px;
 }
 
+#liked_btn:hover{
+    cursor:pointer;
+}
+
 .list_container {
     padding: 10px;
+}
+
+.tr_width {
+    width:100%;
+}
+
+.first_width {
+    width:30%;
+}
+
+.second_width{
+    width:70%;
 }
 
 .container_text {

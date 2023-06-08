@@ -15,31 +15,26 @@
 <body>
 <% UserEntity user = (UserEntity)session.getAttribute("login");
 %>
-
 	<nav>
             <div class="top-nav">
                 <div class="top-nav-left">
-                    <a href="Home.jsp" class="color_w"><img src="resource/img/Logo.png" style="width: 100px"></a>
+                    <a href="/main" class="color_w"><img src="/img/logo.png" style="width: 150px"></a>
                 </div>
                 <div class="search">
-                    <select onchange="search_()" id=change_select>
-                        <option disabled="disabled" selected="selected">검색 조건</option>
-                        <option value="Title">제목 검색</option>
-                        <option value="Story">작성자 검색</option>
-                    </select>
-                    <form method="get" action="searchResult">
-                        <input type="text" placeholder="검색어를 입력" class="serach_text" id="serach_form" name="query">
+                    <form method="get" action="/main/searchResult">
+                        <input type="text" placeholder="검색어를 입력" class="search_text" id="search_form" name="query">
+                        <input type="hidden" name="page" value="0">
                         <button class="search_btn" type="submit">검색</button>
                     </form>
                 </div>
                 <div class="top-nav-right">
-                   님
+
                 </div>
             </div>
             <hr>
             <div class="bot">
                 <div class="bot-nav">
-                    <div class="w150">회원</div>
+                    <div class="w150">게시판</div>
                     <div class="w150">회원 2</div>
                     <div class="w150">조회</div>
                     <div class="w150">좋아요</div>
@@ -49,11 +44,9 @@
             <div class="hide-nav">
                 <div class="hide_nav_width">
                     <div class="around">
-                        <div class="pt20">회원 가입</div>
-                        <div class="pt20">회원 가입 정규식</div>
-                        <div class="pt20">로그인</div>
-                        <div class="pt20">로그아웃</div>
-
+                        <c:forEach var="board" items="${allBoard}">
+                            <div class="pt20"><a href="/main/board/${board.boardType}">${board.boardName}</a></div>
+                        </c:forEach>
                     </div>
                     <div class="around">
                         <div class="pt20">내 정보 보기</div>
@@ -84,85 +77,99 @@
         </nav>
 
     <div id="container">
-	<div id="outside1"></div>
+    	<div id="outside1"></div>
 
-	<div id="main">
+    	<div id="main">
 
-		<div id="set1">
-			<div id="banner"></div>
-			<div id="login">
-			   <% if(user!=null){ %>
-			           <span><%=user.getUserName()%>님</span>
-			           <a href="/auth/logout">로그아웃</a><a>회원탈퇴</a>
-			   <% } else{%>
-					<button onclick="location.href='/auth/login'">로그인</button>
-				<% } %>
-			</div>
-		</div>
+    		<div id="set1">
+    			<div id="banner"></div>
+    			<div id="login">
+    			   <% if(user!=null){ %>
+    			           <span><%=user.getUserNickName()%>님</span>
+    			           <div><a href="/auth/logout">로그아웃</a><a>회원탈퇴</a></div>
+    			               <form action="/auth/MyPage" method="get">
+                           			<input type="hidden" value="<%=user.getUserEmail()%>" name="UserEmail">
+                           			<button>마이 페이지</button>
+                           	   </form>
+    			   <% } else{%>
+    					<button onclick="location.href='/auth/login'">로그인</button>
+    				<% } %>
+    			</div>
+    		</div>
+    <h2 class="bugu">핫   게시판</h2>
+    		<div id="set2">
+    			<div id="best">
+    			    <c:forEach var="board" items="${hotGesigeul}">
+    			        <div class="best_detail1" onclick="location.href='/main/DetailBoard/${board.boardId}'">
+    			            <h4>${board.boardTitle}</h4>
+    			            ${board.boardContent}
+    			        </div>
+    			    </c:forEach>
+    			</div>
+    		</div>
+              <h2 class="bugu">오늘의 게시판</h2>
+    		<div id="set3">
+    			<div id="gesiSet1">
+    				<div id="gesi1" onclick="location.href='/main/board/${board0.boardType}'">
+    				<h3>${board0.boardName}</h3>
+                        <c:forEach var="board" items="${boardList0}">
+                            <div id="gesi1Contents">
+                                <h4>${board.boardTitle}</h4>
+                                ${board.boardContent}
+                            </div>
+                        </c:forEach>
+    				</div>
+    				<div id="gesi2" onclick="location.href='/main/board/${board1.boardType}'">
+    				<h3>${board1.boardName}</h3>
+                        <c:forEach var="board" items="${boardList1}">
+                            <div id="gesi1Contents">
+                                <h4>${board.boardTitle}</h4>
+                                ${board.boardContent}
+                            </div>
+                        </c:forEach>
+    				</div>
+    			</div>
+    		</div>
 
-		<div id="set2">
-			<div id="best">
-			    <c:forEach var="board" items="${hotGesigeul}">
-			        <div class="best_detail1">
-			            ${board.boardContent}
-			        </div>
-			    </c:forEach>
-			</div>
-		</div>
+    		<div id="set4">
+    			<div id="gesiSet2">
+    				<div id="gesi3" onclick="location.href='/main/board/${board2.boardType}'">
+    				<h3>${board2.boardName}</h3>
+                        <c:forEach var="board" items="${boardList2}">
+                            <div id="gesi1Contents">
+                                 <h4>${board.boardTitle}</h4>
+                                ${board.boardContent}
+                            </div>
+                        </c:forEach>
+    				</div>
+    				<div id="gesi4" onclick="location.href='/main/board/${board3.boardType}'">
+    				<h3>${board3.boardName}</h3>
+                        <c:forEach var="board" items="${boardList3}">
+                            <div id="gesi1Contents">
+                                 <h4>${board.boardTitle}</h4>
+                                ${board.boardContent}
+                            </div>
+                        </c:forEach>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
 
-		<div id="set3">
-			<div id="gesiSet1">
-				<div id="gesi1">
-                    <c:forEach var="board" items="${boardList0}">
-                        <div id="gesi1Contents">
-                            ${board.boardContent}
+    	<div id="outside2">
+    	    <%
+            	        if(request.getAttribute("hotBoard") == null)
+            	            System.out.println("null");
+            	    %>
+
+            	     <c:forEach var="board" items="${hotBoard}">
+                        <div id="hotGesipan" onclick="location.href='/main/board/${board.boardType}'">
+                            ${board.boardName}
                         </div>
-                    </c:forEach>
-				</div>
-				<div id="gesi2">
-                    <c:forEach var="board" items="${boardList1}">
-                        <div id="gesi1Contents">
-                            ${board.boardContent}
-                        </div>
-                    </c:forEach>
-				</div>
-			</div>
-		</div>
+            	    </c:forEach>
+    	</div>
+    </div>
+    <script>
 
-		<div id="set4">
-			<div id="gesiSet2">
-				<div id="gesi3">
-                    <c:forEach var="board" items="${boardList2}">
-                        <div id="gesi1Contents">
-                            ${board.boardContent}
-                        </div>
-                    </c:forEach>
-				</div>
-				<div id="gesi4">
-                    <c:forEach var="board" items="${boardList3}">
-                        <div id="gesi1Contents">
-                            ${board.boardContent}
-                        </div>
-                    </c:forEach>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div id="outside2">
-	    <%
-	        for(int i=0;i<10;i++)
-	        {
-	    %>
-	    <div id="hotGesipan">
-	    </div>
-	    <%
-	        }
-	    %>
-	</div>
-</div>
-<script>
-
-</script>
-</body>
-</html>
+    </script>
+    </body>
+    </html>
