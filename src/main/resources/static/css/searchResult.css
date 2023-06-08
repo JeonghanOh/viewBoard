@@ -1,101 +1,88 @@
 #nav1 {
-   background-color: #00ff00;
-   width: max;
-   height: 50px;
+	background-color: #00ff00;
+	width: max;
+	height: 50px;
 }
 
 #nav2 {
-   background-color: #ff0000;
-   width: max;
-   height: 50px;
+	background-color: #ff0000;
+	width: max;
+	height: 50px;
 }
 
 #logo {
-   float: left;
+	float: left;
 }
 
 #search {
-   float: right;
+	float: right;
 }
 
 #main {
-   margin: auto;
-   background-color: #00ffff;
-   width: 1000px;
-   height: 0px;
-   font-size:50px;
+	margin: auto;
+	background-color: #00ffff;
+	width: 1000px;
+	height: 2000px;
+	font-size:50px;
 }
 
 #result{
-   margin: auto;
-   width:100%;
-   height: 0px;
-   font-size: 30px;
+	margin: auto;
+	width:100%;
+	height: 1600px;
+	font-size: 30px;
 }
 
 #footer{
-   margin:auto;
-   width:100%;
-   height:0px;
-   font-size: 20px;
+	margin:auto;
+	width:100%;
+	height:400px;
+	font-size: 20px;
 }
 
 .resBox{
-   background-color:#0000ff;
-   width:100%;
-   height:150px;
-   cursor: pointer;
+	background-color:#0000ff;
+	width:100%;
+	height:150px;
 }
 
 .box{
-   background-color:#ff00ff;
-   width:800px;
-   height:150px;
-   margin:auto;
+	background-color:#ff00ff;
+	width:800px;
+	height:150px;
+	margin:auto;
 }
 
 #box1{
     background-color: #ffff00;
-   width: 100px;
-   height: 150px;
-   float:left;
-   text-overflow: ellipsis;  /* 위에 설정한 100px 보다 길면 말줄임표처럼 표시합니다. */
-   white-space  : nowrap;    /* 줄바꿈을 하지 않습니다. */
-   overflow     : hidden;    /* 내용이 길면 감춤니다 */
-   display      : block;     /* ie6이상 현재요소를 블럭처리합니다. */
+	width: 100px;
+	height: 150px;
+	float:left;
 }
 
 #box2{
-   width: 550px;
-   height: 150px;
-   float:left;
+	width: 550px;
+	height: 150px;
+	float:left;
 }
 
 #box2_1{
     background-color: #00ffff;
-   width: 550px;
-   height: 40px;
-   text-overflow: ellipsis;  /* 위에 설정한 100px 보다 길면 말줄임표처럼 표시합니다. */
-   white-space  : nowrap;    /* 줄바꿈을 하지 않습니다. */
-   overflow     : hidden;    /* 내용이 길면 감춤니다 */
-   display      : block;     /* ie6이상 현재요소를 블럭처리합니다. */
+	width: 550px;
+	height: 40px;
 }
 
 #box2_2{
     background-color: #00ff00;
-   width: 550px;
-   height: 110px;
-   text-overflow: ellipsis;  /* 위에 설정한 100px 보다 길면 말줄임표처럼 표시합니다. */
-   white-space  : nowrap;    /* 줄바꿈을 하지 않습니다. */
-   overflow     : hidden;    /* 내용이 길면 감춤니다 */
-   display      : block;     /* ie6이상 현재요소를 블럭처리합니다. */
+	width: 550px;
+	height: 110px;
 }
 
 #box3{
     background-color: #ff0000;
-   width: 150px;
-   height: 150px;
-   float:left;
+	width: 150px;
+	height: 150px;
+	float:left;
 }
   .article {
     max-width: 960px;
@@ -206,7 +193,7 @@
   }
 
   .search {
-     display:flex;
+  	display:flex;
   }
 
   .search_text {
@@ -512,21 +499,4 @@
   .text > a:hover {
       text-decoration: underline;
       font-weight: 600;
-  }
-
-  .pagination{
-      width: 100%;
-      display: flex;
-      justify-content: center;
-  }
-  .page{
-      padding: 0;
-      display: flex;
-
-  }
-  .page li{
-      margin: 0 5px;
-  }
-  .page li a {
-      color: #000;
   }

@@ -8,7 +8,3 @@ spring:
     url: jdbc:mysql://192.168.250.10/viewboard?characterEncoding=UTF-8&serverTimezone=UTC
     username: wns
     password: 1234
-  resources:
-    static-locations: classpath:/static/
-comm:
-  uploadPath: "C:\\Users\\admin\\Desktop\\viewBoard-master\\src\\main\\resources\\static\\img"

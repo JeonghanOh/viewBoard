@@ -23,4 +23,19 @@ public class WriteDTO {
     private int commentCount;
     private LocalDateTime boardDate;
 
+    public static WriteDTO toBoardDTO(BoardEntity boardEntity){
+        WriteDTO writeDTO = new WriteDTO();
+        writeDTO.setBoardType(boardEntity.getBoardType());
+        writeDTO.setBoardId(boardEntity.getBoardId());
+        writeDTO.setBoardTitle(boardEntity.getBoardTitle());
+        writeDTO.setBoardContent(boardEntity.getBoardContent());
+        writeDTO.setBoardImage(boardEntity.getBoardImage());
+        writeDTO.setBoardFile(boardEntity.getBoardFile());
+        writeDTO.setBoardLike(boardEntity.getBoardLike());
+        writeDTO.setBoardClick(boardEntity.getBoardClick());
+        writeDTO.setUserEmail(boardEntity.getUserEmail());
+        writeDTO.setCommentCount(boardEntity.getCommentCount());
+        writeDTO.setBoardDate(boardEntity.getBoardDate());
+        return writeDTO;
+    }
 }

@@ -19,7 +19,7 @@
 	<nav>
             <div class="top-nav">
                 <div class="top-nav-left">
-                    <a href="/main" class="color_w"><img src="/img/logo.png" style="width: 100px"></a>
+                    <a href="Home.jsp" class="color_w"><img src="resource/img/Logo.png" style="width: 100px"></a>
                 </div>
                 <div class="search">
                     <select onchange="search_()" id=change_select>
@@ -27,9 +27,8 @@
                         <option value="Title">제목 검색</option>
                         <option value="Story">작성자 검색</option>
                     </select>
-                    <form method="get" action="/main/searchResult">
+                    <form method="get" action="searchResult">
                         <input type="text" placeholder="검색어를 입력" class="serach_text" id="serach_form" name="query">
-                        <input type="hidden" name="page" value="0">
                         <button class="search_btn" type="submit">검색</button>
                     </form>
                 </div>
@@ -95,10 +94,6 @@
 			   <% if(user!=null){ %>
 			           <span><%=user.getUserName()%>님</span>
 			           <a href="/auth/logout">로그아웃</a><a>회원탈퇴</a>
-			               <form action="/auth/MyPage" method="get">
-                       			<input type="hidden" value="<%=user.getUserEmail()%>" name="UserEmail">
-                       			<button>마이 페이지</button>
-                       	   </form>
 			   <% } else{%>
 					<button onclick="location.href='/auth/login'">로그인</button>
 				<% } %>
@@ -108,8 +103,7 @@
 		<div id="set2">
 			<div id="best">
 			    <c:forEach var="board" items="${hotGesigeul}">
-			        <div class="best_detail1" onclick="location.href='/main/DetailBoard/${board.boardId}'">
-			            <h4>${board.boardTitle}</h4>
+			        <div class="best_detail1">
 			            ${board.boardContent}
 			        </div>
 			    </c:forEach>
@@ -118,20 +112,16 @@
 
 		<div id="set3">
 			<div id="gesiSet1">
-				<div id="gesi1" onclick="location.href='/main/board/${board0.boardType}'">
-				<h3>${board0.boardName}</h3>
+				<div id="gesi1">
                     <c:forEach var="board" items="${boardList0}">
                         <div id="gesi1Contents">
-                            <h4>${board.boardTitle}</h4>
                             ${board.boardContent}
                         </div>
                     </c:forEach>
 				</div>
-				<div id="gesi2" onclick="location.href='/main/board/${board1.boardType}'">
-				<h3>${board1.boardName}</h3>
+				<div id="gesi2">
                     <c:forEach var="board" items="${boardList1}">
                         <div id="gesi1Contents">
-                            <h4>${board.boardTitle}</h4>
                             ${board.boardContent}
                         </div>
                     </c:forEach>
@@ -141,20 +131,16 @@
 
 		<div id="set4">
 			<div id="gesiSet2">
-				<div id="gesi3" onclick="location.href='/main/board/${board2.boardType}'">
-				<h3>${board2.boardName}</h3>
+				<div id="gesi3">
                     <c:forEach var="board" items="${boardList2}">
                         <div id="gesi1Contents">
-                             <h4>${board.boardTitle}</h4>
                             ${board.boardContent}
                         </div>
                     </c:forEach>
 				</div>
-				<div id="gesi4" onclick="location.href='/main/board/${board3.boardType}'">
-				<h3>${board3.boardName}</h3>
+				<div id="gesi4">
                     <c:forEach var="board" items="${boardList3}">
                         <div id="gesi1Contents">
-                             <h4>${board.boardTitle}</h4>
                             ${board.boardContent}
                         </div>
                     </c:forEach>
@@ -165,15 +151,14 @@
 
 	<div id="outside2">
 	    <%
-        	        if(request.getAttribute("hotBoard") == null)
-        	            System.out.println("null");
-        	    %>
-
-        	     <c:forEach var="board" items="${hotBoard}">
-                    <div id="hotGesipan" onclick="location.href='/main/board/${board.boardType}'">
-                        ${board.boardName}
-                    </div>
-        	    </c:forEach>
+	        for(int i=0;i<10;i++)
+	        {
+	    %>
+	    <div id="hotGesipan">
+	    </div>
+	    <%
+	        }
+	    %>
 	</div>
 </div>
 <script>

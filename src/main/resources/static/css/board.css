@@ -2,223 +2,12 @@
     margin: 0;
     box-sizing: border-box;
 }
-nav {
-    background-color: #8987;
-    width: 100%;
-    height: 150px;
-}
-
-.top-nav {
-    width: 60%;
-    margin: auto;
-    height: 70px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.search {
-	display:flex;
-}
-
-.search_text {
-    width: 500px;
-    height: 30px;
-    border: 0;
-    border-radius: 6px;
-    margin-left:20px;
-    text-align: center;
-}
-
-.search_btn {
-    width: 50px;
-    height: 30px;
-    border: none;
-    border-radius: 6px;
-}
-
-.top-nav-left {
-    margin-left: 50px;
-    color: white;
-}
-
-.top-nav-right > ul > li{
-    color: white;
-}
-
-.top-nav-right > ul > li > a{
-    color: white;
-}
-
-.bot {
-    width: 60%;
-    height: 80px;
-    margin: auto;
-}
-
-.bot-nav {
-    height: 80px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.w150 {
-    width: 150px;
-    font-weight:600;
-    font-size:18px;
-    text-align: center;
-    color: white;
-}
-
-.bot:hover ~ .hide-nav{
-    display:flex;
-}
-
-.hide-nav:hover {
-    display: flex;
-}
-
-.hide-nav {
-    position: relative;
-    height: 270px;
-    display: none;
-    justify-content: space-around;
-    z-index: 5;
-    background-color: rgba(150, 150, 150, 0.9);
-}
-
-.hide_nav_width {
-    width: 60%;
-    margin: auto;
-    display: flex;
-    justify-content: space-around;
-}
-
-.around {
-    width: 150px;
-}
-
-.pt20 {
-    height: 30px;
-    text-align: center;
-    padding-top: 20px;
-    color: white;
-    font-size: 15px;
-    font-weight: 550;
-}
 ul{
     list-style: none;
 }
 a{
     text-decoration: none;
     color: #999;
-}
-
-nav {
-    background-color: #8987;
-    width: 100%;
-    height: 150px;
-}
-
-.top-nav {
-    width: 60%;
-    margin: auto;
-    height: 70px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.search {
-	display:flex;
-}
-
-.search_text {
-    width: 500px;
-    height: 30px;
-    border: 0;
-    border-radius: 6px;
-    margin-left:50px;
-    text-align: center;
-}
-
-.search_btn {
-    width: 50px;
-    height: 30px;
-    border: none;
-    border-radius: 6px;
-}
-
-.top-nav-left {
-    margin-left: 50px;
-    color: white;
-}
-
-.top-nav-right > ul > li{
-    color: white;
-}
-
-.top-nav-right > ul > li > a{
-    color: white;
-}
-
-.bot {
-    width: 60%;
-    height: 80px;
-    margin: auto;
-}
-
-.bot-nav {
-    height: 80px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.w150 {
-    width: 150px;
-    font-weight:600;
-    font-size:18px;
-    text-align: center;
-    color: white;
-}
-
-.bot:hover ~ .hide-nav{
-    display:flex;
-}
-
-.hide-nav:hover {
-    display: flex;
-}
-
-.hide-nav {
-    position: relative;
-    height: 270px;
-    display: none;
-    justify-content: space-around;
-    z-index: 5;
-    background-color: rgba(150, 150, 150, 0.9);
-}
-
-.hide_nav_width {
-    width: 60%;
-    margin: auto;
-    display: flex;
-    justify-content: space-around;
-}
-
-.around {
-    width: 150px;
-}
-
-.pt20 {
-    height: 30px;
-    text-align: center;
-    padding-top: 20px;
-    color: white;
-    font-size: 15px;
-    font-weight: 550;
 }
 
 .wrapper{
@@ -249,18 +38,6 @@ nav {
 .boardtitle h1{
     line-height: 150px;
 }
-.about{
-   position:relative;
-}
-.about button{
-    position:absolute;
-    right:-40px;
-    top:0;
-    background:none;
-    border:none;
-    cursor:pointer;
-    font-size:30px;
-}
 .about p{
     line-height: 150px;
 }
@@ -278,42 +55,17 @@ nav {
 .right{
     margin-left: 20px;
     width: 270px;
-    height: 100%;
+    height: 30%;
     display: flex;
     flex-direction: column;
 }
 .login{
     padding: 20px;
     width: 100%;
-    height: 30%;
-}
-.login p{
-    font-size: 15px;
-    padding: 3px;
-    text-align: center;
-}
-.login ul{
-    margin-top: 15px;
-    display: flex;
-    justify-content: space-between;
-}
-.login ul li{
-    font-size: 13px;
+    height: 100%;
 }
 .ad{
     padding: 20px;
-    height: 70%;
-}
-.ad ul{
-    padding:0;
-    text-align:center;
-}
-.ad ul li{
-padding: 5px 0;
- }
-.ad h3{
-    text-align:center;
-    padding-bottom:20px;
 }
 
 .login #signin{
@@ -326,13 +78,11 @@ padding: 5px 0;
     font-weight: bold;
     border-radius: 10px;
     background-color: #8B9A80;
-    cursor:pointer;
 }
 .login ul{
     padding: 0;
     text-align: center;
 }
-
 .login a{
     color: #888;
 }

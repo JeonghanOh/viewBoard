@@ -34,14 +34,9 @@ public class AuthController {
             model.addAttribute("errors", errors);
             return "signup";
         }
-        ResponseDto<?> result = authService.memberInsert(dto);
-        if(result.isResult()==true){
-            redirectAttributes.addFlashAttribute("message", "회원 가입이 완료되었습니다.");
-            return "redirect:/auth/login";
-        }else{
-            return "signup";
-        }
-
+        authService.memberInsert(dto);
+        redirectAttributes.addFlashAttribute("message", "회원 가입이 완료되었습니다.");
+        return "redirect:/main";
     }
     @PostMapping("/loginResult")
     public String login(@ModelAttribute SignInDto dto, HttpSession session){

@@ -14,19 +14,19 @@ import java.util.Map;
 @Service
 public class AuthService {
     @Autowired UserRepository userRepository;
-    public ResponseDto<?> memberInsert(SignUpDto dto){
+    public void memberInsert(SignUpDto dto){
         String email = dto.getUserEmail();
         String password = dto.getUserPassword();
         String passwordChk = dto.getUserPasswordChk();
         try{
             if(userRepository.existsByUserEmail(email)){
-                return ResponseDto.setFailed("중복된 이메일 입니다.");
+                throw new IllegalStateException("이미 존재하는 이메일입니다.");
             }
         }catch (Exception e){
             e.printStackTrace();
         }
         if(!password.equals(passwordChk)) {
-            return ResponseDto.setFailed("비밀번호가 일치하지 않습니다.");
+            throw new IllegalStateException("비밀번호가 일치하지 않습니다");
         }
         UserEntity user = new UserEntity(dto);
         try{
@@ -34,7 +34,6 @@ public class AuthService {
         }catch(Exception e){
             e.printStackTrace();
         }
-        return ResponseDto.setSuccess("회원가입 성공",null);
     }
 
     public ResponseDto<SignInResponseDto> signIn(SignInDto dto){
@@ -75,18 +74,17 @@ public class AuthService {
     public void deleteUser(DeleteDto dto){
         String email = dto.getUserEmail();
         String password = dto.getUserPassword();
-        System.out.println(email + password);
         UserEntity user;
         user =userRepository.findByUserEmail(email);
         try{
             if(email!=null && user.getUserPassword().equals(password)){
                 userRepository.deleteByUserEmail(email);
-            }else if(!user.getUserPassword().equals(password)){
+            }else{
                 throw new RuntimeException("비밀번호가 일치하지 않습니다");
             }
         }catch(Exception e){
             e.printStackTrace();
-
+            throw new RuntimeException("Database Error");
         }
 
     }

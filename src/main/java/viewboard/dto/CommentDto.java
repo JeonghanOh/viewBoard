@@ -3,6 +3,7 @@ package viewboard.dto;
 import lombok.*;
 
 @Data
+@ToString
 @NoArgsConstructor
 public class CommentDto {
     private int commentId;
