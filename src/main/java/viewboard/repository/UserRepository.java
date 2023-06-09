@@ -23,4 +23,9 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     @Modifying
     @Transactional
     public void FixNickname(String NickName, String email);
+
+    @Query(value="update user set board_count = board_count + 1 where user_email = ?1",nativeQuery = true)
+    @Modifying
+    @Transactional
+    public void increaseCount(String email);
 }

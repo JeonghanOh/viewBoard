@@ -13,55 +13,58 @@ import java.util.Map;
 
 @Service
 public class AuthService {
-    @Autowired UserRepository userRepository;
-    public ResponseDto<?> memberInsert(SignUpDto dto){
+    @Autowired
+    UserRepository userRepository;
+
+    public ResponseDto<?> memberInsert(SignUpDto dto) {
         String email = dto.getUserEmail();
         String password = dto.getUserPassword();
         String passwordChk = dto.getUserPasswordChk();
-        try{
-            if(userRepository.existsByUserEmail(email)){
+        try {
+            if (userRepository.existsByUserEmail(email)) {
                 return ResponseDto.setFailed("중복된 이메일 입니다.");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        if(!password.equals(passwordChk)) {
+        if (!password.equals(passwordChk)) {
             return ResponseDto.setFailed("비밀번호가 일치하지 않습니다.");
         }
         UserEntity user = new UserEntity(dto);
-        try{
+        try {
             userRepository.save(user);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return ResponseDto.setSuccess("회원가입 성공",null);
+        return ResponseDto.setSuccess("회원가입 성공", null);
     }
 
-    public ResponseDto<SignInResponseDto> signIn(SignInDto dto){
+    public ResponseDto<SignInResponseDto> signIn(SignInDto dto) {
         String id = dto.getId();
-        String password= dto.getPassword();
+        String password = dto.getPassword();
 
 
         UserEntity userentity = null;
         try {
             userentity = userRepository.findByUserEmail(id);
 //			잘못된 이메일
-            if(userentity == null) return ResponseDto.setFailed("sign in failed");
+            if (userentity == null) return ResponseDto.setFailed("sign in failed");
 //			잘못된 패스워드
-            if(!password.equals(userentity.getUserPassword())) {
+            if (!password.equals(userentity.getUserPassword())) {
                 return ResponseDto.setFailed("sign in failed");
             }
 
-        }catch(Exception error) {
+        } catch (Exception error) {
             return ResponseDto.setFailed("Database Error");
         }
         userentity.setUserPassword("");
 
         int exprTime = 3600000;
 
-        SignInResponseDto signInResponseDto = new SignInResponseDto(exprTime,userentity);
-        return ResponseDto.setSuccess("sign in success !",signInResponseDto);
+        SignInResponseDto signInResponseDto = new SignInResponseDto(exprTime, userentity);
+        return ResponseDto.setSuccess("sign in success !", signInResponseDto);
     }
+
     public Map<String, String> validateHandle(Errors errors) {
         Map<String, String> validatorResult = new HashMap<>();
 
@@ -72,19 +75,19 @@ public class AuthService {
         return validatorResult;
     }
 
-    public void deleteUser(DeleteDto dto){
+    public void deleteUser(DeleteDto dto) {
         String email = dto.getUserEmail();
         String password = dto.getUserPassword();
         System.out.println(email + password);
         UserEntity user;
-        user =userRepository.findByUserEmail(email);
-        try{
-            if(email!=null && user.getUserPassword().equals(password)){
+        user = userRepository.findByUserEmail(email);
+        try {
+            if (email != null && user.getUserPassword().equals(password)) {
                 userRepository.deleteByUserEmail(email);
-            }else if(!user.getUserPassword().equals(password)){
+            } else if (!user.getUserPassword().equals(password)) {
                 throw new RuntimeException("비밀번호가 일치하지 않습니다");
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -92,7 +95,7 @@ public class AuthService {
     public void ChangeNick(String nickname, String email) {
         try {
             userRepository.FixNickname(nickname, email);
-        } catch (Exception error){
+        } catch (Exception error) {
             error.printStackTrace();
         }
     }

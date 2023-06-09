@@ -24,120 +24,132 @@ import java.util.Map;
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
-    @Autowired AuthService authService;
-    @Autowired FindService findService;
-    @Autowired UserService userService;
-    @Autowired BoardService boardService;
+    @Autowired
+    AuthService authService;
+    @Autowired
+    FindService findService;
+    @Autowired
+    UserService userService;
+    @Autowired
+    BoardService boardService;
 
     @GetMapping("/signup")
-    public String signUpHome(){
+    public String signUpHome() {
         return "signup";
     }
+
     @PostMapping("/signup")
-    public String signUp(@Validated @ModelAttribute SignUpDto dto, Errors errors, Model model, RedirectAttributes redirectAttributes){
-        if(errors.hasErrors()){
-            model.addAttribute("dto",dto);
-            Map<String,String> validatorResult = authService.validateHandle(errors);
-            for(String key : validatorResult.keySet()){
-                model.addAttribute(key,validatorResult.get(key));
+    public String signUp(@Validated @ModelAttribute SignUpDto dto, Errors errors, Model model, RedirectAttributes redirectAttributes) {
+        if (errors.hasErrors()) {
+            model.addAttribute("dto", dto);
+            Map<String, String> validatorResult = authService.validateHandle(errors);
+            for (String key : validatorResult.keySet()) {
+                model.addAttribute(key, validatorResult.get(key));
             }
             model.addAttribute("errors", errors);
             return "signup";
         }
         ResponseDto<?> result = authService.memberInsert(dto);
-        if(result.isResult()==true){
+        if (result.isResult() == true) {
             redirectAttributes.addFlashAttribute("message", "회원 가입이 완료되었습니다.");
             return "redirect:/auth/login";
-        }else{
+        } else {
             return "signup";
         }
 
     }
+
     @PostMapping("/loginresult")
-    public String login(@ModelAttribute SignInDto dto, HttpSession session){
+    public String login(@ModelAttribute SignInDto dto, HttpSession session) {
         ResponseDto<SignInResponseDto> res = authService.signIn(dto);
 
-        if(res.isResult()==true){
-            session.setAttribute("login",res.getData().getUser());
+        if (res.isResult() == true) {
+            session.setAttribute("login", res.getData().getUser());
             return "redirect:/main";
-        }
-        else{
+        } else {
             return "login";
         }
     }
+
     @PostMapping("/cancel")
-    public String cancelUser(DeleteDto dto){
+    public String cancelUser(DeleteDto dto) {
         authService.deleteUser(dto);
         return "/secession";
     }
+
     @GetMapping("/login")
-    public String signIn(){
+    public String signIn() {
         return "login";
     }
+
     @GetMapping("/service")
-    public String viewfind(){
+    public String viewfind() {
         return "authservice";
     }
 
     @PostMapping("/findid")
-    public String findEmail(FindDto dto, Model model){
-        String email= findService.findId(dto);
-        if(email=="" || email == null){
-            model.addAttribute("find","해당하는계정이 없습니다.");
+    public String findEmail(FindDto dto, Model model) {
+        String email = findService.findId(dto);
+        if (email == "" || email == null) {
+            model.addAttribute("find", "해당하는계정이 없습니다.");
             return "authservice";
         }
-        model.addAttribute("find",email);
+        model.addAttribute("find", email);
         return "id_finder";
     }
+
     @PostMapping("/findpw")
-    public String findPassword(FindDto dto, Model model){
-        String password= findService.findPassword(dto);
-        if(password=="" || password == null){
-            model.addAttribute("find","해당하는계정이 없습니다.");
+    public String findPassword(FindDto dto, Model model) {
+        String password = findService.findPassword(dto);
+        if (password == "" || password == null) {
+            model.addAttribute("find", "해당하는계정이 없습니다.");
             return "authservice";
         }
-        model.addAttribute("find",password);
+        model.addAttribute("find", password);
         return "pw_finder";
     }
+
     @GetMapping("/logout")
-    public String logout(HttpSession session){
+    public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/main";
     }
+
     @GetMapping("/findid")
-    public String viewId(){
+    public String viewId() {
         return "id_finder";
     }
 
     @GetMapping("/findpw")
-    public String viewPw(){
+    public String viewPw() {
         return "pw_finder";
     }
+
     @GetMapping("/secession")
-    public String viewSecession(){
+    public String viewSecession() {
         return "secession";
     }
 
     @GetMapping("/mypage")
-    public String MyPage(@RequestParam("UserEmail") String email, Model model, @PageableDefault(page=0,size = 3,direction = Sort.Direction.DESC) Pageable pageable) {
+    public String MyPage(@RequestParam("UserEmail") String email, Model model, @PageableDefault(page = 0, size = 3, direction = Sort.Direction.DESC) Pageable pageable) {
         Page<BoardEntity> list = boardService.getMyBoardList(email, pageable);
-        int nowPag = list.getPageable().getPageNumber()+1;
-        int startPag = Math.max(nowPag - 4,1);
-        int endPag = Math.min(nowPag + 5,list.getTotalPages());
-        model.addAttribute("nowpage",nowPag);
-        model.addAttribute("startpage",startPag);
-        model.addAttribute("endpage",endPag);
+        int nowPag = list.getPageable().getPageNumber() + 1;
+        int startPag = Math.max(nowPag - 4, 1);
+        int endPag = Math.min(nowPag + 5, list.getTotalPages());
+        model.addAttribute("nowpage", nowPag);
+        model.addAttribute("startpage", startPag);
+        model.addAttribute("endpage", endPag);
         model.addAttribute("Title", list.getContent());
-        model.addAttribute("favorite",userService.favBoard(email));
+        model.addAttribute("favorite", userService.favBoard(email));
 
-        return "MyPage";
+        return "mypage";
     }
 
     @PostMapping("/mypage")
-    public String changeNick(@RequestParam("UserNickName") String NickName ,@RequestParam("UserEmail") String email, Model model){
-        authService.ChangeNick(NickName , email);
+    public String changeNick(@RequestParam("UserNickName") String NickName, @RequestParam("UserEmail") String email, Model model) {
+        authService.ChangeNick(NickName, email);
         model.addAttribute("FixName", NickName);
-        return "MyPage";
+        return "mypage";
     }
 
 }

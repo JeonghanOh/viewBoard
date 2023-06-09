@@ -1,6 +1,20 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing:border-box;
+}
+
+ul {
+  list-style: none;
+}
+
+a{
+    text-decoration:none;
+    color:black;
+}
+
+a:hover {
+    text-decoration:underline;
 }
 
 table {
@@ -27,6 +41,11 @@ td {
     padding: 10px;
 }
 
+h3 {
+    margin-bottom:20px;
+    color: #9C3646;
+}
+
 .btn_another_width {
     width: 100%;
 }
@@ -48,7 +67,7 @@ td {
 }
 
 nav {
-    background-color: #8987;
+    background-color: #EDEDED;
     width: 100%;
     height: 150px;
 }
@@ -71,7 +90,6 @@ nav {
     height: 30px;
     border: 0;
     border-radius: 6px;
-    margin-left:50px;
     text-align: center;
 }
 
@@ -83,7 +101,6 @@ nav {
 }
 
 .top-nav-left {
-    margin-left: 50px;
     color: white;
 }
 
@@ -113,7 +130,7 @@ nav {
     font-weight:600;
     font-size:18px;
     text-align: center;
-    color: white;
+    color: #9C3646;
 }
 
 .bot:hover ~ .hide-nav{
@@ -159,20 +176,24 @@ button:hover {
 
 .bodyContainer {
     width: 1000px;
-    margin: auto;
-    background-color: pink;
+    margin: 50px auto;
+    border:3px solid gray;
+    box-shadow : 3px 3px 3px 3px;
+    border-radius:10px;
     display: flex;
 }
 
 .content {
     width: 75%;
     margin: 10px;
-    background-color: aquamarine;
+    border-radius:10px;
 }
 
 .content_title {
     height: 150px;
-    background-color: bisque;
+    border:2px solid gray;
+    border-radius:5px;
+    box-shadow : 3px 3px 3px;
     padding: 10px;
 }
 
@@ -184,6 +205,11 @@ button:hover {
     line-height: 1;
 }
 
+#title_font {
+    font-size:18px;
+    font-weight:500;
+}
+
 .title_detail {
     display: flex;
     justify-content: space-between;
@@ -192,13 +218,15 @@ button:hover {
 
 .Write_info {
     display: flex;
-    width: 450px;
+    width: 500px;
+    font-size:14px;
 }
 
 .Board_info {
     display: flex;
-    width: 500px;
+    width: 350px;
     justify-content: flex-end;
+    font-size:12px;
 }
 
 .ml20 {
@@ -206,8 +234,9 @@ button:hover {
 }
 
 .content_body {
-    height: 500px;
-    background-color: bisque;
+    border:2px solid gray;
+    border-radius:5px;
+    box-shadow : 3px 3px 3px;
     margin: 30px 0;
     padding: 10px;
 }
@@ -218,9 +247,11 @@ button:hover {
 
 .main_text {
     width: 95%;
+    height: 300px;
     margin: auto;
     background-color: antiquewhite;
-    padding: 5px 10px;
+    word-wrap: break-word;
+    padding: 0 10px;
 }
 
 .Liky_btn {
@@ -236,14 +267,21 @@ button:hover {
 }
 
 .input_comment {
-    height: 150px;
-    background-color: bisque;
+    height: 170px;
     padding: 10px;
+    margin-top:20px;
+    border:2px solid gray;
+    border-radius:5px;
+    box-shadow :3px 3px 3px;
+}
+
+#write_btn {
+    float:right;
 }
 
 .comment_list {
-    background-color: gray;
     margin-top:30px;
+    border:1px solid black;
 }
 
 #liked_btn:hover{
@@ -252,6 +290,9 @@ button:hover {
 
 .list_container {
     padding: 10px;
+     border:2px solid gray;
+     border-radius:5px;
+     box-shadow : 3px 3px 3px;
 }
 
 .tr_width {
@@ -333,6 +374,10 @@ button:hover {
 .Arrow_btn {
     justify-content: space-around;
     align-items: center;
+    border:2px solid gray;
+    border-radius:5px;
+    box-shadow : 3px 3px 3px;
+    padding:10px;
 }
 
 .seq > a {
@@ -351,19 +396,58 @@ button:hover {
 }
 
 .login {
-    height: 250px;
-    background-color: gray;
+    height: 150px;
+    border:1px solid black;
     margin: 10px;
+    border:2px solid gray;
+    border-radius:5px;
+    box-shadow : 3px 3px 3px;
+}
+
+.Before_login {
+    width:90%;
+    margin:auto;
+    text-align:center;
+}
+
+.Before_login > ul > li {
+    margin-top:8px;
+}
+
+.After_login {
+    padding-left: 3px;
+}
+
+#signin {
+    width:90%;
+    height:40px;
+    margin: 10px auto;
+    text-align:center;
+    background: #9c3646;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+    border: none;
+}
+
+.after_login > ul > li {
+    margin-top:8px;
 }
 
 .hot_board {
     margin: 30px 10px;
-    background-color: gray;
+    border:2px solid gray;
+    border-radius:5px;
+    box-shadow : 3px 3px 3px;
 }
 
 .text_width {
     width: 90%;
     margin: 10px auto;
+}
+
+.text_width > ul > li {
+    margin-top:5px;
 }
 
 .text {

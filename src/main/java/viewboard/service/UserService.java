@@ -19,14 +19,15 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public UserEntity userInfo(String email){
+    public UserEntity userInfo(String email) {
         UserEntity user = userRepository.findByUserEmail(email);
         user.setUserPassword("");
         System.out.println(user);
         return user;
     }
-    public List<BoardTypeDto> favBoard(String email){
-        List<BoardTypeEntity> list =boardRepository.favoriteBoard(email) ;
+
+    public List<BoardTypeDto> favBoard(String email) {
+        List<BoardTypeEntity> list = boardRepository.favoriteBoard(email);
         List<BoardTypeDto> dtoList = new ArrayList<>();
         for (BoardTypeEntity entity : list) {
             BoardTypeDto dto = new BoardTypeDto();

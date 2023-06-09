@@ -8,10 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import viewboard.dto.FavoriteDto;
 import viewboard.dto.LikedDto;
 import viewboard.dto.WriteDTO;
-import viewboard.entity.BoardEntity;
-import viewboard.entity.BoardTypeEntity;
-import viewboard.entity.FavoriteEntity;
-import viewboard.entity.LikedEntity;
+import viewboard.entity.*;
 import viewboard.repository.BoardRepository;
 import viewboard.repository.DetailRepository;
 import viewboard.repository.FavoriteRepository;
@@ -26,20 +23,24 @@ import java.util.UUID;
 @Service
 @Transactional
 public class BoardService {
-    @Autowired DetailRepository detailRepository;
-    @Autowired BoardRepository boardRepository;
+    @Autowired
+    DetailRepository detailRepository;
+    @Autowired
+    BoardRepository boardRepository;
     @Autowired
     LikedRepository likedRepository;
     @Autowired
     FavoriteRepository favoriteRepository;
-    public Page<BoardEntity> getList(int type, Pageable pageable){
-        return detailRepository.findByBoardType(type,pageable);
+
+    public Page<BoardEntity> getList(int type, Pageable pageable) {
+        return detailRepository.findByBoardType(type, pageable);
     }
-    public List<BoardEntity> getHotboard(int type){
+
+    public List<BoardEntity> getHotboard(int type) {
         List<BoardEntity> boardList = new ArrayList<BoardEntity>();
-        try{
+        try {
             boardList = detailRepository.liveHot(type);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Database Error");
         }
@@ -47,33 +48,34 @@ public class BoardService {
         return boardList;
     }
 
-    public Long counting(int type){
+    public Long counting(int type) {
         long count = 0;
-        try{
-             count = detailRepository.countByBoardType(type);
-        }catch (Exception e){
+        try {
+            count = detailRepository.countByBoardType(type);
+        } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Database Error");
         }
         return count;
     }
-    public BoardTypeEntity getBoardType(int type){
+
+    public BoardTypeEntity getBoardType(int type) {
         BoardTypeEntity typeInfo;
-        try{
+        try {
             typeInfo = boardRepository.findByboardType(type);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Database Error");
         }
         return typeInfo;
     }
 
-    public List<BoardTypeEntity>HotBoardType(){
+    public List<BoardTypeEntity> HotBoardType() {
         List<BoardTypeEntity> list = boardRepository.getHotBoardName();
         return list;
     }
 
-    public void increaseView(int id){
+    public void increaseView(int id) {
         detailRepository.UpView(id);
     }
 
@@ -96,38 +98,44 @@ public class BoardService {
     }
 
     @Transactional
-    public void likeview(int id){
+    public void likeview(int id) {
         likedRepository.Uplike(id);
     }
 
-    public boolean isLiked(LikedDto likedDto){
-        if (likedRepository.existsById(likedDto.getBoardId())){
+    public boolean isLiked(LikedDto likedDto) {
+        if (likedRepository.existsById(likedDto.getBoardId())) {
             return false;
         } else {
             return true;
         }
     }
 
-    public Page<BoardEntity> getMyBoardList(String email, Pageable pageable){
-        System.out.println("service " + detailRepository.findByUserEmail(email,pageable));
-        return detailRepository.findByUserEmail(email,pageable);
+    public Page<BoardEntity> getMyBoardList(String email, Pageable pageable) {
+        System.out.println("service " + detailRepository.findByUserEmail(email, pageable));
+        return detailRepository.findByUserEmail(email, pageable);
     }
 
-    public void addFavorite(FavoriteDto dto){
+    public void addFavorite(FavoriteDto dto) {
         String email = dto.getUserEmail();
         int type = dto.getBoardType();
 
-        if(favoriteRepository.existsByFavoriteDtoUserEmailAndFavoriteDtoBoardType(email,type)){
-            favoriteRepository.deleteByFavoriteDtoUserEmailAndFavoriteDtoBoardType(email,type);
-        }else{
-            FavoriteEntity fav= new FavoriteEntity(dto);
+        if (favoriteRepository.existsByFavoriteDtoUserEmailAndFavoriteDtoBoardType(email, type)) {
+            favoriteRepository.deleteByFavoriteDtoUserEmailAndFavoriteDtoBoardType(email, type);
+        } else {
+            FavoriteEntity fav = new FavoriteEntity(dto);
             favoriteRepository.save(fav);
         }
     }
 
-    public List<BoardTypeEntity> selectAllBoardType(){
+    public List<BoardTypeEntity> selectAllBoardType() {
         List<BoardTypeEntity> list = boardRepository.getAllBoardName();
         return list;
+    }
+
+    public boolean isFavorite(int type, UserEntity user) {
+        String email = user.getUserEmail();
+        boolean isfav = favoriteRepository.existsByFavoriteDtoUserEmailAndFavoriteDtoBoardType(email, type);
+        return isfav;
     }
 }
 

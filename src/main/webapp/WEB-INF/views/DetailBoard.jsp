@@ -18,7 +18,7 @@
      var currentPage = 2;
    function moreList(boardId) {
        $.ajax({
-           url: "/main/Detail",
+           url: "/main/detail",
            type: "Post",
            cache: false,
            dataType: 'json',
@@ -66,11 +66,11 @@
           var like_view = $('#liked_btn');
           var likeCount = parseInt(likeCountElement.text());
           if (isLiked) {
-             likeCount++;
-             like_view.text("좋아요 - 1");
-          } else {
              likeCount--;
              like_view.text("좋아요 + 1");
+          } else {
+             likeCount++;
+             like_view.text("좋아요 - 1");
           }
           likeCountElement.text(likeCount);
         },
@@ -79,6 +79,23 @@
         }
       });
    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var div = document.getElementById('main_text');
+        var contentHeight = div.scrollHeight;
+
+        if (contentHeight > 400) {
+            div.style.overflow = 'hidden';
+            div.style.height = '400px';
+            div.style.overflowX = 'hidden';
+        } else {
+            div.style.overflow = 'visible';
+            div.style.height = '300px';
+            div.style.overflowX = 'auto';
+        }
+    });
+
+
      </script>
  </head>
  <body>
@@ -89,19 +106,15 @@
      <nav>
          <div class="top-nav">
              <div class="top-nav-left">
-                 <a href="/main" class="color_w"><img src="resource/img/Logo.png" style="width: 100px"></a>
+                 <a href="/main" class="color_w"><img src="/img/logo.png" style="width: 150px"></a>
              </div>
-             <div class="serach">
-                 <select onchange="search_()" id=change_select>
-                     <option disabled="disabled" selected="selected">검색 조건</option>
-                     <option value="Title">제목 검색</option>
-                     <option value="Story">작성자 검색</option>
-                 </select>
-                 <form method="post" action="search_input">
-                     <input type="text" placeholder="검색어를 입력" class="serach_text" id="serach_form">
-                     <button class="search_btn" type="submit">검색</button>
-                 </form>
-             </div>
+             <div class="search">
+                                 <form method="get" action="/main/searchresult">
+                                     <input type="text" placeholder="검색어를 입력" class="search_text" id="search_form" name="query">
+                                     <input type="hidden" name="page" value="0">
+                                     <button class="search_btn" type="submit">검색</button>
+                                 </form>
+                             </div>
              <div class="top-nav-right">
                  <% if(user!=null){ %>
                 			           <span><%=user.getUserName()%>님</span>
@@ -163,7 +176,7 @@
                      <h3>${type.boardName} 게시판</h3>
                  </div>
                  <div class="main_title">
-                      글 제목 : ${board.boardTitle}
+                     <div id="title_font">글 제목 : ${board.boardTitle} </div>
                      <div class="title_detail">
                          <div class="Write_info">
                              <div>작성자 명 : ${board.userEmail}</div>
@@ -172,14 +185,14 @@
                          <div class="Board_info">
                              <div>조회수 : ${board.boardClick}</div>
                              <div class="ml20">좋아요 수 : ${board.boardLike}</div>
-                             <div class="ml20">댓글 : 3</div>
+                             <div class="ml20">댓글 : ${count}</div>
                          </div>
                      </div>
                  </div>
              </div>
              <div class="content_body">
                  <h3>본문</h3>
-                 <div class="main_text">
+                 <div class="main_text" id="main_text">
                      ${board.boardContent}
                  </div>
                  <div class="Liky_btn">
@@ -193,7 +206,7 @@
                  <div class="like-count">${board.boardLike}</div>
                  </div>
                     <% } else{%>
-                    <a href="auth/login">로그인</a>
+                    <a href="/auth/login">로그인</a>
                     <% } %>
                  </div>
              </div>
@@ -232,7 +245,7 @@
                      <input value="${board.boardId}" type="hidden" name="boardId">
                      <input type="hidden" value="${board.userEmail}" name="userEmail">
                      <textarea rows="4" class="comment_text" name="commentContent"></textarea>
-                     <button type="submit">작성하기</button>
+                     <button type="submit" id="write_btn">작성하기</button>
                  </div>
                   </form>
              </div>
@@ -262,14 +275,32 @@
          </div>
          <div class="side_bar">
              <div class="login">
-                 *** 님
+                 <% if(user==null){ %>
+                    <div class="Before_login">
+                         <button type="button" id="signin" onclick="location.href='/auth/login'">로그인</button>
+                               <ul>
+                                   <li><a href="/auth/signup">회원가입</a></li>
+                                   <li><a href="/auth/service">이메일/비밀번호 찾기</a></li>
+                               </ul>
+                    </div>
+                 <% } else {%>
+                    <div class="After_login">
+                         <p><strong><%=user.getUserName()%></strong>님</p>
+                         <p>작성한 게시물 : 100개</p>
+                         <p><a href="#">마이페이지</a></p>
+                         <ul>
+                             <li><a href="/auth/logout">로그아웃</a></li>
+                             <li><a href="/auth/service">회원탈퇴</a></li>
+                         </ul>
+                    </div>
+                 <% } %>
              </div>
              <div class="hot_board">
                  <h4>개발 게시판 베스트 글</h4>
                  <div class="text_width">
                       <ul>
                            <c:forEach var="hot" items="${hotBoard}">
-                                <li><a href="#">${hot.boardTitle}</a></li>
+                                <li><a href="/main/detailboard/${hot.boardId}">${hot.boardTitle}</a></li>
                            </c:forEach>
                       </ul>
                  </div>

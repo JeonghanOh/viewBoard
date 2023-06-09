@@ -10,21 +10,31 @@ import viewboard.repository.CommentRepository;
 @Service
 @RequiredArgsConstructor
 public class CommentService {
-        @Autowired
-        CommentRepository commentRepository;
+    @Autowired
+    CommentRepository commentRepository;
 
-        public void Commentinsert(CommentDto dto) {
-            CommentEntity comment = new CommentEntity(dto);
-            commentRepository.save(comment);
-        }
-
-        public CommentEntity getcomment(int Id){
-            CommentEntity commentEntity = null;
-            try {
-                commentEntity = commentRepository.findBycommentId(Id);
-            } catch (Exception error) {
-                error.printStackTrace();
-            }
-            return commentEntity;
-        }
+    public void Commentinsert(CommentDto dto) {
+        CommentEntity comment = new CommentEntity(dto);
+        commentRepository.save(comment);
     }
+
+    public CommentEntity getcomment(int Id) {
+        CommentEntity commentEntity = null;
+        try {
+            commentEntity = commentRepository.findBycommentId(Id);
+        } catch (Exception error) {
+            error.printStackTrace();
+        }
+        return commentEntity;
+    }
+
+    public int CommentCount(int Id) {
+        int count = 0;
+        try {
+            count = commentRepository.selectCount(Id);
+        } catch (Exception error) {
+            error.printStackTrace();
+        }
+        return count;
+    }
+}

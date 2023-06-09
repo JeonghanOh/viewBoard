@@ -9,11 +9,11 @@ import java.util.Set;
 @Service
 public class RandomService {
 
-    public Set<Integer> getGesipanSet(BoardRepository boardRepository){
+    public Set<Integer> getGesipanSet(BoardRepository boardRepository) {
         int maxType = boardRepository.getMaxBoard_type();
         Set<Integer> set = new HashSet<Integer>();
-        while(set.size() < 4){
-            int type = (int)(Math.random()*maxType)+1;
+        while (set.size() < 4) {
+            int type = (int) (Math.random() * maxType) + 1;
             set.add(type);
             System.out.println("type : " + type);
         }

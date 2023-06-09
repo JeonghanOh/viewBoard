@@ -1,15 +1,6 @@
-#nav1 {
 
-	width: max;
-	height: 50px;
-}
 *{
 box-sizing:border-box;
-}
-#nav2 {
-
-	width: max;
-	height: 50px;
 }
 
 #logo {
@@ -151,14 +142,15 @@ box-sizing:border-box;
 
 #main {
 	margin: auto;
-	border:1px solid #e8e8e8;
+	box-shadow: 0 2px 4px rgba(138, 0, 46, 0.4);
 	width: 1000px;
 	height: 1800px;
     float:left;
 }
 
 .best_detail1{
-    border: 5px solid #e8e8e8;
+    box-shadow: 0 2px 4px rgba(138, 0, 46, 0.4);
+    padding:15px;
     width: 440px;
     height: 70px;
     float:left;

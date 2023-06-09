@@ -15,4 +15,7 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
 
     @Query(value = "SELECT * FROM comment WHERE comment.board_id = :boardId ORDER BY comment_id DESC LIMIT :pageSize OFFSET :offset", nativeQuery = true)
     public List<CommentEntity> findByCommentList(@Param("boardId") int boardId, @Param("offset") int offset, @Param("pageSize") int pageSize);
+
+    @Query(value = "select Count(*) from comment where board_id =?1", nativeQuery = true)
+    public int selectCount(int board_id);
 }

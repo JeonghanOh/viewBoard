@@ -20,7 +20,7 @@
 <nav>
             <div class="top-nav">
                 <div class="top-nav-left">
-                    <a href="Home.jsp" class="color_w"><img src="resource/img/Logo.png" style="width: 100px"></a>
+                    <a href="Home.jsp" class="color_w"><img src="resource/img/Logo.png" style="width: 150px"></a>
                 </div>
                 <div class="search">
                     <select onchange="search_()" id=change_select>
@@ -89,32 +89,28 @@
               <div class="wrapper">
                   <div class="row">
                           <h3>글작성</h3>
-                                                   <form action="/main/write" method="post" enctype="multipart/form-data">
-                                                   <input type="hidden" value="<%=user.getUserEmail()%>" name="userEmail"/>
-                                                       <div id="title">
-                                                            <select name="boardType">
-                                                                 <option value="1">개발 게시판</option>
-                                                                 <option value="2">자격증 게시판</option>
-                                                                 <option value="3">JOB 게시판</option>
-                                                                 <option value="4">유머 게시판</option>
-                                                                 <option value="5">부산 게시판</option>
-                                                                 <option value="6">노래 게시판</option>
-                                                            </select>
-                                                           <input type="text" name="boardTitle" style="width:100%">
-                                                       </div>
-                                                       <div id="smarteditor">
-                                                       <textarea
-                                                               name="boardContent"
-                                                               id="editorTxt"
-                                                               rows="20"
-                                                               cols="10"
-                                                               placeholder="내용을 입력해주세요"
-                                                               style="width: 100%"></textarea>
-                                                       </div>
-                                                       <input type="file" class="upload" name="image" accept="image/$"/>
-                                                       <button type="submit" onclick="submitPost()">작성하기</button>
-                                                   </form>
-
+                          <form action="/main/write" method="post" enctype="multipart/form-data">
+                          <input type="hidden" value="<%=user.getUserEmail()%>" name="userEmail"/>
+                              <div id="title">
+                                   <select name="boardType">
+                                        <c:forEach var="board" items="${allBoard}" varStatus="status">
+                                            <option value=${status.count}>${board.boardName}</option>
+                                        </c:forEach>
+                                   </select>
+                                  <input type="text" name="boardTitle" style="width:100%">
+                              </div>
+                              <div id="smarteditor">
+                              <textarea
+                                      name="boardContent"
+                                      id="editorTxt"
+                                      rows="20"
+                                      cols="10"
+                                      placeholder="내용을 입력해주세요"
+                                      style="width: 100%"></textarea>
+                              </div>
+                              <input type="file" class="upload" name="image" accept="image/$"/>
+                              <button type="submit" onclick="submitPost()" onclick="">작성하기</button>
+                          </form>
                           <!-- 포스트 추가하는 곳-->
                       </div>
               </div>

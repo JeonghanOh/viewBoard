@@ -9,31 +9,34 @@ import viewboard.repository.UserRepository;
 
 @Service
 public class FindService {
-    @Autowired UserRepository userRepository;
-    public String findId(FindDto dto){
-        String email="";
-        String name= dto.getUserName();
+    @Autowired
+    UserRepository userRepository;
+
+    public String findId(FindDto dto) {
+        String email = "";
+        String name = dto.getUserName();
         String phone = dto.getUserPhonenumber();
-        UserEntity user ;
-        try{
-          user =  userRepository.findUserEmailByUserNameAndUserPhoneNumber(name,phone);
-          email = user.getUserEmail();
-        }catch (Exception e){
+        UserEntity user;
+        try {
+            user = userRepository.findUserEmailByUserNameAndUserPhoneNumber(name, phone);
+            email = user.getUserEmail();
+        } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Database Error");
         }
         return email;
     }
-    public String findPassword(FindDto dto){
-        String email=dto.getUserEmail();
-        String name= dto.getUserName();
+
+    public String findPassword(FindDto dto) {
+        String email = dto.getUserEmail();
+        String name = dto.getUserName();
         String phone = dto.getUserPhonenumber();
         String password = "";
-        UserEntity user ;
-        try{
-            user =  userRepository.findUserPasswordByUserEmailAndUserNameAndUserPhoneNumber(email,name,phone);
+        UserEntity user;
+        try {
+            user = userRepository.findUserPasswordByUserEmailAndUserNameAndUserPhoneNumber(email, name, phone);
             password = user.getUserPassword();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Database Error");
         }

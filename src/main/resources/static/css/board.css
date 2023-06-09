@@ -9,7 +9,7 @@ nav {
 }
 
 .top-nav {
-    width: 60%;
+    width: 1000px;
     margin: auto;
     height: 70px;
     display: flex;
@@ -26,7 +26,6 @@ nav {
     height: 30px;
     border: 0;
     border-radius: 6px;
-    margin-left:50px;
     text-align: center;
 }
 
@@ -38,7 +37,6 @@ nav {
 }
 
 .top-nav-left {
-    margin-left: 50px;
     color: white;
 }
 
@@ -106,6 +104,9 @@ nav {
     color: white;
     font-size: 15px;
     font-weight: 550;
+}
+.pt20 a{
+    color:#fff;
 }
 ul{
     list-style: none;

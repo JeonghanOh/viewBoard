@@ -96,7 +96,7 @@
     				<% } %>
     			</div>
     		</div>
-    <h2 class="bugu">핫   게시판</h2>
+    <h2 class="bugu">핫   게시물</h2>
     		<div id="set2">
     			<div id="best">
     			    <c:forEach var="board" items="${hotGesigeul}">

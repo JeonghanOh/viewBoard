@@ -10,7 +10,9 @@ import viewboard.dto.CommentDto;
 import viewboard.dto.WriteDTO;
 import viewboard.entity.BoardEntity;
 import viewboard.entity.CommentEntity;
+import viewboard.entity.UserEntity;
 import viewboard.repository.DetailRepository;
+import viewboard.repository.UserRepository;
 
 import java.io.File;
 import java.util.UUID;
@@ -20,27 +22,30 @@ import java.util.UUID;
 public class WriteService {
     @Value("${comm.uploadPath}")
     private String uploadPath;
-    @Autowired 
+    @Autowired
     DetailRepository detailRepository;
+    @Autowired
+    UserRepository userRepository;
 
 
-
-    public BoardEntity writePost2(MultipartFile file, WriteDTO dto){
-        String filename= UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
-        String imgPath=uploadPath+"/"+filename;
+    public BoardEntity writePost2(MultipartFile file, WriteDTO dto) {
+        String filename = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
+        String imgPath = uploadPath + "/" + filename;
         dto.setBoardImage(imgPath);
-       try{
-           file.transferTo(new File(imgPath));
-       }catch(Exception e) {
-           e.printStackTrace();
-       }
-       BoardEntity board = new BoardEntity(dto);
-       return detailRepository.save(board);
-    }
-    public BoardEntity writePost1(WriteDTO dto){
+        try {
+            file.transferTo(new File(imgPath));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         BoardEntity board = new BoardEntity(dto);
-        return  detailRepository.save(board);
+        return detailRepository.save(board);
     }
+
+    public BoardEntity writePost1(WriteDTO dto) {
+        BoardEntity board = new BoardEntity(dto);
+        return detailRepository.save(board);
+    }
+
     public BoardEntity getFindid(int id) {
         BoardEntity boardEntity = null;
         try {
@@ -51,24 +56,33 @@ public class WriteService {
         return boardEntity;
     }
 
-    public BoardEntity prevPage (int id, int type) {
-        BoardEntity boardList=null;
+    public BoardEntity prevPage(int id, int type) {
+        BoardEntity boardList = null;
         try {
             boardList = detailRepository.PrevPage(id, type);
-        } catch(Exception error) {
+        } catch (Exception error) {
             error.printStackTrace();
         }
         return boardList;
     }
 
-    public BoardEntity nextPage (int id, int type) {
-        BoardEntity boardList=null;
+    public BoardEntity nextPage(int id, int type) {
+        BoardEntity boardList = null;
         try {
             boardList = detailRepository.NextPage(id, type);
         } catch (Exception error) {
             error.printStackTrace();
         }
         return boardList;
+    }
+
+    public void increaseCount(WriteDTO dto, UserEntity user) {
+        try {
+            user.setBoardCount(user.getBoardCount() + 1);
+            userRepository.increaseCount(dto.getUserEmail());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 
