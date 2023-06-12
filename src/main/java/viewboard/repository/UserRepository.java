@@ -18,6 +18,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     public UserEntity findUserPasswordByUserEmailAndUserNameAndUserPhoneNumber(String email,String name,String phoneNumber);
     @Transactional
     public void deleteByUserEmail(String email);
+    @Query(value = "select user_nickname from user where user_email = ?1", nativeQuery = true)
+    public String findByUserNickname(String email);
 
     @Query(value="update user set user_nickname = ?1 where user_email = ?2",nativeQuery = true)
     @Modifying
@@ -28,4 +30,9 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     @Modifying
     @Transactional
     public void increaseCount(String email);
+
+    @Query(value="update user set board_count = board_count - 1 where user_email = ?1",nativeQuery = true)
+    @Modifying
+    @Transactional
+    public void decreaseCount(String email);
 }

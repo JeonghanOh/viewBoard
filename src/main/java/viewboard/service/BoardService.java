@@ -5,16 +5,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import viewboard.dto.DeleteConDto;
 import viewboard.dto.FavoriteDto;
 import viewboard.dto.LikedDto;
 import viewboard.dto.WriteDTO;
 import viewboard.entity.*;
-import viewboard.repository.BoardRepository;
-import viewboard.repository.DetailRepository;
-import viewboard.repository.FavoriteRepository;
-import viewboard.repository.LikedRepository;
+import viewboard.repository.*;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -31,6 +30,10 @@ public class BoardService {
     LikedRepository likedRepository;
     @Autowired
     FavoriteRepository favoriteRepository;
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    CommentRepository commentRepository;
 
     public Page<BoardEntity> getList(int type, Pageable pageable) {
         return detailRepository.findByBoardType(type, pageable);
@@ -79,18 +82,17 @@ public class BoardService {
         detailRepository.UpView(id);
     }
 
-    @Transactional
-    public void likeContent(LikedDto likedDto) {
-        if (likedRepository.existsById(likedDto.getBoardId())) {
-            int boardId = likedDto.getBoardId();
-            String email = likedDto.getUserEmail();
-            detailRepository.downlike(boardId);
-            likedRepository.deleteByboardId(boardId);
+
+    public void likeContent(int id, String email) {
+        if (likedRepository.existsByLikedDtoBoardIdAndLikedDtoUserEmail(id , email)) {
+            detailRepository.downlike(id);
+            likedRepository.deleteByLikedDtoBoardIdAndLikedDtoUserEmail(id, email);
             return;
         }
-        LikedEntity liked = new LikedEntity(likedDto);
         try {
-            likedRepository.save(liked);
+            LikedDto likedDto = new LikedDto(id, email);
+            LikedEntity likedEntity = new LikedEntity(likedDto, LocalDateTime.now());
+            likedRepository.save(likedEntity);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Database Error");
@@ -102,8 +104,8 @@ public class BoardService {
         likedRepository.Uplike(id);
     }
 
-    public boolean isLiked(LikedDto likedDto) {
-        if (likedRepository.existsById(likedDto.getBoardId())) {
+    public boolean isLiked(int id, String email){
+        if (likedRepository.existsByLikedDtoBoardIdAndLikedDtoUserEmail(id, email)){
             return false;
         } else {
             return true;
@@ -111,7 +113,6 @@ public class BoardService {
     }
 
     public Page<BoardEntity> getMyBoardList(String email, Pageable pageable) {
-        System.out.println("service " + detailRepository.findByUserEmail(email, pageable));
         return detailRepository.findByUserEmail(email, pageable);
     }
 
@@ -136,6 +137,21 @@ public class BoardService {
         String email = user.getUserEmail();
         boolean isfav = favoriteRepository.existsByFavoriteDtoUserEmailAndFavoriteDtoBoardType(email, type);
         return isfav;
+    }
+
+    public void deleteCon(DeleteConDto dto, UserEntity user){
+        int id = dto.getBoardId();
+        String userEmail = dto.getUserEmail();
+        try {
+            detailRepository.deleteByBoardId(id);
+            likedRepository.deleteByLikedDtoBoardId(id);
+            commentRepository.deleteByboardId(id);
+            userRepository.decreaseCount(userEmail);
+            user.setBoardCount(user.getBoardCount() - 1);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
 

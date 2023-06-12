@@ -40,7 +40,6 @@ public class FindService {
             e.printStackTrace();
             throw new RuntimeException("Database Error");
         }
-        System.out.println(password);
         return password;
     }
 }

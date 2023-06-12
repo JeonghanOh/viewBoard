@@ -290,9 +290,12 @@ button:hover {
 
 .list_container {
     padding: 10px;
-     border:2px solid gray;
-     border-radius:5px;
-     box-shadow : 3px 3px 3px;
+    border-radius:5px;
+    box-shadow : 3px 3px 3px;
+}
+
+.like-count {
+    text-align:center;
 }
 
 .tr_width {
@@ -361,6 +364,12 @@ button:hover {
     height: 30px;
 }
 
+#comment_login {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
 .more_btn {
     height: 90px;
 }
@@ -418,6 +427,10 @@ button:hover {
     padding-left: 3px;
 }
 
+.After_login > p, .After_login > ul > li {
+    margin-top: 7px;
+}
+
 #signin {
     width:90%;
     height:40px;
@@ -432,6 +445,16 @@ button:hover {
 
 .after_login > ul > li {
     margin-top:8px;
+}
+
+#output_name {
+    display:flex;
+    justify-content:space-between;
+    margin-top:5px;
+}
+
+#mypage_btn {
+    margin-right:5px;
 }
 
 .hot_board {

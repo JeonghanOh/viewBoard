@@ -78,7 +78,6 @@ public class AuthService {
     public void deleteUser(DeleteDto dto) {
         String email = dto.getUserEmail();
         String password = dto.getUserPassword();
-        System.out.println(email + password);
         UserEntity user;
         user = userRepository.findByUserEmail(email);
         try {

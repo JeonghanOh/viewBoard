@@ -2,7 +2,12 @@
 *{
 box-sizing:border-box;
 }
-
+a{
+text-decoration:none;
+}
+ul{
+    list-style:none;
+}
 #logo {
 	float: left;
 }
@@ -36,19 +41,19 @@ box-sizing:border-box;
 }
 
 #banner {
-	border:1px solid #e8e8e8;
+	box-shadow: 0 2px 4px rgba(138, 0, 46, 0.4);
 	width: 800px;
 	height: 200px;
 	float: left;
 }
 
 #login {
-	border:1px solid #e8e8e8;
+	box-shadow: 0 2px 4px rgba(138, 0, 46, 0.4);
 	width: 200px;
 	height: 200px;
 	float: left;
 }
-#login button{
+#loginButton{
     width:150px;
     height:40px;
     background:#9c3646;
@@ -56,7 +61,43 @@ box-sizing:border-box;
     font-weight:bold;
     font-size:18px;
     border:none;
-    margin:80px 25px 80px 25px;
+    margin:85px 25px 85px 25px;
+}
+
+
+.myInfo{
+    text-align: center;
+}
+
+.myInfo a{
+    text-decoration: none;
+    color: #888;
+}
+
+.myInfo:first-child{
+    margin-top: 30px;
+}
+
+.myInfo2{
+    text-align: center;
+    font-size: 13px;
+    margin-top: 10px;
+}
+
+.myInfo2 a{
+    text-decoration: none;
+    color: #888;
+}
+
+#mypageButton{
+    width:150px;
+    height:40px;
+    background:#9c3646;
+    color:#fff;
+    font-weight:bold;
+    font-size:18px;
+    border:none;
+    margin:30px 25px 30px 25px;
 }
 
 #best {
@@ -89,7 +130,8 @@ box-sizing:border-box;
 }
 
 #gesi1Contents{
-    border:1px solid #e8e8e8;
+    box-shadow: 0 2px 4px rgba(138, 0, 46, 0.4);
+    padding: 15px;
     width: 90%;
     height: 70px;
     text-overflow: ellipsis;  /* 위에 설정한 100px 보다 길면 말줄임표처럼 표시합니다. */
@@ -112,7 +154,7 @@ box-sizing:border-box;
 
 #container{
     margin:auto;
-    margin-top:30px;
+    margin-top:125px;
     width: 1450px;
     height: 2000px;
 }
@@ -125,8 +167,11 @@ box-sizing:border-box;
 }
 
 #outside2{
+    box-shadow: 0 2px 4px rgba(138, 0, 46, 0.4);
     margin-left:10px;
-    background-color: #f8f8f8;
+    padding: 15px;
+    text-align: center;
+    /*   background-color: #f8f8f8;*/
     width: 200px;
     height: 500px;
     float:left;
@@ -135,7 +180,7 @@ box-sizing:border-box;
 #hotGesipan{
     color:#9c3646;
     font-weight:bold;
-    width: 190px;
+    width: 100%;
     height: 40px;
 	cursor: pointer;
 }
@@ -150,8 +195,8 @@ box-sizing:border-box;
 
 .best_detail1{
     box-shadow: 0 2px 4px rgba(138, 0, 46, 0.4);
-    padding:15px;
-    width: 440px;
+    padding: 15px;
+    width: 420px;
     height: 70px;
     float:left;
     cursor: pointer;
@@ -159,6 +204,13 @@ box-sizing:border-box;
     white-space: nowrap;
     word-break: break-all;
     overflow: hidden;
+}
+
+.best_detail1:nth-child(2n-1){
+    margin-right:10px;
+}
+.best_detail1:nth-child(2n){
+    margin-left:10px;
 }
 
 * {
@@ -185,8 +237,8 @@ td {
 nav {
     background-color: #EDEDED;
     width: 100%;
-    height: 150px;
-}
+    height: 70px;
+    }
 
 .top-nav {
     width: 60%;
@@ -203,6 +255,8 @@ nav {
 .bugu{
     text-align:center;
     color:#9c3646;
+    margin-top: 20px;
+    margin-bottom: -30px;
 }
 .search_text {
     width: 500px;
@@ -233,63 +287,7 @@ nav {
     color: white;
 }
 
-.bot {
-    width: 60%;
-    height: 80px;
-    margin: auto;
-}
 
-.bot-nav {
-    height: 80px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.w150 {
-    width: 150px;
-    font-weight:600;
-    font-size:18px;
-    text-align: center;
-    color: #9C3646;
-}
-
-.bot:hover ~ .hide-nav{
-    display:flex;
-}
-
-.hide-nav:hover {
-    display: flex;
-}
-
-.hide-nav {
-    position: relative;
-    height: 270px;
-    display: none;
-    justify-content: space-around;
-    z-index: 5;
-    background-color: rgba(150, 150, 150, 0.9);
-}
-
-.hide_nav_width {
-    width: 60%;
-    margin: auto;
-    display: flex;
-    justify-content: space-around;
-}
-
-.around {
-    width: 150px;
-}
-
-.pt20 {
-    height: 30px;
-    text-align: center;
-    padding-top: 20px;
-    color: white;
-    font-size: 15px;
-    font-weight: 550;
-}
 
 button:hover {
     cursor: pointer;
@@ -503,4 +501,43 @@ button:hover {
 .text > a:hover {
     text-decoration: underline;
     font-weight: 600;
+}
+.container{
+    width:800px;
+    position:absolute;
+    top:95px;
+    left:28%;
+    border:1px solid #e8e8e8;
+    border-radius:25px;
+    z-index:300;
+    box-shadow:0 0 0 1px #e3e5e8, 0 4px 8px 0 rgba(0,0,0,.3);
+}
+.hot{
+display:flex;
+justify-content:space-between;
+padding:10px;
+}
+.hot a li{
+    width:44px;
+    height:44px;
+    border-radius:20px;
+    border:1px solid green;
+    font-size:20px;
+    color:black;
+    align-items:center;
+}
+.all{
+    border-top:1px solid #e6e6e6;
+    padding:15px;
+    background:#fafbfb;
+    display:none;
+}
+.all ul{
+    margin-top:10px;
+    display:flex;
+    flex-wrap:wrap;
+}
+.all ul a{
+flex-basis:190px;
+padding:8px 0;
 }

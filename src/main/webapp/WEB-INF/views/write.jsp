@@ -20,22 +20,16 @@
 <nav>
             <div class="top-nav">
                 <div class="top-nav-left">
-                    <a href="Home.jsp" class="color_w"><img src="resource/img/Logo.png" style="width: 150px"></a>
+                    <a href="/main" class="color_w"><img src="/img/logo.png" style="width: 150px"></a>
                 </div>
                 <div class="search">
-                    <select onchange="search_()" id=change_select>
-                        <option disabled="disabled" selected="selected">검색 조건</option>
-                        <option value="Title">제목 검색</option>
-                        <option value="Story">작성자 검색</option>
-                    </select>
-                    <form method="get" action="/main/searchResult">
-                        <input type="text" placeholder="검색어를 입력" class="serach_text" id="serach_form" name="query">
-                        <input type="hidden" name="page" value="0">
-                        <button class="search_btn" type="submit">검색</button>
+                    <form method="get" action="/main/searchresult">
+                       <input type="text" placeholder="검색어를 입력" class="search_text" id="search_form" name="query">
+                       <input type="hidden" name="page" value="0">
+                       <button class="search_btn" type="submit">검색</button>
                     </form>
                 </div>
                 <div class="top-nav-right">
-                   님
                 </div>
             </div>
             <hr>

@@ -22,7 +22,6 @@ public class UserService {
     public UserEntity userInfo(String email) {
         UserEntity user = userRepository.findByUserEmail(email);
         user.setUserPassword("");
-        System.out.println(user);
         return user;
     }
 
@@ -37,9 +36,16 @@ public class UserService {
 
             dtoList.add(dto);
         }
-        System.out.println(list);
         return dtoList;
     }
-
+    public String findNickName(String email) {
+        String nickname = null;
+        try {
+            nickname = userRepository.findByUserNickname(email);
+        } catch (Exception error) {
+            error.printStackTrace();
+        }
+        return nickname;
+    }
 
 }

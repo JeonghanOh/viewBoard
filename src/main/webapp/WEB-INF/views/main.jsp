@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@page import="viewboard.repository.*"%>
 <%@page import="viewboard.entity.*"%>
 <%@page import="java.util.List"%>
@@ -31,51 +32,29 @@
 
                 </div>
             </div>
-            <hr>
-            <div class="bot">
-                <div class="bot-nav">
-                    <div class="w150">게시판</div>
-                    <div class="w150">회원 2</div>
-                    <div class="w150">조회</div>
-                    <div class="w150">좋아요</div>
-                    <div class="w150">리뷰</div>
-                </div>
-            </div>
-            <div class="hide-nav">
-                <div class="hide_nav_width">
-                    <div class="around">
-                        <c:forEach var="board" items="${allBoard}">
-                            <div class="pt20"><a href="/main/board/${board.boardType}">${board.boardName}</a></div>
-                        </c:forEach>
-                    </div>
-                    <div class="around">
-                        <div class="pt20">내 정보 보기</div>
-                        <div class="pt20">내 정보 변경</div>
-                        <div class="pt20">아아디 찾기</div>
-                        <div class="pt20">비밀 번호 찾기</div>
-                        <div class="pt20">회원 탈퇴</div>
-                    </div>
-                    <div class="around">
-                        <div class="pt20">이름순 정렬 조회</div>
-                        <div class="pt20">좋아요순 정렬 조회</div>
-                        <div class="pt20">조회순 정렬 조회</div>
-                        <div class="pt20">검색어 검색</div>
-                    </div>
-                    <div class="around">
-                        <div class="pt20">좋아요</div>
-                        <div class="pt20">좋아요 해제</div>
-                        <div class="pt20">좋아요 작품 보기</div>
-                        <div class="pt20">좋아요 수 표시</div>
-                    </div>
-                    <div class="around">
-                        <div class="pt20">리뷰 작성</div>
-                        <div class="pt20">작품 최근 리뷰 보기</div>
-                        <div class="pt20">작성한 리뷰 보기</div>
-                    </div>
-                </div>
-            </div>
         </nav>
+        <div class="container">
+        <ul class="hot">
+         <c:forEach var="board" items="${allBoard}">
+             <a href="/main/board/${board.boardType}">
+             <li>개</li>
+             <span>${board.boardName}</span>
+             </a>
+         </c:forEach>
 
+        <a>+</a>
+        </ul>
+         <div class="all">
+           <h4>전체 게시판</h4>
+           <ul>
+            <c:forEach var="board" items="${allBoard}">
+                         <a href="/main/board/${board.boardType}">
+                         <li>${board.boardName}</li>
+                         </a>
+                     </c:forEach>
+           </ul>
+         </div>
+         </div>
     <div id="container">
     	<div id="outside1"></div>
 
@@ -84,16 +63,20 @@
     		<div id="set1">
     			<div id="banner"></div>
     			<div id="login">
-    			   <% if(user!=null){ %>
-    			           <span><%=user.getUserNickName()%>님</span>
-    			           <div><a href="/auth/logout">로그아웃</a><a>회원탈퇴</a></div>
-    			               <form action="/auth/mypage" method="get">
-                           			<input type="hidden" value="<%=user.getUserEmail()%>" name="UserEmail">
-                           			<button>마이 페이지</button>
-                           	   </form>
-    			   <% } else{%>
-    					<button onclick="location.href='/auth/login'">로그인</button>
-    				<% } %>
+    			   <c:choose>
+                        <c:when test = "${user == null}">
+                           <button id="loginButton" onclick="location.href='/auth/login'">로그인</button>
+                        </c:when>
+                        <c:otherwise>
+                           <div class="myInfo"><h4>${user.getUserNickName()}님</h4></div>
+                           <div class="myInfo"><a href="#">작성한 게시물 : ${user.getBoardCount()}개</a></div>
+                           <div class="myInfo2"><a href="/main/write">글쓰기</a> <a href="/auth/logout">로그아웃</a> <a href="/auth/service">회원탈퇴</a></div>
+                               <form action="/auth/mypage" method="get">
+                           			<input type="hidden" value="${user.getUserEmail()}" name="UserEmail">
+                           			<button id="mypageButton">마이 페이지</button>
+                               </form>
+                        </c:otherwise>
+                   </c:choose>
     			</div>
     		</div>
     <h2 class="bugu">핫   게시물</h2>
@@ -162,14 +145,16 @@
             	    %>
 
             	     <c:forEach var="board" items="${hotBoard}">
-                        <div id="hotGesipan" onclick="location.href='/main/board/${board.boardType}'">
-                            ${board.boardName}
-                        </div>
-            	    </c:forEach>
+                          <div id="hotGesipan" onclick="location.href='/main/board/${board.boardType}'">${board.boardName}</div>
+                     </c:forEach>
     	</div>
     </div>
     <script>
-
+        function hidenavArea(){
+            var sel = document.querySelector('.hide-nav');
+            var len = ${fn:length(allBoard)};
+            sel.style.height=len*40+'px';
+        }
     </script>
     </body>
     </html>

@@ -15,7 +15,6 @@ public class RandomService {
         while (set.size() < 4) {
             int type = (int) (Math.random() * maxType) + 1;
             set.add(type);
-            System.out.println("type : " + type);
         }
 
         return set;

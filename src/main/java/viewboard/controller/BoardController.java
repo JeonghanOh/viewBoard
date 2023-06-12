@@ -11,18 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import viewboard.dto.CommentDto;
-import viewboard.dto.FavoriteDto;
-import viewboard.dto.LikedDto;
-import viewboard.dto.WriteDTO;
+import viewboard.dto.*;
 import viewboard.entity.BoardEntity;
 import viewboard.entity.BoardTypeEntity;
 import viewboard.entity.CommentEntity;
 import viewboard.entity.UserEntity;
-import viewboard.repository.BoardRepository;
-import viewboard.repository.CommentRepository;
-import viewboard.repository.DetailRepository;
-import viewboard.repository.LikedRepository;
+import viewboard.repository.*;
 import viewboard.service.*;
 
 import javax.servlet.http.HttpSession;
@@ -50,6 +44,8 @@ public class BoardController {
     CommentRepository commentRepository;
     @Autowired
     LikedRepository likedRepository;
+    @Autowired
+    UserRepository userRepository;
 
     @GetMapping("/board/{boardType}")
     public String getboard(@PathVariable("boardType") int type, Model model, @PageableDefault(page = 0, size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable, HttpSession session) {
@@ -64,7 +60,6 @@ public class BoardController {
         int nowPag = list.getPageable().getPageNumber() + 1;
         int startPag = Math.max(nowPag - 4, 1);
         int endPag = Math.min(nowPag + 5, list.getTotalPages());
-        System.out.println(list3);
         model.addAttribute("hotType", nameList);
         model.addAttribute("nowpage", nowPag);
         model.addAttribute("startpage", startPag);
@@ -83,11 +78,25 @@ public class BoardController {
     }
 
     @GetMapping("/detailboard/{boardId}")
-    public String DetailBoard(@PathVariable("boardId") int id, Model model) {
+    public String DetailBoard(@PathVariable("boardId") int id, Model model, HttpSession session){
         List<CommentEntity> commentList = commentRepository.findByCommentLists(id);
         boardService.increaseView(id);
         BoardEntity board = writeService.getFindid(id);
-
+        LikedDto likedDto = new LikedDto();
+        likedDto.setBoardId(id);
+        UserEntity user = (UserEntity)session.getAttribute("login");
+        if(user != null) {
+            likedDto.setUserEmail(user.getUserEmail());
+            boolean isLiked = boardService.isLiked(id, user.getUserEmail());
+            if (likedRepository.existsByLikedDtoBoardIdAndLikedDtoUserEmail(id, likedDto.getUserEmail())) {
+                model.addAttribute("Likestatus", isLiked);
+            } else {
+                model.addAttribute("Likestatus", isLiked);
+            }
+        } else {
+            // 로그인하지 않은 사용자의 처리
+            model.addAttribute("Likestatus", false);
+        }
         model.addAttribute("board", board);
         model.addAttribute("Prev", writeService.prevPage(id, board.getBoardType()));
         model.addAttribute("Next", writeService.nextPage(id, board.getBoardType()));
@@ -95,7 +104,6 @@ public class BoardController {
         model.addAttribute("type", boardService.getBoardType(board.getBoardType()));
         model.addAttribute("comment", commentList);
         model.addAttribute("count", commentService.CommentCount(board.getBoardId()));
-
         return "detailboard";
     }
 
@@ -117,15 +125,12 @@ public class BoardController {
 
     @PostMapping("/like")
     @ResponseBody
-    public boolean like(@RequestParam("boardId") int id, @RequestParam("userEmail") String email, Model model) {
-        LikedDto likedDto = new LikedDto();
-        likedDto.setBoardId(id);
-        likedDto.setUserEmail(email);
-        boolean isLiked = boardService.isLiked(likedDto);
-        if (likedRepository.existsById(likedDto.getBoardId())) {
-            boardService.likeContent(likedDto);
+    public boolean like(@RequestParam("boardId") int id, @RequestParam("userEmail") String email , Model model){
+        boolean isLiked = boardService.isLiked(id, email);
+        if (likedRepository.existsByLikedDtoBoardIdAndLikedDtoUserEmail(id, email)) {
+            boardService.likeContent(id, email);
         } else {
-            boardService.likeContent(likedDto);
+            boardService.likeContent(id,email);
             boardService.likeview(id);
         }
         return isLiked;
@@ -153,14 +158,13 @@ public class BoardController {
     }
 
     @GetMapping("")
-    public String mainController(Model model) {
+    public String mainController(Model model, HttpSession session) {
         Set<Integer> set = randomService.getGesipanSet(boardRepository);
 
         int i = 0;
         for (int x : set) {
             List<BoardEntity> list = writeRepository.findByboardType(x);
             BoardTypeEntity bte = boardRepository.findByboardType(x);
-            System.out.println(list);
             model.addAttribute("boardList" + i, list);
             model.addAttribute("board" + i, bte);
             i++;
@@ -170,9 +174,16 @@ public class BoardController {
         List<BoardTypeEntity> list2 = boardService.HotBoardType();
         List<BoardTypeEntity> list3 = boardService.selectAllBoardType();
 
+        UserEntity tmp = (UserEntity) session.getAttribute("login");
+        UserEntity user = null;
+
+        if(tmp != null)
+            user = userRepository.findByUserEmail(tmp.getUserEmail());
+
         model.addAttribute("hotGesigeul", list);
         model.addAttribute("hotBoard", list2);
         model.addAttribute("allBoard", list3);
+        model.addAttribute("user", user);
         return "main";
     }
 
@@ -190,7 +201,6 @@ public class BoardController {
         int endPag = Math.min(nowPag + 5, res.getTotalPages());
         List<BoardTypeEntity> list3 = boardService.selectAllBoardType();
 
-        System.out.println(nowPag + "/" + startPag + "/" + endPag + "/" + res.getTotalPages());
 
         model.addAttribute("nowpage", nowPag);
         model.addAttribute("startpage", startPag);
@@ -204,7 +214,12 @@ public class BoardController {
 
         return "searchresult";
     }
-
+    @PostMapping("/delete")
+    public String deleteCon(DeleteConDto dto,HttpSession session){
+        UserEntity user = (UserEntity) session.getAttribute("login");
+        boardService.deleteCon(dto,user);
+        return "redirect:/main/board/"+dto.getBoardType();
+    }
     @PostMapping("/favorite")
     public String favorite(FavoriteDto dto) {
         boardService.addFavorite(dto);

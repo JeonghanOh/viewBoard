@@ -19,6 +19,8 @@ import viewboard.service.FindService;
 import viewboard.service.UserService;
 
 import javax.servlet.http.HttpSession;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 @Controller
@@ -136,6 +138,7 @@ public class AuthController {
         int nowPag = list.getPageable().getPageNumber() + 1;
         int startPag = Math.max(nowPag - 4, 1);
         int endPag = Math.min(nowPag + 5, list.getTotalPages());
+        model.addAttribute("NickName", userService.findNickName(email));
         model.addAttribute("nowpage", nowPag);
         model.addAttribute("startpage", startPag);
         model.addAttribute("endpage", endPag);
@@ -149,7 +152,7 @@ public class AuthController {
     public String changeNick(@RequestParam("UserNickName") String NickName, @RequestParam("UserEmail") String email, Model model) {
         authService.ChangeNick(NickName, email);
         model.addAttribute("FixName", NickName);
-        return "mypage";
+        return "redirect:/auth/mypage?UserEmail=" + URLEncoder.encode(email, StandardCharsets.UTF_8);
     }
 
 }

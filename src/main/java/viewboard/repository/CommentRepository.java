@@ -18,4 +18,6 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
 
     @Query(value = "select Count(*) from comment where board_id =?1", nativeQuery = true)
     public int selectCount(int board_id);
+
+    public void deleteByboardId(int id);
 }

@@ -19,6 +19,7 @@ public interface DetailRepository extends JpaRepository<BoardEntity, Long> {
     public Page<BoardEntity> findByBoardType(int boardType, Pageable pageable);
 //    public List<BoardEntity> findByBoardType(int boardType, Pageable pageable);
     public BoardEntity findByBoardId(int id);
+    public void deleteByBoardId(int id);
     public Page<BoardEntity> findByUserEmail(String email, Pageable pageable);
     public long countByBoardType(int boardType);
 

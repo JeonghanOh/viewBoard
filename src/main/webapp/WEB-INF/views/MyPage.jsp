@@ -27,7 +27,7 @@
      %>
      <% if (user == null) { %>
      <script>
-        	alert("로그인 이후에 사용 가능합니다.");
+           alert("로그인 이후에 사용 가능합니다.");
             location.href="/main"
      </script>
      <% } else { %>
@@ -96,7 +96,7 @@
         <div class="Nickname">
          <% String FixName = (String) request.getAttribute("FixName"); %>
          <% if (FixName == null) { %>
-             <h3><%= user.getUserNickName() %></h3>
+             <h3>${NickName}</h3>
          <% } else { %>
              <h3><%= FixName %></h3>
          <% } %>
@@ -127,7 +127,7 @@
             <h3>게시글 목록</h3>
             <div>
                 <c:forEach var="MyBoard" items="${Title}">
-                    <a href="/main/detailboard/${MyBoard.boardId}"><div class="write_boardList"><span>글 제목 : ${MyBoard.boardTitle}</span><span>좋아요 수 : ${MyBoard.boardLike}</span><span>조회 수 : ${MyBoard.boardClick}</div></a>
+                    <a href="/main/detailboard/${MyBoard.boardId}"><div class="write_boardList"><div id="board_title">글 제목 : ${MyBoard.boardTitle}</div><div id="like_count">좋아요 수 : ${MyBoard.boardLike}</div><div id="view_count">조회 수 : ${MyBoard.boardClick}</div></div></a>
                 </c:forEach>
             </div>
         </div>
@@ -135,10 +135,10 @@
           <c:forEach begin="${startpage}" end="${endpage}" var="pageNum">
             <c:choose>
               <c:when test="${pageNum != nowpage}">
-                <li><a href="/auth/MyPage?UserEmail=${param.UserEmail}&page=${pageNum-1}">${pageNum}</a></li>
+                <li><a href="/auth/mypage?UserEmail=${param.UserEmail}&page=${pageNum-1}">${pageNum}</a></li>
               </c:when>
               <c:otherwise>
-                <li><a href="/auth/MyPage?UserEmail=${param.UserEmail}&page=${pageNum-1}"><strong style="color:red">${pageNum}</strong></a></li>
+                <li><a href="/auth/mypage?UserEmail=${param.UserEmail}&page=${pageNum-1}"><strong style="color:red">${pageNum}</strong></a></li>
               </c:otherwise>
             </c:choose>
           </c:forEach>
