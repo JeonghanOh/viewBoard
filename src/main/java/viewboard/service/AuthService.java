@@ -1,6 +1,8 @@
 package viewboard.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
@@ -15,7 +17,7 @@ import java.util.Map;
 public class AuthService {
     @Autowired
     UserRepository userRepository;
-
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     public ResponseDto<?> memberInsert(SignUpDto dto) {
         String email = dto.getUserEmail();
         String password = dto.getUserPassword();
@@ -31,6 +33,8 @@ public class AuthService {
             return ResponseDto.setFailed("비밀번호가 일치하지 않습니다.");
         }
         UserEntity user = new UserEntity(dto);
+        String encodedPassword = passwordEncoder.encode(password);
+        user.setUserPassword(encodedPassword);
         try {
             userRepository.save(user);
         } catch (Exception e) {
@@ -50,7 +54,7 @@ public class AuthService {
 //			잘못된 이메일
             if (userentity == null) return ResponseDto.setFailed("sign in failed");
 //			잘못된 패스워드
-            if (!password.equals(userentity.getUserPassword())) {
+            if (!passwordEncoder.matches(password,userentity.getUserPassword())) {
                 return ResponseDto.setFailed("sign in failed");
             }
 

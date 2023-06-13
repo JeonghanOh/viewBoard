@@ -9,49 +9,49 @@ ul{
     list-style:none;
 }
 #logo {
-	float: left;
+   float: left;
 }
 
 #search {
-	float: right;
+   float: right;
 }
 
 
 #set1 {
-	height: 200px;
-	width: 1000px;
+   height: 200px;
+   width: 1000px;
 }
 
 #set2 {
-	padding-top: 50px;
-	width: 1000px;
-	height: 400px;
+   padding-top: 50px;
+   width: 1000px;
+   height: 400px;
 }
 
 #set3 {
-	padding-top: 50px;
-	width: 1000px;
-	height: 425px;
+   padding-top: 50px;
+   width: 1000px;
+   height: 425px;
 }
 
 #set4 {
-	padding-top: 50px;
-	width: 1000px;
-	height: 425px;
+   padding-top: 50px;
+   width: 1000px;
+   height: 425px;
 }
 
 #banner {
-	box-shadow: 0 2px 4px rgba(138, 0, 46, 0.4);
-	width: 800px;
-	height: 200px;
-	float: left;
+   box-shadow: 0 2px 4px rgba(138, 0, 46, 0.4);
+   width: 800px;
+   height: 200px;
+   float: left;
 }
 
 #login {
-	box-shadow: 0 2px 4px rgba(138, 0, 46, 0.4);
-	width: 200px;
-	height: 200px;
-	float: left;
+   box-shadow: 0 2px 4px rgba(138, 0, 46, 0.4);
+   width: 200px;
+   height: 200px;
+   float: left;
 }
 #loginButton{
     width:150px;
@@ -103,30 +103,30 @@ ul{
 #best {
     border-top:5px solid #9C3646;
     padding:10px;
-	width: 900px;
-	height: 400px;
-	margin: auto;
+   width: 900px;
+   height: 400px;
+   margin: auto;
 }
 
 #gesiSet1 {
-	width: 900px;
-	height: 425px;
-	margin: auto;
+   width: 900px;
+   height: 425px;
+   margin: auto;
 }
 
 #gesiSet2 {
-	width: 900px;
-	height: 425px;
-	margin: auto;
+   width: 900px;
+   height: 425px;
+   margin: auto;
 }
 
 #gesi1, #gesi3 {
-	border-top:5px solid #9C3646;
-	width: 425px;
-	height: 425px;
-	padding: 20px;
-	float: left;
-	cursor: pointer;
+   border-top:5px solid #9C3646;
+   width: 425px;
+   height: 425px;
+   padding: 20px;
+   float: left;
+   cursor: pointer;
 }
 
 #gesi1Contents{
@@ -141,13 +141,13 @@ ul{
 }
 
 #gesi2, #gesi4 {
-	border-top:5px solid #9C3646;
-	width: 425px;
-	height: 425px;
-	float: left;
-	margin-left: 50px;
-	padding: 20px;
-	cursor: pointer;
+   border-top:5px solid #9C3646;
+   width: 425px;
+   height: 425px;
+   float: left;
+   margin-left: 50px;
+   padding: 20px;
+   cursor: pointer;
 }
 
 
@@ -182,14 +182,14 @@ ul{
     font-weight:bold;
     width: 100%;
     height: 40px;
-	cursor: pointer;
+   cursor: pointer;
 }
 
 #main {
-	margin: auto;
-	box-shadow: 0 2px 4px rgba(138, 0, 46, 0.4);
-	width: 1000px;
-	height: 1800px;
+   margin: auto;
+   box-shadow: 0 2px 4px rgba(138, 0, 46, 0.4);
+   width: 1000px;
+   height: 1800px;
     float:left;
 }
 
@@ -250,7 +250,7 @@ nav {
 }
 
 .search {
-	display:flex;
+   display:flex;
 }
 .bugu{
     text-align:center;
@@ -507,29 +507,50 @@ button:hover {
     position:absolute;
     top:95px;
     left:28%;
-    border:1px solid #e8e8e8;
     border-radius:25px;
     z-index:300;
-    box-shadow:0 0 0 1px #e3e5e8, 0 4px 8px 0 rgba(0,0,0,.3);
 }
 .hot{
 display:flex;
 justify-content:space-between;
 padding:10px;
 }
+
+
 .hot a li{
+    display: flex;
+    justify-content: center;
     width:44px;
     height:44px;
     border-radius:20px;
-    border:1px solid green;
+    background:#9c3646;
     font-size:20px;
-    color:black;
     align-items:center;
+
 }
+.hot a span{
+    font-family: 'Orbit', sans-serif;
+     color: black;
+ }
+.hot a li span{
+font-family: 'Black Han Sans', sans-serif;
+color:white;
+}
+.hot a span:hover{
+    text-decoration:underline;
+}
+
+
+
+.hot a{
+    text-align:center;
+}
+
 .all{
     border-top:1px solid #e6e6e6;
     padding:15px;
     background:#fafbfb;
+    border-radius: 0 0 25px 25px;
     display:none;
 }
 .all ul{
@@ -540,4 +561,15 @@ padding:10px;
 .all ul a{
 flex-basis:190px;
 padding:8px 0;
+color: black;
+}
+
+.all ul a li span:hover{
+    text-decoration:underline;
+}
+
+.plus{
+    margin-top: -10px;
+    font-size: 25px;
+    font-weight: bold;
 }
