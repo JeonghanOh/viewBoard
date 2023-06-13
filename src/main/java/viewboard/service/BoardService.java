@@ -153,5 +153,16 @@ public class BoardService {
             e.printStackTrace();
         }
     }
+
+    public List<BoardEntity> findById(int id) {
+        List<BoardEntity> boardentity = null;
+        try {
+            boardentity = detailRepository.findByboardId(id);
+        } catch (Exception error) {
+            error.printStackTrace();
+        }
+        return boardentity;
+    }
+
 }
 

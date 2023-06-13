@@ -46,6 +46,12 @@ public class WriteService {
         return detailRepository.save(board);
     }
 
+    public void updatePost1(WriteDTO dto) {
+        BoardEntity board = new BoardEntity(dto);
+        detailRepository.boardUpdate(board.getBoardTitle(), board.getBoardContent(),board.getBoardId());
+    }
+
+
     public BoardEntity getFindid(int id) {
         BoardEntity boardEntity = null;
         try {

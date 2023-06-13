@@ -47,4 +47,12 @@ public interface DetailRepository extends JpaRepository<BoardEntity, Long> {
     @Transactional
     @Query(value = "update boarddetail set board_like = board_like - 1 where board_id = ?1", nativeQuery = true)
     public void downlike(int boardId);
+
+    @Query(value="select * from boarddetail where board_id = ?1", nativeQuery = true)
+    public List<BoardEntity> findByboardId(int id);
+
+    @Modifying
+    @Transactional
+    @Query(value="update boarddetail set board_title = ?1 , board_content = ?2 where board_id = ?3", nativeQuery = true)
+    public void boardUpdate(String title, String content, int id);
 }

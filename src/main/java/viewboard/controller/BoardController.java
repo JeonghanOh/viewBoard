@@ -157,6 +157,27 @@ public class BoardController {
         return "redirect:/main";
     }
 
+    @GetMapping("/write/update")
+    public String Fix(@RequestParam("boardId") int id ,Model model){
+        List<BoardEntity> fixboard = boardService.findById(id);
+        model.addAttribute("BoardContent",fixboard);
+        return "write";
+    }
+
+    @PostMapping("/write/update")
+    public String Fixboard(@RequestParam("image") MultipartFile file, WriteDTO writeDTO, HttpSession session) {
+        UserEntity user = (UserEntity) session.getAttribute("login");
+        System.out.println("WriteDto" + writeDTO);
+        if (file.isEmpty()) {
+            writeService.updatePost1(writeDTO);
+            writeService.increaseCount(writeDTO, user);
+        } else {
+            writeService.writePost2(file, writeDTO);
+            writeService.increaseCount(writeDTO, user);
+        }
+        return "redirect:/main/detailboard/" + writeDTO.getBoardId();
+    }
+
     @GetMapping("")
     public String mainController(Model model, HttpSession session) {
         Set<Integer> set = randomService.getGesipanSet(boardRepository);

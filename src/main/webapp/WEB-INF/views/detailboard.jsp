@@ -76,10 +76,10 @@
         var div = document.getElementById('main_text');
         var contentHeight = div.scrollHeight;
 
-        if (contentHeight > 400) {
+        if (contentHeight > 300) {
             div.style.overflow = 'hidden';
-            div.style.height = '400px';
-            div.style.overflowX = 'hidden';
+            div.style.height = 'auto';
+            div.style.overflowX = 'auto';
         } else {
             div.style.overflow = 'visible';
             div.style.height = '300px';
@@ -186,7 +186,7 @@
                         <input type="hidden" name="boardType" value="${board.boardType}">
                         <button type="submit">삭제하기</button>
                      </form>
-                     <form action="/main/delete" method="post">
+                     <form action="/main/write/update" method="get">
                       <input type="hidden" name="boardId" value="${board.boardId}">
                       <button type="submit">수정하기</button>
                      </form>
@@ -198,6 +198,11 @@
              <h3>본문</h3>
              <div class="main_text" id="main_text">
                  ${board.boardContent}
+                     <c:choose>
+                         <c:when test="${board.boardImage.length() > 70}">
+                             <img src="/img/${board.boardImage.substring(70)}" style="width: 100%; height: 100%;">
+                         </c:when>
+                     </c:choose>
              </div>
                  <% if(user!=null){ %>
                  <div class="Liky_btn">
