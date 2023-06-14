@@ -22,7 +22,7 @@ public interface DetailRepository extends JpaRepository<BoardEntity, Long> {
     public void deleteByBoardId(int id);
     public Page<BoardEntity> findByUserEmail(String email, Pageable pageable);
     public long countByBoardType(int boardType);
-
+    public void deleteByUserEmail(String userEmail);
     @Query(value = "select * from boarddetail where board_id < :id and board_type = :type order by board_id desc limit 1", nativeQuery = true)
     public BoardEntity PrevPage(@Param("id") int id, @Param("type") int type);
 

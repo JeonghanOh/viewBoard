@@ -94,7 +94,7 @@ public class AuthController {
         String email = findService.findId(dto);
         if (email == "" || email == null) {
             model.addAttribute("find", "해당하는계정이 없습니다.");
-            return "authservice";
+            return "id_finder";
         }
         model.addAttribute("find", email);
         return "id_finder";
@@ -105,9 +105,11 @@ public class AuthController {
         String password = findService.findPassword(dto);
         if (password == "" || password == null) {
             model.addAttribute("find", "해당하는계정이 없습니다.");
-            return "authservice";
+            return "pw_finder";
         }
-        model.addAttribute("find", password);
+        String newPassword  = findService.getRandomPassword(10);
+        authService.updateNewPassword(newPassword,dto);
+        model.addAttribute("find", newPassword);
         return "pw_finder";
     }
 

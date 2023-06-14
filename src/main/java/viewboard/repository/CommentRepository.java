@@ -20,4 +20,6 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
     public int selectCount(int board_id);
 
     public void deleteByboardId(int id);
+
+    public void deleteByUserEmail(String userEmail);
 }

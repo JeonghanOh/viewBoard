@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface FavoriteRepository extends JpaRepository<FavoriteEntity, FavoriteDto> {
-    boolean existsByFavoriteDtoUserEmailAndFavoriteDtoBoardType(String userEmail, int boardType);
-    void deleteByFavoriteDtoUserEmailAndFavoriteDtoBoardType(String userEmail, int boardType);
-
+    public boolean existsByFavoriteDtoUserEmailAndFavoriteDtoBoardType(String userEmail, int boardType);
+    public void deleteByFavoriteDtoUserEmailAndFavoriteDtoBoardType(String userEmail, int boardType);
+    public void deleteByFavoriteDtoUserEmail(String userEmail);
 }

@@ -19,6 +19,7 @@ public interface LikedRepository extends JpaRepository <LikedEntity, LikedDto>{
     public void deleteByLikedDtoBoardIdAndLikedDtoUserEmail(int id ,String email);
 
     public void deleteByLikedDtoBoardId(int boardid);
+    public void deleteByLikedDtoUserEmail(String userEmail);
 
     boolean existsByLikedDtoBoardIdAndLikedDtoUserEmail(int id, String email);
 }

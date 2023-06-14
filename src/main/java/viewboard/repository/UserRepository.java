@@ -26,6 +26,11 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     @Transactional
     public void FixNickname(String NickName, String email);
 
+    @Query(value="update user set user_password = ?1 where user_email = ?2",nativeQuery = true)
+    @Modifying
+    @Transactional
+    public void newPassword(String password, String email);
+
     @Query(value="update user set board_count = board_count + 1 where user_email = ?1",nativeQuery = true)
     @Modifying
     @Transactional

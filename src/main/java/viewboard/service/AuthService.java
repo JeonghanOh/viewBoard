@@ -8,7 +8,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import viewboard.dto.*;
 import viewboard.entity.UserEntity;
-import viewboard.repository.UserRepository;
+import viewboard.repository.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +17,14 @@ import java.util.Map;
 public class AuthService {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    DetailRepository detailRepository;
+    @Autowired
+    LikedRepository likedRepository;
+    @Autowired
+    CommentRepository commentRepository;
+    @Autowired
+    FavoriteRepository favoriteRepository;
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     public ResponseDto<?> memberInsert(SignUpDto dto) {
         String email = dto.getUserEmail();
@@ -87,6 +95,10 @@ public class AuthService {
         try {
             if (email != null && user.getUserPassword().equals(password)) {
                 userRepository.deleteByUserEmail(email);
+                detailRepository.deleteByUserEmail(email);
+                likedRepository.deleteByLikedDtoUserEmail(email);
+                commentRepository.deleteByUserEmail(email);
+                favoriteRepository.deleteByFavoriteDtoUserEmail(email);
             } else if (!user.getUserPassword().equals(password)) {
                 throw new RuntimeException("비밀번호가 일치하지 않습니다");
             }
@@ -100,6 +112,15 @@ public class AuthService {
             userRepository.FixNickname(nickname, email);
         } catch (Exception error) {
             error.printStackTrace();
+        }
+    }
+    public void updateNewPassword(String password, FindDto dto){
+        String newPassword = passwordEncoder.encode(password);
+        String userEmail = dto.getUserEmail();
+        try {
+            userRepository.newPassword(newPassword, userEmail);
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
 
