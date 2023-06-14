@@ -1,0 +1,9 @@
+*{
+    margin:0;
+    box-sizing:border-box;
+}
+nav{
+    width:300px;
+    height:100vh;
+    background:red;
+}
