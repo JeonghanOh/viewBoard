@@ -52,6 +52,7 @@ public class BoardController {
         Page<BoardEntity> list = boardService.getList(type, pageable);
         List<BoardTypeEntity> nameList = boardService.HotBoardType();
         List<BoardTypeEntity> list3 = boardService.selectAllBoardType();
+        List<BoardTypeEntity> list2 = boardService.HotBoardType();
         UserEntity user = (UserEntity) session.getAttribute("login");
         if (user != null) {
             boolean is = boardService.isFavorite(type, user);
@@ -65,6 +66,7 @@ public class BoardController {
         model.addAttribute("startpage", startPag);
         model.addAttribute("endpage", endPag);
         model.addAttribute("boardDetail", list.getContent());
+        model.addAttribute("hot", list2);
         model.addAttribute("hotBoard", boardService.getHotboard(type));
         model.addAttribute("board", boardService.getBoardType(type));
         model.addAttribute("boardCount", boardService.counting(type));
@@ -209,7 +211,10 @@ public class BoardController {
     }
 
     @RequestMapping("/searchresult")
-    public String searchController(Model model, @RequestParam String query, @RequestParam int page, @PageableDefault(page = 0, size = 10, direction = Sort.Direction.DESC) Pageable pageable) {
+    public String searchController(Model model, @RequestParam String query, @PageableDefault(page = 0, size = 10, direction = Sort.Direction.DESC) Pageable pageable) {
+        if(query.equals(""))
+            return "redirect:/main";
+
         Page<BoardEntity> res = searchService.searchResult(query, writeRepository, pageable);
         ArrayList<BoardTypeEntity> bteList = new ArrayList<BoardTypeEntity>();
 
@@ -230,7 +235,6 @@ public class BoardController {
         model.addAttribute("query", query);
         model.addAttribute("result", res.getContent());
         model.addAttribute("bteList", bteList);
-        model.addAttribute("page", page);
         model.addAttribute("allBoard", list3);
 
         return "searchresult";

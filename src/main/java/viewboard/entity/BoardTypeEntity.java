@@ -3,6 +3,7 @@ package viewboard.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import viewboard.dto.AdminBoardDto;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,4 +23,8 @@ public class BoardTypeEntity {
     private String boardName;
     @Column(name = "board_intro")
     private String boardIntro;
+    public BoardTypeEntity(AdminBoardDto dto){
+        this.boardName=dto.getBoardTitle();
+        this.boardIntro = dto.getBoardInfo();
+    }
 }

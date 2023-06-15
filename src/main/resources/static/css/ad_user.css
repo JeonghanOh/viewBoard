@@ -2,8 +2,77 @@
     margin:0;
     box-sizing:border-box;
 }
+body{
+    display:flex;
+}
+
 nav{
     width:300px;
     height:100vh;
-    background:red;
+    background:#9c3646;
+    float:left;
+}
+
+.userList{
+    width: 800px;
+    height: 500px;
+    border: 1px solid #9C3646;
+    margin:0 auto;
+}
+
+.container{
+    text-align:center;
+    /*width: calc(100% - 300px);*/
+    width: 100%;
+}
+
+.userManage{
+    padding-bottom: 10px;
+  /*  text-align: center;*/
+}
+
+.search{
+    border-top:5px solid #9C3646;
+    margin:auto;
+    width: 800px;
+}
+
+.searchDiv{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.selectBox{
+    width: 80px;
+    font-size: 15px;
+}
+
+.inputSearch{
+    width: 300px;
+}
+
+.thead{
+    background-color: #e4f0f5;
+}
+
+.th_check{
+    width: 10%;
+}
+
+.th_email{
+    width: 40%;
+}
+
+.th_grant{
+    width: 10%;
+}
+
+button{
+    background: #9c3646;
+    width: 150px;
+    color: white;
+}
+
+.button{
+    padding-top:10px;
 }

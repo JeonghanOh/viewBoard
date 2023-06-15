@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import viewboard.dto.SearchuserDto;
 import viewboard.dto.SignUpDto;
 
 import javax.persistence.Column;
@@ -30,11 +31,11 @@ public class UserEntity {
     @Column(name="user_phonenumber")
     private String userPhoneNumber;
     @Column(name="user_grant")
-    private int userGrant;
+    private Integer userGrant;
     @Column(name="user_adult")
-    private int userAdult;
+    private Integer userAdult;
     @Column(name = "board_count")
-    private int boardCount;
+    private Integer boardCount;
 
     public UserEntity(SignUpDto dto) {
         this.userEmail = dto.getUserEmail();
@@ -42,6 +43,11 @@ public class UserEntity {
         this.userName = dto.getUserName();
         this.userNickName = dto.getUserNickname();
         this.userPhoneNumber = dto.getUserPhoneNumber();
+    }
+    public UserEntity(SearchuserDto searchuserDto) {
+        this.userEmail = searchuserDto.getUser_email();
+        this.userName = searchuserDto.getUser_name();
+        this.userNickName = searchuserDto.getUser_nickname();
     }
 }
 
