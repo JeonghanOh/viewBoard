@@ -15,7 +15,12 @@ public class CommentService {
 
     public void Commentinsert(CommentDto dto) {
         CommentEntity comment = new CommentEntity(dto);
-        commentRepository.save(comment);
+        try {
+            // 댓글 작성 DB에 저장
+            commentRepository.save(comment);
+        } catch (Exception error){
+            error.printStackTrace();
+        }
     }
 
     public CommentEntity getcomment(int Id) {

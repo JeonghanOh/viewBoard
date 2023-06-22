@@ -10,7 +10,25 @@
 </head>
 <body>
  <nav>
- d
+  <nav>
+     <div id="nav_logo">
+         <a href="/main" class="color_w"><img src="/img/adlogo.png" style="width: 150px"></a>
+     </div>
+     <div id="admin_feature">
+         <div class="manage">
+         <form action="/admin/user" method="get">
+             <input type="hidden" value="${user.getUserEmail()}" name="UserEmail">
+             <button class="adminButton">유저 관리</button>
+         </form
+         </div>
+         <div class="manage">
+             <form action="/admin/board" method="get">
+                 <input type="hidden" value="${user.getUserEmail()}" name="UserEmail">
+                 <button class="adminButton">게시판 관리</button>
+             </form>
+         </div>
+     </div>
+  </nav>
  </nav>
  <div class="container">
     <div class="left">
@@ -57,7 +75,7 @@
                             <input type="text" name="boardTitle" placeholder="기존 게시판 이름">
                             <input type="text" name="boardTitle2" placeholder="변경할 게시판 이름">
                             <button type="submit">수정</button>
-                            </form>
+                    </form>
         </div>
         <div class="bottom">
                       <h2>게시판 추가</h2>
@@ -67,8 +85,6 @@
                             <button type="submit" class="add">추가</button>
                             </form>
         </div>
-
-
     </div>
  </div>
 </body>

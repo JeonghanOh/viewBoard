@@ -307,15 +307,27 @@ margin-right:35px;
      font-weight: bold;
      margin-bottom: 5px;
  }
-
- .content{
-    width:280px;
+.letter .content{
+width:280px;
     height:40px;
      margin-bottom: 30px;
-     white-space: nowrap;
-     overflow: hidden;
-     text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: break-all;
  }
+
+ .content > p, .content > span{
+    font-size : 15px !important;
+ }
+
+.content p{
+    width:280px;
+    line-height:40px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
  .writer{
      font-size: 13px;
      margin-bottom: 12px;

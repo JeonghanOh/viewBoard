@@ -1,6 +1,7 @@
-
 *{
 box-sizing:border-box;
+margin:0;
+padding:0;
 }
 a{
 text-decoration:none;
@@ -129,16 +130,16 @@ ul{
    cursor: pointer;
 }
 
-#gesi1Contents{
-    box-shadow: 0 2px 4px rgba(138, 0, 46, 0.4);
-    padding: 15px;
-    width: 90%;
-    height: 70px;
-    text-overflow: ellipsis;  /* 위에 설정한 100px 보다 길면 말줄임표처럼 표시합니다. */
-    white-space  : nowrap;    /* 줄바꿈을 하지 않습니다. */
-    overflow     : hidden;    /* 내용이 길면 감춤니다 */
-    display      : block;     /* ie6이상 현재요소를 블럭처리합니다. */
+
+.bottom{
+    height:30px;
+    width:100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
 }
+
 
 #gesi2, #gesi4 {
    border-top:5px solid #9C3646;
@@ -155,7 +156,7 @@ ul{
 #container{
     margin:auto;
     margin-top:125px;
-    width: 1450px;
+    width: 1000px;
     height: 2000px;
 }
 
@@ -195,7 +196,7 @@ ul{
 
 .best_detail1{
     box-shadow: 0 2px 4px rgba(138, 0, 46, 0.4);
-    padding: 15px;
+    padding: 10px;
     width: 420px;
     height: 70px;
     float:left;
@@ -205,7 +206,16 @@ ul{
     word-break: break-all;
     overflow: hidden;
 }
-
+#gesi1Contents{
+    box-shadow: 0 2px 4px rgba(138, 0, 46, 0.4);
+        padding: 15px;
+        width: 90%;
+        height: 70px;
+        text-overflow: ellipsis;  /* 위에 설정한 100px 보다 길면 말줄임표처럼 표시합니다. */
+        white-space  : nowrap;    /* 줄바꿈을 하지 않습니다. */
+        overflow     : hidden;    /* 내용이 길면 감춤니다 */
+        display      : block;     /* ie6이상 현재요소를 블럭처리합니다. */
+}
 .best_detail1:nth-child(2n-1){
     margin-right:10px;
 }
@@ -241,7 +251,7 @@ nav {
     }
 
 .top-nav {
-    width: 60%;
+     width: 1000px;
     margin: auto;
     height: 70px;
     display: flex;
@@ -251,6 +261,7 @@ nav {
 
 .search {
    display:flex;
+   margin-left:-10px;
 }
 .bugu{
     text-align:center;
@@ -275,8 +286,8 @@ nav {
 }
 
 .top-nav-left {
-    margin-left: 50px;
     color: white;
+    margin-left:-10px;
 }
 
 .top-nav-right > ul > li{
@@ -520,7 +531,7 @@ padding:10px;
 .hot a li{
     display: flex;
     justify-content: center;
-    width:44px;
+    width:60px;
     height:44px;
     border-radius:20px;
     background:#9c3646;
@@ -573,4 +584,30 @@ color: black;
     font-size: 25px;
     font-weight: bold;
     cursor:pointer;
+}
+
+#adminButton{
+    width:150px;
+    height:40px;
+    background:#9c3646;
+    color:#fff;
+    font-weight:bold;
+    font-size:18px;
+    border:none;
+    margin:5px 25px 0 25px;
+}
+
+.hot_board_css {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: break-all;
+}
+
+.hot_board_css > span , .hot_board_css > p{
+    font-size : 15px !important;
+}
+
+.bottom > span, .bottom > p{
+    font-size : 15px !important;
 }

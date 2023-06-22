@@ -32,7 +32,7 @@
                    content += '<td class="second_width">' + comment.commentContent + '</td>';
                    content += '</tr>';
                }
-   	              content += '<div class="input_recomment">';
+                    content += '<div class="input_recomment">';
                   content += '<input type="text"/>';
                   content += '<button type="submit">답글 달기</button>';
                   content += '</div>';
@@ -107,57 +107,7 @@
              </form>
          </div>
          <div class="top-nav-right">
-             <% if(user!=null){ %>
-             <span><%=user.getUserName()%>님</span>
-             <a href="/auth/logout">로그아웃</a><a>회원탈퇴</a>
-             <% } else{%>
-             <button onclick="location.href='/auth/login'">로그인</button>
-             <% } %>
-         </div>
-     </div>
-     <hr>
-     <div class="bot">
-         <div class="bot-nav">
-             <div class="w150">회원</div>
-             <div class="w150">회원 2</div>
-             <div class="w150">조회</div>
-             <div class="w150">좋아요</div>
-             <div class="w150">리뷰</div>
-         </div>
-     </div>
-     <div class="hide-nav">
-         <div class="hide_nav_width">
-             <div class="around">
-                 <div class="pt20">회원 가입</div>
-                 <div class="pt20">회원 가입 정규식</div>
-                 <div class="pt20">로그인</div>
-                 <div class="pt20">로그아웃</div>
 
-             </div>
-             <div class="around">
-                 <div class="pt20">내 정보 보기</div>
-                 <div class="pt20">내 정보 변경</div>
-                 <div class="pt20">아아디 찾기</div>
-                 <div class="pt20">비밀 번호 찾기</div>
-                 <div class="pt20">회원 탈퇴</div>
-             </div>
-             <div class="around">
-                 <div class="pt20">이름순 정렬 조회</div>
-                 <div class="pt20">좋아요순 정렬 조회</div>
-                 <div class="pt20">조회순 정렬 조회</div>
-                 <div class="pt20">검색어 검색</div>
-             </div>
-             <div class="around">
-                 <div class="pt20">좋아요</div>
-                 <div class="pt20">좋아요 해제</div>
-                 <div class="pt20">좋아요 작품 보기</div>
-                 <div class="pt20">좋아요 수 표시</div>
-             </div>
-             <div class="around">
-                 <div class="pt20">리뷰 작성</div>
-                 <div class="pt20">작품 최근 리뷰 보기</div>
-                 <div class="pt20">작성한 리뷰 보기</div>
-             </div>
          </div>
      </div>
  </nav>
@@ -168,7 +118,23 @@
                  <h3>${type.boardName} 게시판</h3>
              </div>
              <div class="main_title">
-                 <div id="title_font">글 제목 : ${board.boardTitle}</div>
+                 <div id="title_font">
+                    <div>글 제목 : ${board.boardTitle}</div>
+                    <div id="form_btn">
+                            <% if(user!=null && user.getUserEmail().equals(board.getUserEmail())) {%>
+                                         <form action="/main/delete" method="post">
+                                            <input type="hidden" name="boardId" value="${board.boardId}">
+                                            <input type="hidden" name="userEmail" value="${board.userEmail}">
+                                            <input type="hidden" name="boardType" value="${board.boardType}">
+                                            <button type="submit" class="btn_board_update">삭제하기</button>
+                                         </form>
+                                         <form action="/main/write/update" method="get">
+                                          <input type="hidden" name="boardId" value="${board.boardId}">
+                                          <button type="submit" class="btn_board_update">수정하기</button>
+                                         </form>
+                            <%}%>
+                    </div>
+                 </div>
                  <div class="title_detail">
                      <div class="Write_info">
                          <div>작성자 명 : ${board.userEmail}</div>
@@ -179,18 +145,6 @@
                          <div class="ml20">좋아요 수 : ${board.boardLike}</div>
                          <div class="ml20">댓글 : ${count}</div>
                      </div>
-                     <% if(user!=null && user.getUserEmail().equals(board.getUserEmail())) {%>
-                     <form action="/main/delete" method="post">
-                        <input type="hidden" name="boardId" value="${board.boardId}">
-                        <input type="hidden" name="userEmail" value="${board.userEmail}">
-                        <input type="hidden" name="boardType" value="${board.boardType}">
-                        <button type="submit">삭제하기</button>
-                     </form>
-                     <form action="/main/write/update" method="get">
-                      <input type="hidden" name="boardId" value="${board.boardId}">
-                      <button type="submit">수정하기</button>
-                     </form>
-                     <%}%>
                  </div>
              </div>
          </div>
@@ -206,7 +160,7 @@
              </div>
                  <% if(user!=null){ %>
                  <div class="Liky_btn">
-                 <button type="button" onclick="liked('${board.boardId}', '<%=user.getUserEmail()%>')">
+                 <button type="button" onclick="liked('${board.boardId}', '<%=user.getUserEmail()%>')" class="BTN_LIKE">
                      <div id="liked_btn">
                          <c:choose>
                              <c:when test="${Likestatus}">
@@ -313,7 +267,7 @@
                     <button id ="mypage_btn">마이 페이지</button>
                  </form>
                  </div>
-                 <p>작성한 게시물 : <%=user.getBoardCount()%> </p>
+                 <p>작성한 게시물 : ${board_count} </p>
                  <p><a href="/main/write" class="write">글쓰기</a></p>
                  <ul>
                      <li><a href="/auth/logout">로그아웃</a></li>

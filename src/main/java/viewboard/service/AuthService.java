@@ -10,6 +10,7 @@ import viewboard.dto.*;
 import viewboard.entity.UserEntity;
 import viewboard.repository.*;
 
+import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -87,24 +88,22 @@ public class AuthService {
         return validatorResult;
     }
 
-    public void deleteUser(DeleteDto dto) {
+    public boolean deleteUser(DeleteDto dto) {
         String email = dto.getUserEmail();
         String password = dto.getUserPassword();
-        UserEntity user;
+        boolean a = false;
+        UserEntity user = null;
         user = userRepository.findByUserEmail(email);
         try {
-            if (email != null && user.getUserPassword().equals(password)) {
-                userRepository.deleteByUserEmail(email);
-                detailRepository.deleteByUserEmail(email);
-                likedRepository.deleteByLikedDtoUserEmail(email);
-                commentRepository.deleteByUserEmail(email);
-                favoriteRepository.deleteByFavoriteDtoUserEmail(email);
-            } else if (!user.getUserPassword().equals(password)) {
-                throw new RuntimeException("비밀번호가 일치하지 않습니다");
+            if (email != null && passwordEncoder.matches(password,user.getUserPassword())){
+                deleteAllAboutUser(email);
+                a=true;
+                return a;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return a;
     }
 
     public void ChangeNick(String nickname, String email) {
@@ -123,5 +122,12 @@ public class AuthService {
             e.printStackTrace();
         }
     }
-
+    @Transactional
+    public void deleteAllAboutUser(String email) {
+        userRepository.deleteByUserEmail(email);
+        detailRepository.deleteByUserEmail(email);
+        likedRepository.deleteByLikedDtoUserEmail(email);
+        commentRepository.deleteByUserEmail(email);
+        favoriteRepository.deleteByFavoriteDtoUserEmail(email);
+    }
 }

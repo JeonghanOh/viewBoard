@@ -30,9 +30,6 @@
                         <button class="search_btn" type="submit">검색</button>
                     </form>
                 </div>
-                <div class="top-nav-right">
-
-                </div>
             </div>
         </nav>
         <div class="container">
@@ -45,7 +42,6 @@
                  </a>
              </c:if>
          </c:forEach>
-
         <a onclick="navArea()" class="plus">+</a>
         </ul>
          <div class="all">
@@ -60,38 +56,53 @@
          </div>
          </div>
     <div id="container">
-       <div id="outside1"></div>
 
        <div id="main">
-
           <div id="set1">
              <div id="banner"></div>
              <div id="login">
                 <c:choose>
-                        <c:when test = "${user == null}">
-                           <button id="loginButton" onclick="location.href='/auth/login'">로그인</button>
-                        </c:when>
-                        <c:otherwise>
-                           <div class="myInfo"><h4>${user.getUserNickName()}님</h4></div>
-                           <div class="myInfo"><a href="#">작성한 게시물 : ${user.getBoardCount()}개</a></div>
-                           <div class="myInfo2"><a href="/main/write">글쓰기</a> <a href="/auth/logout">로그아웃</a> <a href="/auth/service">회원탈퇴</a></div>
-                               <form action="/auth/mypage" method="get">
+                     <c:when test = "${user == null}">
+                        <button id="loginButton" onclick="location.href='/auth/login'">로그인</button>
+                     </c:when>
+                     <c:otherwise>
+                         <c:choose>
+                             <c:when test = "${user.getUserGrant() == 1}">
+                                <div class="myInfo"><h4>${user.getUserNickName()}님</h4></div>
+                                <div class="myInfo"><a href="/auth/mypage?UserEmail=${user.getUserEmail()}">작성한 게시물 : ${count}개</a></div>
+                                <div class="myInfo2"><a href="/main/write">글쓰기</a> <a href="/auth/logout">로그아웃</a> <a href="/auth/service">회원탈퇴</a></div>
+                                <form action="/auth/mypage" method="get">
+                                     <input type="hidden" value="${user.getUserEmail()}" name="UserEmail">
+                                     <button id="mypageButton" style="margin: 5px 25px 0 25px;">마이 페이지</button>
+                                </form>
+                                <form action="/admin/user" method="get">
                                     <input type="hidden" value="${user.getUserEmail()}" name="UserEmail">
-                                    <button id="mypageButton">마이 페이지</button>
-                               </form>
-                        </c:otherwise>
-                   </c:choose>
+                                    <button id="adminButton">관리자 페이지</button>
+                                </form>
+                             </c:when>
+                             <c:otherwise>
+                                 <div class="myInfo"><h4>${user.getUserNickName()}님</h4></div>
+                                 <div class="myInfo"><a href="/auth/mypage?UserEmail=${user.getUserEmail()}">작성한 게시물 : ${count}개</a></div>
+                                 <div class="myInfo2"><a href="/main/write">글쓰기</a> <a href="/auth/logout">로그아웃</a> <a href="/auth/service">회원탈퇴</a></div>
+                                 <form action="/auth/mypage" method="get">
+                                      <input type="hidden" value="${user.getUserEmail()}" name="UserEmail">
+                                      <button id="mypageButton">마이 페이지</button>
+                                 </form>
+                             </c:otherwise>
+                         </c:choose>
+                     </c:otherwise>
+                </c:choose>
              </div>
           </div>
     <h2 class="bugu">핫   게시물</h2>
           <div id="set2">
              <div id="best">
                  <c:forEach var="board" items="${hotGesigeul}">
-                     <div class="best_detail1" onclick="location.href='/main/detailboard/${board.boardId}'">
-                         <h4>${board.boardTitle}</h4>
-                         ${board.boardContent}
-                     </div>
-                 </c:forEach>
+                                      <div class="best_detail1" onclick="location.href='/main/detailboard/${board.boardId}'">
+                                          <h4>${board.boardTitle}</h4>
+                                             <div class="hot_board_css">${board.boardContent}</div>
+                                      </div>
+                                  </c:forEach>
              </div>
           </div>
               <h2 class="bugu">오늘의 게시판</h2>
@@ -101,8 +112,8 @@
                 <h3>${board0.boardName}</h3>
                         <c:forEach var="board" items="${boardList0}">
                             <div id="gesi1Contents">
-                                <h4>${board.boardTitle}</h4>
-                                ${board.boardContent}
+                               <div class ="top"><h4>${board.boardTitle}</h4></div>
+                                                               <div class="bottom">${board.boardContent}</div>
                             </div>
                         </c:forEach>
                 </div>
@@ -110,22 +121,21 @@
                 <h3>${board1.boardName}</h3>
                         <c:forEach var="board" items="${boardList1}">
                             <div id="gesi1Contents">
-                                <h4>${board.boardTitle}</h4>
-                                ${board.boardContent}
+                                <div class ="top"><h4>${board.boardTitle}</h4></div>
+                                                                <div class="bottom">${board.boardContent}</div>
                             </div>
                         </c:forEach>
                 </div>
              </div>
           </div>
-
           <div id="set4">
              <div id="gesiSet2">
                 <div id="gesi3" onclick="location.href='/main/board/${board2.boardType}'">
                 <h3>${board2.boardName}</h3>
                         <c:forEach var="board" items="${boardList2}">
                             <div id="gesi1Contents">
-                                 <h4>${board.boardTitle}</h4>
-                                ${board.boardContent}
+                                 <div class ="top"><h4>${board.boardTitle}</h4></div>
+                                <div class="bottom">${board.boardContent}</div>
                             </div>
                         </c:forEach>
                 </div>
@@ -133,16 +143,14 @@
                 <h3>${board3.boardName}</h3>
                         <c:forEach var="board" items="${boardList3}">
                             <div id="gesi1Contents">
-                                 <h4>${board.boardTitle}</h4>
-                                ${board.boardContent}
+                                <div class ="top"><h4>${board.boardTitle}</h4></div>
+                                                                <div class="bottom">${board.boardContent}</div>
                             </div>
                         </c:forEach>
                 </div>
              </div>
           </div>
        </div>
-
-
     </div>
     <script>
         function hidenavArea(){
@@ -150,7 +158,6 @@
             var len = ${fn:length(allBoard)};
             sel.style.height=len*40+'px';
         }
-
         function navArea(){
             var plus = document.querySelector('.plus');
             var sel = document.querySelector('.all');

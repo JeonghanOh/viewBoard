@@ -19,10 +19,20 @@ public interface DetailRepository extends JpaRepository<BoardEntity, Long> {
     public Page<BoardEntity> findByBoardType(int boardType, Pageable pageable);
 //    public List<BoardEntity> findByBoardType(int boardType, Pageable pageable);
     public BoardEntity findByBoardId(int id);
+    @Transactional
+    public void deleteByUserEmailIn(List<String> email);
     public void deleteByBoardId(int id);
     public Page<BoardEntity> findByUserEmail(String email, Pageable pageable);
     public long countByBoardType(int boardType);
+    @Transactional
     public void deleteByUserEmail(String userEmail);
+    @Transactional
+    @Query(value="select board_id from boarddetail where board_type in ?1", nativeQuery = true)
+    public List<Integer> findBoardCon(List<Integer>type);
+    @Transactional
+    @Modifying
+    @Query(value="delete from boarddetail where board_type in ?1", nativeQuery = true)
+    public void deleteBoardCon(List<Integer>type);
     @Query(value = "select * from boarddetail where board_id < :id and board_type = :type order by board_id desc limit 1", nativeQuery = true)
     public BoardEntity PrevPage(@Param("id") int id, @Param("type") int type);
 
@@ -53,6 +63,10 @@ public interface DetailRepository extends JpaRepository<BoardEntity, Long> {
 
     @Modifying
     @Transactional
-    @Query(value="update boarddetail set board_title = ?1 , board_content = ?2 where board_id = ?3", nativeQuery = true)
-    public void boardUpdate(String title, String content, int id);
+    @Query(value="update boarddetail set board_title = ?1 , board_content = ?2 , board_type = ?3 where board_id = ?4", nativeQuery = true)
+    public void boardUpdate(String title, String content,  int type, int id);
+
+    @Transactional
+    @Query(value = "select count(*) from boarddetail where user_email = ?1", nativeQuery = true)
+    public int boardcount(String email);
 }

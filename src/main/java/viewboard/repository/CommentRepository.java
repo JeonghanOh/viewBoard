@@ -1,8 +1,10 @@
 package viewboard.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 import viewboard.entity.CommentEntity;
 import viewboard.entity.UserEntity;
 
@@ -20,6 +22,14 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
     public int selectCount(int board_id);
 
     public void deleteByboardId(int id);
+    @Transactional
+    @Modifying
+    @Query(value="delete from comment where board_id in ?1", nativeQuery = true)
+    public void deleteComment(List<Integer> id);
 
+    @Transactional
     public void deleteByUserEmail(String userEmail);
+
+    @Transactional
+    public void deleteByUserEmailIn(List<String> email);
 }

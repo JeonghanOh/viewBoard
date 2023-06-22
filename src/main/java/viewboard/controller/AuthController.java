@@ -58,7 +58,6 @@ public class AuthController {
         } else {
             return "signup";
         }
-
     }
 
     @PostMapping("/loginresult")
@@ -74,16 +73,25 @@ public class AuthController {
     }
 
     @PostMapping("/cancel")
-    public String cancelUser(DeleteDto dto) {
-        authService.deleteUser(dto);
-        return "/secession";
+    public String cancelUser(DeleteDto dto,HttpSession session,Model model) {
+        boolean state = authService.deleteUser(dto);
+        if(state) {
+            session.invalidate();
+            model.addAttribute("state", state);
+            return "oo";
+        }else {
+            return "secession";
+        }
     }
 
     @GetMapping("/login")
     public String signIn() {
         return "login";
     }
-
+    @GetMapping("/oo")
+    public String oo(){
+        return "oo";
+    }
     @GetMapping("/service")
     public String viewfind() {
         return "authservice";
@@ -135,7 +143,7 @@ public class AuthController {
     }
 
     @GetMapping("/mypage")
-    public String MyPage(@RequestParam("UserEmail") String email, Model model, @PageableDefault(page = 0, size = 3, direction = Sort.Direction.DESC) Pageable pageable) {
+    public String MyPage(@RequestParam("UserEmail") String email, Model model, @PageableDefault(page = 0, size = 6, direction = Sort.Direction.DESC) Pageable pageable) {
         Page<BoardEntity> list = boardService.getMyBoardList(email, pageable);
         int nowPag = list.getPageable().getPageNumber() + 1;
         int startPag = Math.max(nowPag - 4, 1);

@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Entity
 @Table(name = "user")
-public class UserEntity {
+public class SearchEntity {
     @Id
     @Column(name="user_email")
     private String userEmail;
@@ -31,19 +31,16 @@ public class UserEntity {
     @Column(name="user_phonenumber")
     private String userPhoneNumber;
     @Column(name="user_grant")
-    private int userGrant;
+    private Integer userGrant;
     @Column(name="user_adult")
-    private int userAdult;
+    private Integer userAdult;
     @Column(name = "board_count")
-    private int boardCount;
+    private Integer boardCount;
 
-    public UserEntity(SignUpDto dto) {
-        this.userEmail = dto.getUserEmail();
-        this.userPassword= dto.getUserPassword();
-        this.userName = dto.getUserName();
-        this.userNickName = dto.getUserNickname();
-        this.userPhoneNumber = dto.getUserPhoneNumber();
+
+    public SearchEntity(SearchuserDto searchuserDto) {
+        this.userEmail = searchuserDto.getUser_email();
+        this.userName = searchuserDto.getUser_name();
+        this.userNickName = searchuserDto.getUser_nickname();
     }
-
 }
-

@@ -8,11 +8,13 @@ import org.springframework.stereotype.Repository;
 import viewboard.entity.UserEntity;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
     public boolean existsByUserEmail(String email);
-
+    @Transactional
+    public void deleteByUserEmailIn(List<String> email);
     public UserEntity findByUserEmail(String id);
     public UserEntity findUserEmailByUserNameAndUserPhoneNumber(String name,String phoneNumber);
     public UserEntity findUserPasswordByUserEmailAndUserNameAndUserPhoneNumber(String email,String name,String phoneNumber);
@@ -40,4 +42,5 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     @Modifying
     @Transactional
     public void decreaseCount(String email);
+
 }

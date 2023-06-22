@@ -84,14 +84,18 @@ public class BoardService {
 
 
     public void likeContent(int id, String email) {
+        //existsByLikedDtoBoardIdAndLikedDtoUserEmail 복합키 BoardI와 UserEmail의 중복 체크 false , true 형태 반환
         if (likedRepository.existsByLikedDtoBoardIdAndLikedDtoUserEmail(id , email)) {
+            // 좋아요 수를 낮추고 중복체크된 복합키 삭제
             detailRepository.downlike(id);
             likedRepository.deleteByLikedDtoBoardIdAndLikedDtoUserEmail(id, email);
+            // 해당 복합키 가 존재 할경우 해당 함수 종료
             return;
         }
         try {
             LikedDto likedDto = new LikedDto(id, email);
             LikedEntity likedEntity = new LikedEntity(likedDto, LocalDateTime.now());
+            // 위 중복체크에서 복합키가 존재하 않을경우 DB에 저장
             likedRepository.save(likedEntity);
         } catch (Exception e) {
             e.printStackTrace();
@@ -99,11 +103,13 @@ public class BoardService {
         }
     }
 
+    // 게시글에 좋아요 수를 올림
     @Transactional
     public void likeview(int id) {
         likedRepository.Uplike(id);
     }
 
+    // 좋아요 상태 체크
     public boolean isLiked(int id, String email){
         if (likedRepository.existsByLikedDtoBoardIdAndLikedDtoUserEmail(id, email)){
             return false;
@@ -162,6 +168,15 @@ public class BoardService {
             error.printStackTrace();
         }
         return boardentity;
+    }
+    public int count(String email) {
+        int count = 0;
+        try{
+          count = detailRepository.boardcount(email);
+        }catch (Exception error){
+            error.printStackTrace();
+        }
+        return count;
     }
 
 }

@@ -19,7 +19,7 @@
          <input type="text" placeholder="'-'없이 전화번호 11자리" class="pnum" name="userPhonenumber">
          <button type="submit">찾기</button>
          </form>
-         임시비밀번호 : ${find}
+         ${find}
      </div>
 </body>
 </body>

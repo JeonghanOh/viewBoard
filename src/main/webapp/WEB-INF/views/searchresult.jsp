@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <%@page import="viewboard.repository.*"%>
 <%@page import="viewboard.entity.*"%>
@@ -13,7 +14,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="/css/searchResult.css">
-
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Orbit&display=swap');
+</style>
 </head>
 <body>
   <nav>
@@ -32,50 +35,30 @@
 
                   </div>
               </div>
-              <hr>
-              <div class="bot">
-                  <div class="bot-nav">
-                      <div class="w150">게시판</div>
-                      <div class="w150">회원 2</div>
-                      <div class="w150">조회</div>
-                      <div class="w150">좋아요</div>
-                      <div class="w150">리뷰</div>
-                  </div>
-              </div>
-              <div class="hide-nav">
-                  <div class="hide_nav_width">
-                      <div class="around">
-                          <c:forEach var="board" items="${allBoard}">
-                              <div class="pt20"><a href="/main/board/${board.boardType}">${board.boardName}</a></div>
-                          </c:forEach>
-                      </div>
-                      <div class="around">
-                          <div class="pt20">내 정보 보기</div>
-                          <div class="pt20">내 정보 변경</div>
-                          <div class="pt20">아아디 찾기</div>
-                          <div class="pt20">비밀 번호 찾기</div>
-                          <div class="pt20">회원 탈퇴</div>
-                      </div>
-                      <div class="around">
-                          <div class="pt20">이름순 정렬 조회</div>
-                          <div class="pt20">좋아요순 정렬 조회</div>
-                          <div class="pt20">조회순 정렬 조회</div>
-                          <div class="pt20">검색어 검색</div>
-                      </div>
-                      <div class="around">
-                          <div class="pt20">좋아요</div>
-                          <div class="pt20">좋아요 해제</div>
-                          <div class="pt20">좋아요 작품 보기</div>
-                          <div class="pt20">좋아요 수 표시</div>
-                      </div>
-                      <div class="around">
-                          <div class="pt20">리뷰 작성</div>
-                          <div class="pt20">작품 최근 리뷰 보기</div>
-                          <div class="pt20">작성한 리뷰 보기</div>
-                      </div>
-                  </div>
-              </div>
           </nav>
+          <div class="container">
+          <ul class="hot">
+           <c:forEach var="i" begin="0" end="${fn:length(hotBoard) - 1}" varStatus="status">
+               <c:if test="${status.index < 7}">
+                   <a href="/main/board/${hotBoard[i].boardType}">
+                       <li><span>${hotBoard[i].boardName.substring(0,1)}</span></li>
+                       <span>${hotBoard[i].boardName}</span>
+                   </a>
+               </c:if>
+           </c:forEach>
+          <a onclick="navArea()" class="plus">+</a>
+          </ul>
+           <div class="all">
+             <h4>전체 게시판</h4>
+             <ul>
+              <c:forEach var="board" items="${allBoard}">
+                           <a href="/main/board/${board.boardType}">
+                           <li><span>${board.boardName}</span></li>
+                           </a>
+                       </c:forEach>
+             </ul>
+           </div>
+           </div>
 
    <div id="main">
       '<%=request.getAttribute("query")%>' 검색 결과
@@ -138,5 +121,25 @@
             <div class="buttons"></div>
       </footer>
    </div>
+
+   <script>
+   function navArea(){
+               var plus = document.querySelector('.plus');
+               var sel = document.querySelector('.all');
+               var sel2 = document.querySelector('.container');
+
+               if(sel.style.display=='block'){
+                   sel.style.display='none';
+                   sel2.style.boxShadow="none";
+                   sel2.style.border='none';
+                   plus.innerText = '+';
+               }
+               else{
+                   plus.innerText = '×';
+                   sel.style.display='block';
+                   sel2.style.boxShadow="0 0 0 1px #e3e5e8, 0 4px 8px 0 rgba(0,0,0,.3)";
+               }
+           }
+   </script>
 </body>
 </html>

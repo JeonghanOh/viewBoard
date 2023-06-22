@@ -15,8 +15,8 @@ import java.util.List;
 public interface BoardRepository extends JpaRepository<BoardTypeEntity, Long> {
     public BoardTypeEntity findByboardType(int boardType);
 
-    @Query(value="select max(board_type) from board", nativeQuery = true)
-    public int getMaxBoard_type();
+    @Query(value="select * from board", nativeQuery = true)
+    public List<BoardTypeEntity> selectAllBoard();
     public boolean existsByBoardName(String title);
     @Transactional
     public void deleteByBoardTypeIn(List<Integer>type);

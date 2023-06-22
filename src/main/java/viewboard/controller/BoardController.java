@@ -1,8 +1,6 @@
 package viewboard.controller;
 
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -20,7 +18,11 @@ import viewboard.repository.*;
 import viewboard.service.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/main")
@@ -47,6 +49,12 @@ public class BoardController {
     @Autowired
     UserRepository userRepository;
 
+    public static String removeTags(String html) {
+        Pattern pattern = Pattern.compile("<[^>]*>");
+        Matcher matcher = pattern.matcher(html);
+        return matcher.replaceAll("");
+    }
+
     @GetMapping("/board/{boardType}")
     public String getboard(@PathVariable("boardType") int type, Model model, @PageableDefault(page = 0, size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable, HttpSession session) {
         Page<BoardEntity> list = boardService.getList(type, pageable);
@@ -55,9 +63,13 @@ public class BoardController {
         List<BoardTypeEntity> list2 = boardService.HotBoardType();
         UserEntity user = (UserEntity) session.getAttribute("login");
         if (user != null) {
+
             boolean is = boardService.isFavorite(type, user);
             model.addAttribute("isfavorite", is);
+            int board_count = boardService.count(user.getUserEmail());
+            model.addAttribute("boardcount",board_count);
         }
+
         int nowPag = list.getPageable().getPageNumber() + 1;
         int startPag = Math.max(nowPag - 4, 1);
         int endPag = Math.min(nowPag + 5, list.getTotalPages());
@@ -69,7 +81,6 @@ public class BoardController {
         model.addAttribute("hot", list2);
         model.addAttribute("hotBoard", boardService.getHotboard(type));
         model.addAttribute("board", boardService.getBoardType(type));
-        model.addAttribute("boardCount", boardService.counting(type));
         model.addAttribute("allBoard", list3);
         return "board";
     }
@@ -79,16 +90,23 @@ public class BoardController {
         return "board";
     }
 
+    // 해당 게시글 아이디를 주소로 받아옴.
     @GetMapping("/detailboard/{boardId}")
     public String DetailBoard(@PathVariable("boardId") int id, Model model, HttpSession session){
+        // 댓글 리스트를 commentRepository를 통해 DB와 연동해서 받아옴
         List<CommentEntity> commentList = commentRepository.findByCommentLists(id);
         boardService.increaseView(id);
         BoardEntity board = writeService.getFindid(id);
         LikedDto likedDto = new LikedDto();
         likedDto.setBoardId(id);
+        // User 세션 로그인 정보 확인
         UserEntity user = (UserEntity)session.getAttribute("login");
         if(user != null) {
             likedDto.setUserEmail(user.getUserEmail());
+            // 해당 유저가 작성한 게시글
+            int board_count = boardService.count(user.getUserEmail());
+            model.addAttribute("board_count",board_count);
+            // 해당 유저의 좋아요 상태
             boolean isLiked = boardService.isLiked(id, user.getUserEmail());
             if (likedRepository.existsByLikedDtoBoardIdAndLikedDtoUserEmail(id, likedDto.getUserEmail())) {
                 model.addAttribute("Likestatus", isLiked);
@@ -100,18 +118,23 @@ public class BoardController {
             model.addAttribute("Likestatus", false);
         }
         model.addAttribute("board", board);
+        // 이전글 다음글 버튼 정보
         model.addAttribute("Prev", writeService.prevPage(id, board.getBoardType()));
         model.addAttribute("Next", writeService.nextPage(id, board.getBoardType()));
+        // 핫 게시글 정보
         model.addAttribute("hotBoard", writeRepository.getHotGesigeul());
         model.addAttribute("type", boardService.getBoardType(board.getBoardType()));
+        // 댓글 리스트
         model.addAttribute("comment", commentList);
+        // 댓글 작성 갯수
         model.addAttribute("count", commentService.CommentCount(board.getBoardId()));
         return "detailboard";
     }
-
+    //
     @PostMapping("/detailboard")
     public String CommentWrite(@ModelAttribute CommentDto commentDto) {
         commentService.Commentinsert(commentDto);
+        // 댓글 작성 작업후 다시 commentDto.getBoardId() 해당 게시글의 BoardId 주소로 리다이렉트
         return "redirect:/main/detailboard/" + commentDto.getBoardId();
     }
 
@@ -129,6 +152,7 @@ public class BoardController {
     @ResponseBody
     public boolean like(@RequestParam("boardId") int id, @RequestParam("userEmail") String email , Model model){
         boolean isLiked = boardService.isLiked(id, email);
+        // 좋아요 existsByLikedDtoBoardIdAndLikedDtoUserEmail 복합키 중복 체크 true, false 형태 반환
         if (likedRepository.existsByLikedDtoBoardIdAndLikedDtoUserEmail(id, email)) {
             boardService.likeContent(id, email);
         } else {
@@ -141,42 +165,53 @@ public class BoardController {
     @GetMapping("/write")
     public String write(Model model) {
         List<BoardTypeEntity> list = boardService.selectAllBoardType();
+        System.out.println("allboard / write" + list);
         model.addAttribute("allBoard", list);
         return "write";
     }
 
+    // 게시물 작성
     @PostMapping("/write")
     public String write(@RequestParam("image") MultipartFile file, @ModelAttribute WriteDTO writeDTO, HttpSession session) {
         UserEntity user = (UserEntity) session.getAttribute("login");
         if (file.isEmpty()) {
+            // 파일이 없을 경우
             writeService.writePost1(writeDTO);
             writeService.increaseCount(writeDTO, user);
-
         } else {
+            // 파일이 있을 경우
             writeService.writePost2(file, writeDTO);
             writeService.increaseCount(writeDTO, user);
         }
         return "redirect:/main";
     }
 
+    // 게시글 수정 기능 View단 처리
     @GetMapping("/write/update")
     public String Fix(@RequestParam("boardId") int id ,Model model){
+        // 기존 게시글 정보를 받아옴
         List<BoardEntity> fixboard = boardService.findById(id);
+        List<BoardTypeEntity> list = boardService.selectAllBoardType();
+        // 기존 게시글을 다시 Write 페이지 에 뿌려줌
+        model.addAttribute("allBoard", list);
         model.addAttribute("BoardContent",fixboard);
         return "write";
     }
 
+    // 게시글 수정 기능 
     @PostMapping("/write/update")
     public String Fixboard(@RequestParam("image") MultipartFile file, WriteDTO writeDTO, HttpSession session) {
         UserEntity user = (UserEntity) session.getAttribute("login");
-        System.out.println("WriteDto" + writeDTO);
         if (file.isEmpty()) {
+            // 파일이 없을 경우 처리
             writeService.updatePost1(writeDTO);
             writeService.increaseCount(writeDTO, user);
         } else {
+            // 파일이 있을 경우 처리
             writeService.writePost2(file, writeDTO);
             writeService.increaseCount(writeDTO, user);
         }
+        // 수정 후 다시 해당 게시글 자세히 보기로 이동
         return "redirect:/main/detailboard/" + writeDTO.getBoardId();
     }
 
@@ -188,20 +223,24 @@ public class BoardController {
         for (int x : set) {
             List<BoardEntity> list = writeRepository.findByboardType(x);
             BoardTypeEntity bte = boardRepository.findByboardType(x);
+
             model.addAttribute("boardList" + i, list);
             model.addAttribute("board" + i, bte);
             i++;
         }
 
         List<BoardEntity> list = writeRepository.getHotGesigeul();
+
         List<BoardTypeEntity> list2 = boardService.HotBoardType();
         List<BoardTypeEntity> list3 = boardService.selectAllBoardType();
 
         UserEntity tmp = (UserEntity) session.getAttribute("login");
         UserEntity user = null;
-
-        if(tmp != null)
+        if(tmp != null) {
+            int board_count = boardService.count(tmp.getUserEmail());
+            model.addAttribute("count",board_count);
             user = userRepository.findByUserEmail(tmp.getUserEmail());
+        }
 
         model.addAttribute("hotGesigeul", list);
         model.addAttribute("hotBoard", list2);
@@ -212,6 +251,8 @@ public class BoardController {
 
     @RequestMapping("/searchresult")
     public String searchController(Model model, @RequestParam String query, @PageableDefault(page = 0, size = 10, direction = Sort.Direction.DESC) Pageable pageable) {
+        System.out.println("query : "+query);
+
         if(query.equals(""))
             return "redirect:/main";
 
@@ -226,6 +267,7 @@ public class BoardController {
         int startPag = Math.max(nowPag - 4, 1);
         int endPag = Math.min(nowPag + 5, res.getTotalPages());
         List<BoardTypeEntity> list3 = boardService.selectAllBoardType();
+        List<BoardTypeEntity> list2 = boardService.HotBoardType();
 
 
         model.addAttribute("nowpage", nowPag);
@@ -236,6 +278,7 @@ public class BoardController {
         model.addAttribute("result", res.getContent());
         model.addAttribute("bteList", bteList);
         model.addAttribute("allBoard", list3);
+        model.addAttribute("hotBoard", list2);
 
         return "searchresult";
     }

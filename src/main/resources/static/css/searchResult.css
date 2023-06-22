@@ -19,7 +19,7 @@
 }
 
 #main {
-   margin: auto;
+   margin: 120px auto;
 /*   background-color: #00ffff;*/
    width: 1000px;
    height: 0px;
@@ -29,6 +29,10 @@
 #mainhead{
     border-bottom: 5px solid #9C3646;
     width: 100%;
+}
+
+a{
+text-decoration:none;
 }
 
 #result{
@@ -203,20 +207,20 @@
       padding: 10px;
   }
 
-  nav {
-      background-color: #EDEDED;
-      width: 100%;
-      height: 150px;
-  }
+ nav {
+     background-color: #EDEDED;
+     width: 100%;
+     height: 70px;
+     }
 
-  .top-nav {
-      width: 60%;
-      margin: auto;
-      height: 70px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-  }
+ .top-nav {
+     width: 60%;
+     margin: auto;
+     height: 70px;
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+ }
 
   .search {
   	display:flex;
@@ -506,6 +510,48 @@
       background-color: gray;
   }
 
+  .hot{
+  display:flex;
+  justify-content:space-between;
+  padding:10px;
+  }
+
+  .hot a li{
+      display: flex;
+      justify-content: center;
+      width:60px;
+      height:44px;
+      border-radius:20px;
+      background:#9c3646;
+      font-size:20px;
+      align-items:center;
+
+  }
+  .hot a span{
+      font-family: 'Orbit', sans-serif;
+       color: black;
+   }
+  .hot a li span{
+  font-family: 'Black Han Sans', sans-serif;
+  color:white;
+  }
+  .hot a span:hover{
+      text-decoration:underline;
+  }
+
+  .hot a{
+      text-align:center;
+  }
+
+  .container{
+      width:800px;
+      position:absolute;
+      top:95px;
+      left:28%;
+      border-radius:25px;
+      z-index:300;
+  }
+
   .text_width {
       width: 90%;
       margin: 10px auto;
@@ -541,4 +587,33 @@
   }
   .page li a {
       color: #000;
+  }
+
+  .all{
+      border-top:1px solid #e6e6e6;
+      padding:15px;
+      background:#fafbfb;
+      border-radius: 0 0 25px 25px;
+      display:none;
+  }
+  .all ul{
+      margin-top:10px;
+      display:flex;
+      flex-wrap:wrap;
+  }
+  .all ul a{
+  flex-basis:190px;
+  padding:8px 0;
+  color: black;
+  }
+
+  .all ul a li span:hover{
+      text-decoration:underline;
+  }
+
+  .plus{
+      margin-top: -10px;
+      font-size: 25px;
+      font-weight: bold;
+      cursor:pointer;
   }

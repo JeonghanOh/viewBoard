@@ -124,11 +124,9 @@
                                 <p><strong>
                                         <%=user.getUserNickName()%>
                                     </strong>님</p>
-                                <p>작성한 게시물 :<%if(user.getBoardCount() <1){ %>
-                                        0개
-                                        <%}else{%>
-                                            <%=user.getBoardCount()%>개
-                                                <%}%>
+                                <p>작성한 게시물 :
+                                            ${boardcount}개
+
                                 </p>
                                 <form action="/auth/mypage" method="get">
                                     <input type="hidden" value="<%=user.getUserEmail()%>" name="UserEmail">
@@ -156,7 +154,7 @@
                     <div class="board" onclick=location.href="/main/detailboard/${board.boardId}">
                         <div class="letter">
                             <div class="title">${board.boardTitle}</div>
-                            <div class="writer">${board.userEmail}<span>${board.boardDate}</span></div>
+                            <div class="writer">${board.userEmail}<span>${fn:substring(board.boardDate, 0, 10)}</span></div>
                             <div class="content">${board.boardContent}</div>
                             <ul>
                                 <li>조회수${board.boardClick}</li>
