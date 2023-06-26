@@ -15,9 +15,8 @@
         var a = '${state}';
         if(a){
             alert("회원탈퇴 성공");
-            window.onload = function() {
-                parent.location.reload(); // 부모 페이지 새로고침
-            };
+
+            window.parent.location.href = "/auth/login"
          }
 </script>
 </body>
