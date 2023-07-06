@@ -5,8 +5,8 @@ spring:
       suffix: .jsp
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.250.10/viewboard?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
-    username: wns
+    url: jdbc:mysql://localhost:3306/viewboard?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    username: xo
     password: 1234
   resources:
     static-locations: classpath:/static/

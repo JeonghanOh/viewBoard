@@ -54,14 +54,16 @@ public class BoardController {
         Matcher matcher = pattern.matcher(html);
         return matcher.replaceAll("");
     }
-
+//  게시판 페이지
     @GetMapping("/board/{boardType}")
     public String getboard(@PathVariable("boardType") int type, Model model, @PageableDefault(page = 0, size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable, HttpSession session) {
+//      게시물 페이징 및 게시판페이지에 필요한 데이터
         Page<BoardEntity> list = boardService.getList(type, pageable);
         List<BoardTypeEntity> nameList = boardService.HotBoardType();
         List<BoardTypeEntity> list3 = boardService.selectAllBoardType();
         List<BoardTypeEntity> list2 = boardService.HotBoardType();
         UserEntity user = (UserEntity) session.getAttribute("login");
+//        유저정보에 따른 즐겨찾기 가능유무
         if (user != null) {
 
             boolean is = boardService.isFavorite(type, user);

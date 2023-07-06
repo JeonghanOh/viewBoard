@@ -25,7 +25,7 @@ public class webSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
+            public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOrigin("*"); // 모든 오리진 허용 (필요에 따라 수정)
         configuration.addAllowedMethod("*"); // 모든 HTTP 메서드 허용

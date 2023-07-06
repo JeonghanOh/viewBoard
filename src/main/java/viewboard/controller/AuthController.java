@@ -35,11 +35,13 @@ public class AuthController {
     @Autowired
     BoardService boardService;
 
+//    회원가입페이지
     @GetMapping("/signup")
     public String signUpHome() {
         return "signup";
     }
 
+//  유효성검사 , 회원가입
     @PostMapping("/signup")
     public String signUp(@Validated @ModelAttribute SignUpDto dto, Errors errors, Model model, RedirectAttributes redirectAttributes) {
         if (errors.hasErrors()) {
@@ -59,7 +61,7 @@ public class AuthController {
             return "signup";
         }
     }
-
+//  로그인
     @PostMapping("/loginresult")
     public String login(@ModelAttribute SignInDto dto, HttpSession session) {
         ResponseDto<SignInResponseDto> res = authService.signIn(dto);
@@ -71,10 +73,11 @@ public class AuthController {
             return "login";
         }
     }
-
+//  회원탈퇴
     @PostMapping("/cancel")
     public String cancelUser(DeleteDto dto,HttpSession session,Model model) {
         boolean state = authService.deleteUser(dto);
+//        회원 탈퇴 성공시 세션제거
         if(state) {
             session.invalidate();
             model.addAttribute("state", state);
@@ -97,6 +100,7 @@ public class AuthController {
         return "authservice";
     }
 
+//    아이디찾기
     @PostMapping("/findid")
     public String findEmail(FindDto dto, Model model) {
         String email = findService.findId(dto);
@@ -107,15 +111,18 @@ public class AuthController {
         model.addAttribute("find", email);
         return "id_finder";
     }
-
+//  비밀번호 찾기 ( 새비밀번호 생성)
     @PostMapping("/findpw")
     public String findPassword(FindDto dto, Model model) {
         String password = findService.findPassword(dto);
+//        비밀번호가 비어있을때
         if (password == "" || password == null) {
             model.addAttribute("find", "해당하는계정이 없습니다.");
             return "pw_finder";
         }
+//        10자리 랜덤 패스워드 생성
         String newPassword  = findService.getRandomPassword(10);
+//        생성된패스워드 암호화 , 저장
         authService.updateNewPassword(newPassword,dto);
         model.addAttribute("find", newPassword);
         return "pw_finder";
@@ -141,6 +148,8 @@ public class AuthController {
     public String viewSecession() {
         return "secession";
     }
+
+//    내정보 페이지
 
     @GetMapping("/mypage")
     public String MyPage(@RequestParam("UserEmail") String email, Model model, @PageableDefault(page = 0, size = 6, direction = Sort.Direction.DESC) Pageable pageable) {

@@ -82,6 +82,7 @@ public class AdminController {
         adminService.rollbackgrant(list);
         return"redirect:/admin/user";
     }
+//    관리자 게시판 페이지
     @GetMapping("/board")
     public String boardManage(Model model, HttpSession session ,@PageableDefault(page = 0, size = 5, sort = "boardType", direction = Sort.Direction.DESC) Pageable pageable){
 
@@ -100,17 +101,20 @@ public class AdminController {
         model.addAttribute("board",list.getContent());
         return "ad_board";
     }
+//    게시판 삭제
     @PostMapping("/board/delete")
     public String boardDelete(AdminBoardDto dto){
         List<Integer> list =  dto.getBoardType();
         adminService.deleteBoard(list);
         return "redirect:/admin/board";
     }
+//    게시판 추가
     @PostMapping("/board/add")
     public String boardAdd(AdminBoardDto dto){
         adminService.addBoard(dto);
         return "redirect:/admin/board";
     }
+//    게시판 수정
     @PostMapping("/board/update")
     public String boardUpdate(AdminBoardDto dto,Model model){
 
