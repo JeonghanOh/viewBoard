@@ -150,6 +150,7 @@ public class BoardController {
         return commentList;
     }
 
+    // 좋아요를 Post
     @PostMapping("/like")
     @ResponseBody
     public boolean like(@RequestParam("boardId") int id, @RequestParam("userEmail") String email , Model model){

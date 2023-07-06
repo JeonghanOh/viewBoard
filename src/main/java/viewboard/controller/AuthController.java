@@ -65,7 +65,7 @@ public class AuthController {
     @PostMapping("/loginresult")
     public String login(@ModelAttribute SignInDto dto, HttpSession session) {
         ResponseDto<SignInResponseDto> res = authService.signIn(dto);
-
+        // 로그인 정보 세션
         if (res.isResult() == true) {
             session.setAttribute("login", res.getData().getUser());
             return "redirect:/main";
