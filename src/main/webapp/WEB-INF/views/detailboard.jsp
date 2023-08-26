@@ -1,75 +1,80 @@
 <%@ page import="java.util.Calendar" %>
- <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
- <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
- <%@page import="viewboard.entity.*"%>
- <%@page import="viewboard.repository.*"%>
- <%@page import="java.util.List"%>
- <!DOCTYPE html>
- <html lang="en">
- <head>
-     <meta charset="UTF-8">
-     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Document</title>
-     <link rel="stylesheet" href="/css/DetailBoard.css">
-     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-     <script>
-     var currentPage = 2;
-   function moreList(boardId) {
-       $.ajax({
-           url: "/main/detail",
-           type: "Post",
-           cache: false,
-           dataType: 'json',
-           data: { boardId: boardId , page: currentPage },
-           success: function(data) {
-               var content = "";
-               for (var i = 0; i < data.length; i++) {
-                   var comment = data[i];
-                   content += '<tr class="tr_width">';
-                   content += '<td class="first_width">' + comment.userEmail + '</td>';
-                   content += '<td class="second_width">' + comment.commentContent + '</td>';
-                   content += '</tr>';
-               }
-                    content += '<div class="input_recomment">';
-                  content += '<input type="text"/>';
-                  content += '<button type="submit">답글 달기</button>';
-                  content += '</div>';
-               $('.table_body').append(content);
-               currentPage++;
-           },
-           error: function(request, status, error) {
-               alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-           }
-       });
-   };
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@page import="viewboard.entity.*"%>
+<%@page import="viewboard.repository.*"%>
+<%@page import="java.util.List"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link rel="stylesheet" href="/css/DetailBoard.css">
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+    var currentPage = 2;
+    function moreList(boardId) {
+        $.ajax({
+            url: "/main/detail",
+            type: "Post",
+            cache: false,
+            dataType: 'json',
+            data: { boardId: boardId , page: currentPage },
+            success: function(data) {
+                var content = "";
+                for (var i = 0; i < data.length; i++) {
+                    var comment = data[i];
+                    content += '<tr class="tr_width">';
+                    content += '<td class="first_width">' + comment.userEmail + '</td>';
+                    content += '<td class="second_width">' + comment.commentContent + '</td>';
+                    content += '</tr>';
+                }
+                $('.table_body').append(content);
+                currentPage++;
+                if (data.length < 10) {
+                    $('#More_view_btn').hide(); // 더 이상 댓글이 없는 경우 버튼 숨기기
+                }
+            },
+            error: function(request, status, error) {
+                alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            }
+        });
+    };
+
+    $(document).ready(function() {
+        var commentCount = ${comment.size()};
+            if (commentCount < 10) {
+                $('#More_view_btn').hide();
+            }
+    });
 
 
-
-   function liked(boardId, userEmail) {
-      $.ajax({
-        url: "/main/like",
-        type: "POST",
-        data: { boardId: boardId, userEmail: userEmail },
-        success: function(isLiked) {
-          var likeCountElement = $('.like-count');
-          var like_view = $('#liked_btn');
-          var likeCount = parseInt(likeCountElement.text());
-          if (isLiked) {
-            likeCount++;
-            like_view.text("❤");
-          } else {
-            likeCount--;
-            like_view.text("🤍");
-          }
-          likeCountElement.text(likeCount);
-        },
-        error: function() {
-          console.error("요청이 실패했습니다.");
-        }
-      });
-   }
+    function liked(boardId, userEmail) {
+        $.ajax({
+            url: "/main/like",
+            type: "POST",
+            data: { boardId: boardId, userEmail: userEmail },
+            success: function(isLiked) {
+                var likeCountElement = $('.like-count');
+                var like_view = $('#liked_btn');
+                var likeCount = parseInt(likeCountElement.text());
+                if (isLiked) {
+                    likeCount++;
+                    like_view.text("❤");
+                } else {
+                    likeCount--;
+                    like_view.text("🤍");
+                }
+                likeCountElement.text(likeCount);
+            },
+            error: function() {
+              console.error("요청이 실패했습니다.");
+            }
+        });
+    }
 
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -245,7 +250,7 @@
              </div>
          </div>
          <div class="more_btn">
-             <button onclick="moreList(${board.boardId})">더보기</button>
+             <button onclick="moreList(${board.boardId})" id="More_view_btn">더보기</button>
          </div>
      </div>
      <div class="side_bar">
